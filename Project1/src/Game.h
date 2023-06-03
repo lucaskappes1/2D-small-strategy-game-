@@ -14,7 +14,6 @@
 #include "units/AxeKnight.h"
 #include "units/Archer.h"
 
-
 class Game
 {
 public:
@@ -59,12 +58,13 @@ private:
 	int mPlayerArmorUpgradeCount = 0;
 	int mPlayerAttackUpgradeCount = 0;
 
-	const int PLAYER_CREATE_UNIT_POSITION = 90;
-	const int AI_CREATE_UNIT_POSITION = 660;
+	const int WIDTH = 1024;
+	const int HEIGHT = 768;
+	const int PLAYER_CREATE_UNIT_POSITION = WIDTH - 934;
+	const int AI_CREATE_UNIT_POSITION = WIDTH - 130;
 	int mKills;
 	int mDeaths;
 	int mPlayerGold;
 
 	Background* BG;
 };
-

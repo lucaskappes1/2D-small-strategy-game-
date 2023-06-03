@@ -5,7 +5,7 @@
 class Background
 {
 public:
-	Background(SDL_Texture* texture, SDL_Renderer* renderer);
+	Background(SDL_Texture* texture, SDL_Renderer* renderer, int width, int height);
 	void Draw();
 private:
 	SDL_Rect mDestR;

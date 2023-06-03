@@ -7,7 +7,7 @@ class AI
 public:
 	AI(class Game* game);
 	virtual void Act();
-	const float& getGoldMultiplier() const { return mGoldMultiplier; }
+	inline const float& getGoldMultiplier() const { return mGoldMultiplier; }
 protected:
 	float mGoldMultiplier = 1;
 	virtual void ChangeState();

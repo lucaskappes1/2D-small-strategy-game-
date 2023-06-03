@@ -20,7 +20,7 @@ bool Game::Initialize()
 		SDL_Log("Failure: ", SDL_GetError());
 		return false;
 	}
-	mWindow = SDL_CreateWindow("Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, 0);
+	mWindow = SDL_CreateWindow("Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, 0);
 	if (mWindow == nullptr)
 	{
 		SDL_Log("Failure: ", SDL_GetError());
@@ -42,10 +42,10 @@ bool Game::Initialize()
 		SDL_Log("Failure: ", SDL_GetError());
 		return false;
 	}
-	BG = new Background(getTexture("assets/Background.png", "Background"), mRenderer);
+	BG = new Background(getTexture("assets/Background.png", "Background"), mRenderer, WIDTH, HEIGHT);
 	
-	mObjects.emplace_back(new Castle(mRenderer, getTexture("assets/Castle.png", "Castle"), 50, 425, this, 1));
-	mObjects.emplace_back(new Castle(mRenderer, getTexture("assets/Castle.png", "Castle"), 750, 425, this, 0));
+	mObjects.emplace_back(new Castle(mRenderer, getTexture("assets/Castle.png", "Castle"), WIDTH - 974, HEIGHT - 175, this, 1));
+	mObjects.emplace_back(new Castle(mRenderer, getTexture("assets/Castle.png", "Castle"), WIDTH - 50, HEIGHT - 175, this, 0));
 	mObjects.at(1)->setArmor(50);
 	mObjects.at(1)->setAttack(7);
 	mUI = new UI(this, mRenderer);
@@ -207,14 +207,14 @@ void Game::CreateKnight(bool isPlayer)
 		if (mPlayerGold >= Knight::getStaticGoldCost())
 		{
 			mPlayerGold -= Knight::getStaticGoldCost();
-			mPendingPlayerObjects.emplace(new Knight(mRenderer, getTexture("assets/Knight.png", "Knight"), PLAYER_CREATE_UNIT_POSITION, 490, this, 1));
+			mPendingPlayerObjects.emplace(new Knight(mRenderer, getTexture("assets/Knight.png", "Knight"), PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, this, 1));
 			ApplyPlayerUpgrade();
 			mUI->UpdateGoldText();
 		}
 	}
 	else
 	{
-		mPendingAIObjects.emplace(new Knight(mRenderer, getTexture("assets/Knight.png", "Knight"), AI_CREATE_UNIT_POSITION, 490, this, 0));
+		mPendingAIObjects.emplace(new Knight(mRenderer, getTexture("assets/Knight.png", "Knight"), AI_CREATE_UNIT_POSITION, HEIGHT - 110, this, 0));
 	}
 }
 
@@ -226,14 +226,14 @@ void Game::CreateSpearKnight(bool isPlayer)
 		if (mPlayerGold >= SpearKnight::getStaticGoldCost())
 		{
 			mPlayerGold -= SpearKnight::getStaticGoldCost();
-			mPendingPlayerObjects.emplace(new SpearKnight(mRenderer, getTexture("assets/SpearKnight.png", "SpearKnight"), PLAYER_CREATE_UNIT_POSITION, 490, this, 1));
+			mPendingPlayerObjects.emplace(new SpearKnight(mRenderer, getTexture("assets/SpearKnight.png", "SpearKnight"), PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, this, 1));
 			ApplyPlayerUpgrade();
 			mUI->UpdateGoldText();
 		}
 	}
 	else
 	{
-		mPendingAIObjects.emplace(new SpearKnight(mRenderer, getTexture("assets/SpearKnight.png", "SpearKnight"), AI_CREATE_UNIT_POSITION, 490, this, 0));
+		mPendingAIObjects.emplace(new SpearKnight(mRenderer, getTexture("assets/SpearKnight.png", "SpearKnight"), AI_CREATE_UNIT_POSITION, HEIGHT - 110, this, 0));
 	}
 }
 
@@ -244,14 +244,14 @@ void Game::CreateAxeKnight(bool isPlayer)
 		if (mPlayerGold >= AxeKnight::getStaticGoldCost())
 		{
 			mPlayerGold -= AxeKnight::getStaticGoldCost();
-			mPendingPlayerObjects.emplace(new AxeKnight(mRenderer, getTexture("assets/AxeKnight.png", "AxeKnight"), PLAYER_CREATE_UNIT_POSITION, 490, this, 1));
+			mPendingPlayerObjects.emplace(new AxeKnight(mRenderer, getTexture("assets/AxeKnight.png", "AxeKnight"), PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, this, 1));
 			ApplyPlayerUpgrade();
 			mUI->UpdateGoldText();
 		}
 	}
 	else
 	{
-		mPendingAIObjects.emplace(new AxeKnight(mRenderer, getTexture("assets/AxeKnight.png", "AxeKnight"), AI_CREATE_UNIT_POSITION, 490, this, 0));
+		mPendingAIObjects.emplace(new AxeKnight(mRenderer, getTexture("assets/AxeKnight.png", "AxeKnight"), AI_CREATE_UNIT_POSITION, HEIGHT - 110, this, 0));
 	}
 }
 
@@ -262,14 +262,14 @@ void Game::CreateArcher(bool isPlayer)
 		if (mPlayerGold >= Archer::getStaticGoldCost())
 		{
 			mPlayerGold -= Archer::getStaticGoldCost();
-			mPendingPlayerObjects.emplace(new Archer(mRenderer, getTexture("assets/Archer.png", "Archer"), PLAYER_CREATE_UNIT_POSITION, 490, this, 1));
+			mPendingPlayerObjects.emplace(new Archer(mRenderer, getTexture("assets/Archer.png", "Archer"), PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, this, 1));
 			ApplyPlayerUpgrade();
 			mUI->UpdateGoldText();
 		}
 	}
 	else
 	{
-		mPendingAIObjects.emplace(new Archer(mRenderer, getTexture("assets/Archer.png", "Archer"), AI_CREATE_UNIT_POSITION, 490, this, 0));
+		mPendingAIObjects.emplace(new Archer(mRenderer, getTexture("assets/Archer.png", "Archer"), AI_CREATE_UNIT_POSITION, HEIGHT - 110, this, 0));
 	}
 }
 
