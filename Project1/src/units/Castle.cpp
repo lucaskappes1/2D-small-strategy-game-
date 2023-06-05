@@ -9,9 +9,10 @@ Castle::Castle(SDL_Renderer* renderer, SDL_Texture* tex, int x, int y, Game* gam
 	mTexture = tex;
 	mX = x;
 	mY = y;
+	mCollisionR = { mX - 50, mY, 100, 100 };
 	mDestR = { mX - 50, mY, 100, 100 };
 	mHP = MAX_HP;
-	mDamage = 5;
+	mDamage = 15;
 	mPercentHPBar = 1;
 }
 

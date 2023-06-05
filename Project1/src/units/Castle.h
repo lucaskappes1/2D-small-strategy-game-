@@ -10,10 +10,9 @@ public:
 	void Attack(GameObject* target);
 	virtual void TakeDamage(int DMG);
 private:
-	const int MAX_HP = 1200;
-	const int ATTACK_RELOAD_TIME = 5;
+	const int MAX_HP = 600;
+	const int ATTACK_RELOAD_TIME = 8;
 	const int mArmor = 20;
 	void RenderHPBar(int x, int y, int w, int h, float Percent, SDL_Color FGColor, SDL_Color BGColor);
 	float mPercentHPBar;
 };
-

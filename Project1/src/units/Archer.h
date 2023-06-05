@@ -1,10 +1,12 @@
 #pragma once
 #include "GameObject.h"
+#include <vector>
+
 class Archer :
     public GameObject
 {
 public:
-	Archer(SDL_Renderer* renderer, SDL_Texture* texture, int x, int y, class Game* game, bool isPlayer);
+	Archer(SDL_Renderer* renderer, int x, int y, class Game* game, bool isPlayer);
 	void Update(float deltaTime);
 	void Draw();
 	void Attack(GameObject* target);
@@ -12,10 +14,15 @@ public:
 	inline const static int getStaticGoldCost() { return mGoldCost; }
 	inline const int getGoldCost() const override { return mGoldCost; }
 private:
+	enum State{ATTACKING, WALKING} eState;
+	enum State eLastFrameState;;
 	void RenderHPBar(int x, int y, int w, int h, float Percent, SDL_Color FGColor, SDL_Color BGColor);
 	float mPercentHPBar;
-	const int MAX_HP = 60;
+	const int MAX_HP = 80;
 	const int ATTACK_RELOAD_TIME = 40;
 	const static int mGoldCost = 55;
+	void LoadAnimation();
+	SDL_Texture* mAttackTexture;
+	int mFrameCount;
 };
 

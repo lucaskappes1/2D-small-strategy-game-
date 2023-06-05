@@ -23,13 +23,13 @@ UI::~UI()
 void UI::Initialize()
 {
 	mFont = TTF_OpenFont("assets/stocky.ttf", 24);
-	mKnightButton = new Button(mGame->getTexture("assets/Knight.png", "Knight"), mRenderer, mMouse, 50, 50, {0, 0, 428, 380}, mFont);
-	mSpearKnightButton = new Button(mGame->getTexture("assets/SpearKnight.png", "SpearKnight"), mRenderer, mMouse, 100, 50, {0, 0, 400, 504}, mFont);
-	mAxeKnightButton = new Button(mGame->getTexture("assets/AxeKnight.png", "AxeKnight"), mRenderer, mMouse, 150, 50, {0, 0, 496, 520}, mFont);
-	mAcherButton = new Button(mGame->getTexture("assets/Archer.png", "Archer"), mRenderer, mMouse, 200, 50, {20, 50, 88, 78}, mFont);
+	mKnightButton = new Button(mGame->getTexture("assets/Knight/Idle/Tuscan_Idle_10000.png", "Knight"), mRenderer, mMouse, 50, 50, {130, 50, 106, 186}, mFont);
+	mSpearKnightButton = new Button(mGame->getTexture("assets/bSpearman/Button.png", "SpearKnight"), mRenderer, mMouse, 100, 50, {0, 0, 172, 177}, mFont);
+	mAxeKnightButton = new Button(mGame->getTexture("assets/GreekSoldier/Idle/GreekBasic_Idle_00.png", "AxeKnight"), mRenderer, mMouse, 150, 50, {0, 0, 362, 586}, mFont);
+	mAcherButton = new Button(mGame->getTexture("assets/ArcherSkeleton/Idle/Separate sp/idle (1).png", "Archer"), mRenderer, mMouse, 200, 50, {0, 0, 303, 525}, mFont);
 	mUpgradeArmorButton = new Button(mGame->getTexture("assets/ArmorUpgrade.png", "UpgradeArmor"), mRenderer, mMouse, 50, 100, { 0, 0, 64, 64 }, mFont);
 	mUpgradeAttackButton = new Button(mGame->getTexture("assets/AttackUpgrade.png", "UpgradeAttack"), mRenderer, mMouse, 100, 100, { 0, 0, 64, 64 }, mFont);
-	mKnightButton->addTooltip("Cost: 50 gold\nStrong all around infantry");
+	mKnightButton->addTooltip("Cost: 35 gold\nStrong all around infantry");
 	mSpearKnightButton->addTooltip("Cost: 80 gold\nStronger than Knight, but slower");
 	mAxeKnightButton->addTooltip("Cost: 60 gold\nVery weak, but does a lot of damage");
 	mAcherButton->addTooltip("Cost: 55 gold\nVery weak, but attacks from distance");

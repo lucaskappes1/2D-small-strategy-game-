@@ -1,21 +1,23 @@
 #include "Archer.h"
 #include "../Game.h"
 
-Archer::Archer(SDL_Renderer* renderer, SDL_Texture* texture, int x, int y, Game* game, bool isPlayer)
+Archer::Archer(SDL_Renderer* renderer, int x, int y, Game* game, bool isPlayer)
 {
 	mRenderer = renderer;
-	mTexture = texture;
 	mX = x;
 	mY = y;
+	mCollisionR = { x, y, 32, 32 };
 	mDestR = { x, y, 32, 32 };
-	mSrcR = { 20, 50, 88, 78 };
+	mSrcR = { 0, 0, 686, 1055 };
 	mGame = game;
 	mIsPlayer = isPlayer;
 	mHP = MAX_HP;
 	mReloadCount = 0;
 	mPercentHPBar = 1.0f;
-	mArmor = 0;
-	mDamage = 20;
+	mArmor = 4;
+	mDamage = 18;
+	mFrameCount = 0;
+	LoadAnimation();
 }
 
 void Archer::Update(float deltaTime)
@@ -24,31 +26,99 @@ void Archer::Update(float deltaTime)
 	{
 		mGame->RemoveObject(this);
 	}
-	GameObject* res = mGame->CollisionDetection(this);
-	if (res == nullptr)
+	GameObject* res = mGame->RangedAttackDetection(this, 210);
+	GameObject* res2 = mGame->CollisionDetection(this);	
+	if (res == nullptr && res2 == nullptr)
 	{
 		if (mIsPlayer)
 		{
 			mX = mX + 1;
-			mDestR.x = mX;
 		}
 		else
 		{
 			mX = mX - 1;
-			mDestR.x = mX;
 		}
+		mDestR.x = mX;
+		mCollisionR.x = mX;
+		eLastFrameState = eState;
+		eState = WALKING;
 	}
-	res = mGame->RangedAttackDetection(this, 210);
 	if (res != nullptr)
 	{
 		Attack(res);
+		eLastFrameState = eState;
+		eState = ATTACKING;
 	}
 	mReloadCount--;
 }
 
 void Archer::Draw()
 {
-	SDL_RenderCopy(mRenderer, mTexture, &mSrcR, &mDestR);
+	if (eState == ATTACKING)
+	{
+		if (eState != eLastFrameState)
+		{
+			mSrcR = { 0, 0, 756, 1070 };
+			mFrameCount = 0;
+		}
+		if (mIsPlayer)
+		{
+			SDL_RenderCopyEx(mRenderer, mAttackTexture, &mSrcR, &mDestR, 0, nullptr, SDL_FLIP_HORIZONTAL);
+		}
+		else
+		{
+			SDL_RenderCopy(mRenderer, mAttackTexture, &mSrcR, &mDestR);
+		}
+		mFrameCount++;
+		if (mFrameCount >= 5)
+		{
+			mFrameCount = 0;
+			mSrcR.x += 756;
+			if (mSrcR.x >= 3780)
+			{
+				mSrcR.x = 0;
+				mSrcR.y += 1070;
+				if (mSrcR.y >= 2140)
+				{
+					mSrcR.y = 0;
+				}
+			}
+		}
+
+	}
+
+	if (eState == WALKING)
+	{
+		if (eState != eLastFrameState)
+		{
+			mSrcR = { 0, 0, 686, 1055 };
+			mFrameCount = 0;
+		}
+		if (mIsPlayer)
+		{
+			SDL_RenderCopyEx(mRenderer, mTexture, &mSrcR, &mDestR, 0, nullptr, SDL_FLIP_HORIZONTAL);
+		}
+		else
+		{
+			SDL_RenderCopy(mRenderer, mTexture, &mSrcR, &mDestR);
+		}
+		mFrameCount++;
+		if (mFrameCount >= 5)
+		{
+			mFrameCount = 0;
+			mSrcR.x += 686;
+			if (mSrcR.x >= 3430)
+			{
+				mSrcR.x = 0;
+				mSrcR.y += 1055;
+				if (mSrcR.y >= 2110)
+				{
+					mSrcR.y = 0;
+				}
+			}
+		}
+	}
+
 	float temp = mHP / MAX_HP;
 	RenderHPBar(mX, mY - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
 }
@@ -90,4 +160,10 @@ void Archer::RenderHPBar(int x, int y, int w, int h, float Percent, SDL_Color FG
 	SDL_Rect fgrect = { px, y, pw, h };
 	SDL_RenderFillRect(mRenderer, &fgrect);
 	SDL_SetRenderDrawColor(mRenderer, old.r, old.g, old.b, old.a);
+}
+
+void Archer::LoadAnimation()
+{
+	mTexture = mGame->getTexture("assets/ArcherSkeleton/Walk/walk.png", "ArcherWalk");
+	mAttackTexture = mGame->getTexture("assets/ArcherSkeleton/Attack/attack.png", "ArcherAttack");
 }

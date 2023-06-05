@@ -1,20 +1,20 @@
-# 2D-small-strategy-game-
-This is a small strategy game, where the player needs to destroy an AI controlled castle, while not loosing his own. It is very related to Age of War
+# 2D Small Strategy Game
 
-THE PURPOSE OF THIS PROJECT IS TO LEARN ABOUT THE C++ PROGRAMMING LANGUAGE, AND ALSO LEARN ABOUT 2D GAME DEVELOPMENT.
-As i cannot distribute the sprites source files, this repository will not contain most of the sprites in it.
-If you wish to compile and run this project, you will need to manually download the sprites with the following instructions:
+This repository contains a small strategy game in which the player must destroy an AI-controlled castle without losing their own. The game is heavily inspired by Age of War.
 
-You will need to create an account in craftpix.net
-Then, access the link below and download the spritesheet
-https://craftpix.net/freebies/free-skeleton-pixel-art-sprite-sheets/
-Open the .zip, then go to Skeleton_Archer, take the idle.png, copy and paste it to the assets folder of this project, then rename it to Archer.png
-Then, access the link below and download the spritesheet
-https://craftpix.net/freebies/knight-character-free-sprite/
-From this archive you will need: PNG->black_knight->1 IDLE_000.png. Copy and paste it to the assets folder, and rename it to SpearKnight.png
-then take the PNG->bronze_knight->1 IDLE_000.png. Copy and paste it to the assets folder, and rename it to AxeKnight.png
-then take the PNG->silver_knight->1 IDLE_000.png. Copy and paste it to the assets folder, and rename it to Knight.png
-Then, access the link below and download the spritesheet
-https://craftpix.net/freebies/free-nature-backgrounds-pixel-art/
-go to nature_2, take the orig.png, copy and paste it to the assets folder, and rename it to Background.png.
-the other sprites used are not copyrighted since they were made by the developer
+## Purpose of the Project
+
+The purpose of this project is to learn about the C++ programming language and 2D game development.
+
+## Sprites
+
+Sprites used in this project are from opengameart.org. All credit goes to the original artists. Sprites have been taken from the following links:
+
+https://opengameart.org/content/warm-sunrisesunset-background
+https://opengameart.org/content/free-greek-character-ii-2d-animation
+https://opengameart.org/content/spearman-bleeds-game-art
+https://opengameart.org/content/skeleton-archer-0
+https://opengameart.org/content/tuscan-knight-bleeds-game-art-hd
+https://opengameart.org/content/castle-2d
+
+Feel free to modify the structure according to your needs, and let me know if there's anything else I can help you with!

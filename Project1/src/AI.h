@@ -13,8 +13,8 @@ protected:
 	virtual void ChangeState();
 	class Game* mGame;
 	enum State {UNDERATTACK, ATTACKING, NUMBERDISADVANTAGE, NUMBERADVANTAGE, ENEMYATTHEGATES} eState;
-	const int XPOSTHRESHOLD = 500;
-	const int TOUGHXPOSTHRESHOLD = 650;
+	const int XPOSTHRESHOLD = 700;
+	const int TOUGHXPOSTHRESHOLD = 850;
 	std::random_device mRd;
 	std::mt19937 mRng;
 	std::uniform_int_distribution<int> mVariation;
@@ -23,7 +23,7 @@ protected:
 class AIhard : public AI
 {
 public:
-	AIhard(class Game* game) : AI(game) { mGoldMultiplier = 0.75f; }
+	AIhard(class Game* game) : AI(game) { mGoldMultiplier = 0.7f; }
 	void Act();
 protected:
 };

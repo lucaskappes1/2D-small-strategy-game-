@@ -1,20 +1,23 @@
 #include "SpearKnight.h"
 #include "../Game.h"
 
-SpearKnight::SpearKnight(SDL_Renderer* renderer, SDL_Texture* texture, int x, int y, class Game* game, bool isPlayer)
+SpearKnight::SpearKnight(SDL_Renderer* renderer, int x, int y, class Game* game, bool isPlayer)
 {
 	mIsPlayer = isPlayer;
 	mRenderer = renderer;
-	mTexture = texture;
 	mX = x;
 	mY = y;
 	mDestR = { x, y, 32,  32 };
+	mCollisionR = { x, y, 32, 32 };
 	mGame = game;
 	mHP = MAX_HP;
 	mReloadCount = 0;
 	mPercentHPBar = 1.0f;
-	mArmor = 15;
-	mDamage = 60;
+	mArmor = 10;
+	mDamage = 32;
+	mFrameCount = 0;
+	mSrcR = { 0, 0, 191, 123 };
+	LoadAnimation();
 }
 
 void SpearKnight::Update(float deltaTime)
@@ -29,18 +32,22 @@ void SpearKnight::Update(float deltaTime)
 		if (mIsPlayer)
 		{
 			mX = mX + 1;
-			mDestR.x = mX;
 		}
 		else
 		{
 			mX = mX - 1;
-			mDestR.x = mX;
 		}
+		mDestR.x = mX;
+		mCollisionR.x = mX;
+		eLastFrameState = eState;
+		eState = WALKING;
 	}
 	else
 	{
 		if ((res->getIsPlayer() && !mIsPlayer) || (mIsPlayer && !res->getIsPlayer()))
 		{
+			eLastFrameState = eState;
+			eState = ATTACKING;
 			Attack(res);
 		}
 	}
@@ -49,7 +56,58 @@ void SpearKnight::Update(float deltaTime)
 
 void SpearKnight::Draw()
 {
-	SDL_RenderCopy(mRenderer, mTexture, NULL, &mDestR);
+	if (eState == ATTACKING)
+	{
+		if (eLastFrameState != eState)
+		{
+			mSrcR.x = 0;
+			mFrameCount = 0;
+		}
+		if (!mIsPlayer)
+		{
+			SDL_RenderCopyEx(mRenderer, mTextureAttack, &mSrcR, &mDestR, 0, nullptr, SDL_FLIP_HORIZONTAL);
+		}
+		else
+		{
+			SDL_RenderCopy(mRenderer, mTextureAttack, &mSrcR, &mDestR);
+		}
+		mFrameCount++;
+		if (mFrameCount >= 5)
+		{
+			mFrameCount = 0;
+			mSrcR.x += 235;
+			if (mSrcR.x >= 1880)
+			{
+				mSrcR.x = 0;
+			}
+		}
+	}
+	else if (eState == WALKING)
+	{
+		if (eLastFrameState != eState)
+		{
+			mSrcR.x = 0;
+			mFrameCount = 0;
+		}
+		if (!mIsPlayer)
+		{
+			SDL_RenderCopyEx(mRenderer, mTexture, &mSrcR, &mDestR, 0, nullptr, SDL_FLIP_HORIZONTAL);
+		}
+		else
+		{
+			SDL_RenderCopy(mRenderer, mTexture, &mSrcR, &mDestR);
+		}
+		mFrameCount++;
+		if (mFrameCount >= 5)
+		{
+			mFrameCount = 0;
+			mSrcR.x += 191;
+			if (mSrcR.x >= 1910)
+			{
+				mSrcR.x = 0;
+			}
+		}
+	}
 	float temp = mHP / MAX_HP;
 	RenderHPBar(mX, mY - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
 }
@@ -91,4 +149,10 @@ void SpearKnight::RenderHPBar(int x, int y, int w, int h, float Percent, SDL_Col
 	SDL_Rect fgrect = { px, y, pw, h };
 	SDL_RenderFillRect(mRenderer, &fgrect);
 	SDL_SetRenderDrawColor(mRenderer, old.r, old.g, old.b, old.a);
+}
+
+void SpearKnight::LoadAnimation()
+{
+	mTexture = mGame->getTexture("assets/bSpearman/_walk/bSpearman_Walk_Right_strip10.png", "SpearmanWalk");
+	mTextureAttack = mGame->getTexture("assets/bSpearman/_attack/bSpearman_Attack01_Right_strip8.png", "SpearmanAttack");
 }

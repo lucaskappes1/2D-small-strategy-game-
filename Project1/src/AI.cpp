@@ -95,7 +95,7 @@ void AIhard::Act()
 	case ATTACKING:
 		if (temp < 50 && temp > 20)
 		{
-			mGame->CreateAxeKnight(0);
+			mGame->CreateSpearKnight(0);
 			mGame->CreateAxeKnight(0);
 			mGame->CreateArcher(0);
 			mGame->CreateSpearKnight(0);
@@ -136,8 +136,18 @@ void AIhard::Act()
 		mGame->CreateArcher(0);
 		break;
 	case NUMBERADVANTAGE:
-		mGame->CreateArcher(0);
-		mGame->CreateArcher(0);
+		if (temp < 40)
+		{
+			mGame->CreateKnight(0);
+			mGame->CreateKnight(0);
+			mGame->CreateArcher(0);
+			mGame->CreateArcher(0);
+		}
+		else 
+		{
+			mGame->CreateSpearKnight(0);
+			mGame->CreateArcher(0);
+		}
 		break;
 	case ENEMYATTHEGATES:
 		mGame->ClearAIQueue();

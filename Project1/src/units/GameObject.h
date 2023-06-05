@@ -16,16 +16,18 @@ public:
 	inline const int& getX() const { return mX; }
 	inline const int& getY() const { return mY; }
 	inline const bool& getIsPlayer() const { return mIsPlayer; }
-	inline const SDL_Rect& getCollisionRect() { return mDestR; }
+	inline const SDL_Rect& getCollisionRect() const { return mCollisionR; }
 	virtual void setArmor(int Armor) { mArmor = Armor; }
 	virtual void setAttack(int Damage) { mDamage = Damage; }
 
 protected:
 	//enum Type{ARCHER, AXEKNIGHT, CASTLE, KNIGHT, SPEARKNIGHT} eType;
+	enum State{ATTACKING, WALKING, RELOADING} eState;
 	int mX;
 	int mY;
 	int mHP;
 	bool mIsPlayer;
+	SDL_Rect mCollisionR;
 	SDL_Rect mDestR;
 	SDL_Renderer* mRenderer;
 	SDL_Texture* mTexture;

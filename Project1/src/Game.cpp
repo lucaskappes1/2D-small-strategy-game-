@@ -47,7 +47,6 @@ bool Game::Initialize()
 	mObjects.emplace_back(new Castle(mRenderer, getTexture("assets/Castle.png", "Castle"), WIDTH - 974, HEIGHT - 175, this, 1));
 	mObjects.emplace_back(new Castle(mRenderer, getTexture("assets/Castle.png", "Castle"), WIDTH - 50, HEIGHT - 175, this, 0));
 	mObjects.at(1)->setArmor(50);
-	mObjects.at(1)->setAttack(7);
 	mUI = new UI(this, mRenderer);
 	mUI->Initialize();
 	mAI = new AIhard(this);
@@ -62,6 +61,19 @@ void Game::Shutdown()
 	{
 		delete i;
 	}
+	for (auto& i : mDeadObjects)
+	{
+		delete i;
+	}
+	while (mPendingAIObjects.size() > 0)
+	{
+		mPendingAIObjects.pop();
+	}
+	while (mPendingPlayerObjects.size() > 0)
+	{
+		mPendingAIObjects.pop();
+	}
+	mTextureMap.clear();
 	std::cout << "kills: " << mKills << " deaths: " << mDeaths << "gold: " << mPlayerGold << std::endl;
 	SDL_DestroyRenderer(mRenderer);
 	SDL_DestroyWindow(mWindow);
@@ -207,14 +219,14 @@ void Game::CreateKnight(bool isPlayer)
 		if (mPlayerGold >= Knight::getStaticGoldCost())
 		{
 			mPlayerGold -= Knight::getStaticGoldCost();
-			mPendingPlayerObjects.emplace(new Knight(mRenderer, getTexture("assets/Knight.png", "Knight"), PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, this, 1));
+			mPendingPlayerObjects.emplace(new Knight(mRenderer, PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, this, 1));
 			ApplyPlayerUpgrade();
 			mUI->UpdateGoldText();
 		}
 	}
 	else
 	{
-		mPendingAIObjects.emplace(new Knight(mRenderer, getTexture("assets/Knight.png", "Knight"), AI_CREATE_UNIT_POSITION, HEIGHT - 110, this, 0));
+		mPendingAIObjects.emplace(new Knight(mRenderer, AI_CREATE_UNIT_POSITION, HEIGHT - 110, this, 0));
 	}
 }
 
@@ -226,14 +238,14 @@ void Game::CreateSpearKnight(bool isPlayer)
 		if (mPlayerGold >= SpearKnight::getStaticGoldCost())
 		{
 			mPlayerGold -= SpearKnight::getStaticGoldCost();
-			mPendingPlayerObjects.emplace(new SpearKnight(mRenderer, getTexture("assets/SpearKnight.png", "SpearKnight"), PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, this, 1));
+			mPendingPlayerObjects.emplace(new SpearKnight(mRenderer, PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, this, 1));
 			ApplyPlayerUpgrade();
 			mUI->UpdateGoldText();
 		}
 	}
 	else
 	{
-		mPendingAIObjects.emplace(new SpearKnight(mRenderer, getTexture("assets/SpearKnight.png", "SpearKnight"), AI_CREATE_UNIT_POSITION, HEIGHT - 110, this, 0));
+		mPendingAIObjects.emplace(new SpearKnight(mRenderer, AI_CREATE_UNIT_POSITION, HEIGHT - 110, this, 0));
 	}
 }
 
@@ -244,14 +256,14 @@ void Game::CreateAxeKnight(bool isPlayer)
 		if (mPlayerGold >= AxeKnight::getStaticGoldCost())
 		{
 			mPlayerGold -= AxeKnight::getStaticGoldCost();
-			mPendingPlayerObjects.emplace(new AxeKnight(mRenderer, getTexture("assets/AxeKnight.png", "AxeKnight"), PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, this, 1));
+			mPendingPlayerObjects.emplace(new AxeKnight(mRenderer, PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, this, 1));
 			ApplyPlayerUpgrade();
 			mUI->UpdateGoldText();
 		}
 	}
 	else
 	{
-		mPendingAIObjects.emplace(new AxeKnight(mRenderer, getTexture("assets/AxeKnight.png", "AxeKnight"), AI_CREATE_UNIT_POSITION, HEIGHT - 110, this, 0));
+		mPendingAIObjects.emplace(new AxeKnight(mRenderer, AI_CREATE_UNIT_POSITION, HEIGHT - 110, this, 0));
 	}
 }
 
@@ -262,14 +274,14 @@ void Game::CreateArcher(bool isPlayer)
 		if (mPlayerGold >= Archer::getStaticGoldCost())
 		{
 			mPlayerGold -= Archer::getStaticGoldCost();
-			mPendingPlayerObjects.emplace(new Archer(mRenderer, getTexture("assets/Archer.png", "Archer"), PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, this, 1));
+			mPendingPlayerObjects.emplace(new Archer(mRenderer, PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, this, 1));
 			ApplyPlayerUpgrade();
 			mUI->UpdateGoldText();
 		}
 	}
 	else
 	{
-		mPendingAIObjects.emplace(new Archer(mRenderer, getTexture("assets/Archer.png", "Archer"), AI_CREATE_UNIT_POSITION, HEIGHT - 110, this, 0));
+		mPendingAIObjects.emplace(new Archer(mRenderer, AI_CREATE_UNIT_POSITION, HEIGHT - 110, this, 0));
 	}
 }
 
@@ -394,7 +406,7 @@ void Game::Update()
 			ChangedVector = true;
 		}
 	}
-	if (SDL_GetTicks() - mTimeSeconds > 6000)
+	if (SDL_GetTicks() - mTimeSeconds > 4000)
 	{
 		mTimeSeconds = SDL_GetTicks();
 		mAI->Act();
