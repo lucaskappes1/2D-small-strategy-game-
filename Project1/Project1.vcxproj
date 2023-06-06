@@ -148,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AI.h" />
+    <ClInclude Include="src\Constants.h" />
     <ClInclude Include="src\units\Archer.h" />
     <ClInclude Include="src\units\AxeKnight.h" />
     <ClInclude Include="src\Mouse.h" />

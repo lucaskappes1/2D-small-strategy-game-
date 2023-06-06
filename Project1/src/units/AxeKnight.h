@@ -12,7 +12,8 @@ public:
 	virtual void TakeDamage(int DMG);
 	inline static const int getStaticGoldCost() { return mGoldCost; }
 	inline const int getGoldCost() const override { return mGoldCost; }
-	void LoadAnimations();
+	void static StaticLoadAnimation(); //this will load the animation into texture map
+	
 private:
 	enum State{ATTACKING, WALKING} eState;
 	enum State eLastFrameState;
@@ -24,5 +25,6 @@ private:
 	const int ATTACK_RELOAD_TIME = 55;
 	const static int mGoldCost = 60;
 	int mCurrentFrame;
+	void LoadAnimation();
 	int mFrameCount;
 };

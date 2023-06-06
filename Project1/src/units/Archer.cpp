@@ -146,6 +146,11 @@ void Archer::TakeDamage(int DMG)
 	mPercentHPBar = (float)mHP / (float)MAX_HP;
 }
 
+void Archer::StaticLoadAnimation()
+{
+	
+}
+
 void Archer::RenderHPBar(int x, int y, int w, int h, float Percent, SDL_Color FGColor, SDL_Color BGColor)
 {
 	Percent = Percent > 1.f ? 1.f : Percent < 0.f ? 0.f : Percent;
@@ -164,6 +169,6 @@ void Archer::RenderHPBar(int x, int y, int w, int h, float Percent, SDL_Color FG
 
 void Archer::LoadAnimation()
 {
-	mTexture = mGame->getTexture("assets/ArcherSkeleton/Walk/walk.png", "ArcherWalk");
-	mAttackTexture = mGame->getTexture("assets/ArcherSkeleton/Attack/attack.png", "ArcherAttack");
+	mTexture = mGame->getTexture( ARCHER_WALK);
+	mAttackTexture = mGame->getTexture(ARCHER_ATTACK);
 }

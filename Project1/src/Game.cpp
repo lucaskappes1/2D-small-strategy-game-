@@ -42,10 +42,10 @@ bool Game::Initialize()
 		SDL_Log("Failure: ", SDL_GetError());
 		return false;
 	}
-	BG = new Background(getTexture("assets/Background.png", "Background"), mRenderer, WIDTH, HEIGHT);
-	
-	mObjects.emplace_back(new Castle(mRenderer, getTexture("assets/Castle.png", "Castle"), WIDTH - 974, HEIGHT - 175, this, 1));
-	mObjects.emplace_back(new Castle(mRenderer, getTexture("assets/Castle.png", "Castle"), WIDTH - 50, HEIGHT - 175, this, 0));
+	LoadData();
+	BG = new Background(getTexture("assets/Background.png", BACKGROUND_TEXTURE), mRenderer, WIDTH, HEIGHT);
+	mObjects.emplace_back(new Castle(mRenderer, getTexture("assets/Castle.png", CASTLE), WIDTH - 974, HEIGHT - 175, this, 1));
+	mObjects.emplace_back(new Castle(mRenderer, getTexture("assets/Castle.png", CASTLE), WIDTH - 50, HEIGHT - 175, this, 0));
 	mObjects.at(1)->setArmor(50);
 	mUI = new UI(this, mRenderer);
 	mUI->Initialize();
@@ -157,6 +157,16 @@ GameObject* Game::CollisionDetection(GameObject* gameObject)
 	return nullptr;
 }
 
+SDL_Texture* Game::getTexture(int id)
+{
+	auto temp = mTextureMap.find(id);
+	if (temp == mTextureMap.end())
+	{
+		return nullptr;
+	}
+	return temp->second;
+}
+
 void Game::RemoveObject(GameObject* target)
 {
 	if (target->getIsPlayer())
@@ -210,6 +220,78 @@ void Game::ApplyPlayerUpgrade()
 {
 	mPendingPlayerObjects.back()->setAttack(mPendingPlayerObjects.back()->getAttack() + mPlayerAttackUpgradeCount);
 	mPendingPlayerObjects.back()->setArmor(mPendingPlayerObjects.back()->getArmor() + mPlayerArmorUpgradeCount);
+}
+
+void Game::LoadData()
+{
+	getTexture("assets/ArcherSkeleton/Walk/walk.png", ARCHER_WALK);
+	getTexture("assets/ArcherSkeleton/Attack/attack.png", ARCHER_ATTACK);
+
+	getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_00.png", GREEK_WALK0);
+	getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_01.png", GREEK_WALK1);
+	getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_02.png", GREEK_WALK2);
+	getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_03.png", GREEK_WALK3);
+	getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_04.png", GREEK_WALK4);
+	getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_05.png", GREEK_WALK5);
+	getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_06.png", GREEK_WALK6);
+	getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_07.png", GREEK_WALK7);
+	getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_08.png", GREEK_WALK8);
+	getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_09.png", GREEK_WALK9);
+	getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_10.png", GREEK_WALK10);
+	getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_11.png", GREEK_WALK11);
+	getTexture("assets/GreekSoldier/Attack/GreekBasic_Attack_0.png", GREEK_ATTACK0);
+	getTexture("assets/GreekSoldier/Attack/GreekBasic_Attack_1.png", GREEK_ATTACK1);
+	getTexture("assets/GreekSoldier/Attack/GreekBasic_Attack_2.png", GREEK_ATTACK2);
+	getTexture("assets/GreekSoldier/Attack/GreekBasic_Attack_3.png", GREEK_ATTACK3);
+	getTexture("assets/GreekSoldier/Attack/GreekBasic_Attack_4.png", GREEK_ATTACK4);
+	getTexture("assets/GreekSoldier/Attack/GreekBasic_Attack_5.png", GREEK_ATTACK5);
+	getTexture("assets/GreekSoldier/Attack/GreekBasic_Attack_6.png", GREEK_ATTACK6);
+	getTexture("assets/GreekSoldier/Attack/GreekBasic_Attack_7.png", GREEK_ATTACK7);
+
+	getTexture("assets/Knight/Walk/Tuscan_Walk_20000.png", KNIGHT_WALK0);
+	getTexture("assets/Knight/Walk/Tuscan_Walk_20001.png", KNIGHT_WALK1);
+	getTexture("assets/Knight/Walk/Tuscan_Walk_20002.png", KNIGHT_WALK2);
+	getTexture("assets/Knight/Walk/Tuscan_Walk_20003.png", KNIGHT_WALK3);
+	getTexture("assets/Knight/Walk/Tuscan_Walk_20004.png", KNIGHT_WALK4);
+	getTexture("assets/Knight/Walk/Tuscan_Walk_20005.png", KNIGHT_WALK5);
+	getTexture("assets/Knight/Walk/Tuscan_Walk_20006.png", KNIGHT_WALK6);
+	getTexture("assets/Knight/Walk/Tuscan_Walk_20007.png", KNIGHT_WALK7);
+	getTexture("assets/Knight/Walk/Tuscan_Walk_20008.png", KNIGHT_WALK8);
+	getTexture("assets/Knight/Walk/Tuscan_Walk_20009.png", KNIGHT_WALK9);
+	getTexture("assets/Knight/Walk/Tuscan_Walk_20010.png", KNIGHT_WALK10);
+	getTexture("assets/Knight/Walk/Tuscan_Walk_20011.png", KNIGHT_WALK11);
+	getTexture("assets/Knight/Walk/Tuscan_Walk_20012.png", KNIGHT_WALK12);
+	getTexture("assets/Knight/Walk/Tuscan_Walk_20013.png", KNIGHT_WALK13);
+	getTexture("assets/Knight/Walk/Tuscan_Walk_20014.png", KNIGHT_WALK14);
+	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20000.png", KNIGHT_ATTACK0);
+	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20001.png", KNIGHT_ATTACK1);
+	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20002.png", KNIGHT_ATTACK2);
+	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20003.png", KNIGHT_ATTACK3);
+	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20004.png", KNIGHT_ATTACK4);
+	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20005.png", KNIGHT_ATTACK5);
+	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20006.png", KNIGHT_ATTACK6);
+	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20007.png", KNIGHT_ATTACK7);
+	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20008.png", KNIGHT_ATTACK8);
+	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20009.png", KNIGHT_ATTACK9);
+	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20010.png", KNIGHT_ATTACK10);
+	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20011.png", KNIGHT_ATTACK11);
+	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20012.png", KNIGHT_ATTACK12);
+	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20013.png", KNIGHT_ATTACK13);
+	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20014.png", KNIGHT_ATTACK14);
+	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20015.png", KNIGHT_ATTACK15);
+	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20016.png", KNIGHT_ATTACK16);
+	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20017.png", KNIGHT_ATTACK17);
+
+	getTexture("assets/bSpearman/_walk/bSpearman_Walk_Right_strip10.png", SPEARMAN_WALK);
+	getTexture("assets/bSpearman/_attack/bSpearman_Attack01_Right_strip8.png", SPEARKMAN_ATTACK);
+
+	getTexture("assets/Knight/Idle/Tuscan_Idle_10000.png", KNIGHT_BUTTON);
+	getTexture("assets/bSpearman/Button.png", SPEARMAN_BUTTON);
+	getTexture("assets/GreekSoldier/Idle/GreekBasic_Idle_00.png", GREEK_BUTTON);
+	getTexture("assets/ArcherSkeleton/Idle/Separate sp/idle (1).png", ARCHER_BUTTON);
+	getTexture("assets/ArmorUpgrade.png", ARMOR_UPGRADE_BUTTON);
+	getTexture("assets/AttackUpgrade.png", ATTACK_UPGRADE_BUTTON);
+	getTexture("assets/Mouse.png", MOUSE_BUTTON);
 }
 
 void Game::CreateKnight(bool isPlayer)
@@ -313,7 +395,7 @@ void Game::PlayerUpgradeAttack()
 	}
 }
 
-SDL_Texture* Game::getTexture(std::string path, std::string name)
+SDL_Texture* Game::getTexture(std::string path, int name)
 {
 	auto temp = mTextureMap.find(name);
 	if (temp == mTextureMap.end())

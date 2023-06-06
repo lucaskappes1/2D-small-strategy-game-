@@ -153,6 +153,6 @@ void SpearKnight::RenderHPBar(int x, int y, int w, int h, float Percent, SDL_Col
 
 void SpearKnight::LoadAnimation()
 {
-	mTexture = mGame->getTexture("assets/bSpearman/_walk/bSpearman_Walk_Right_strip10.png", "SpearmanWalk");
-	mTextureAttack = mGame->getTexture("assets/bSpearman/_attack/bSpearman_Attack01_Right_strip8.png", "SpearmanAttack");
+	mTexture = mGame->getTexture(SPEARMAN_WALK);
+	mTextureAttack = mGame->getTexture(SPEARKMAN_ATTACK);
 }

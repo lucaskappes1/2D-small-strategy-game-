@@ -104,9 +104,7 @@ void AIhard::Act()
 		else if (temp <= 20)
 		{
 			mGame->CreateSpearKnight(0);
-			mGame->CreateSpearKnight(0);
 			mGame->CreateAxeKnight(0);
-			mGame->CreateArcher(0);
 			mGame->CreateArcher(0);
 			mGame->CreateArcher(0);
 			mGame->CreateKnight(0);
@@ -139,8 +137,6 @@ void AIhard::Act()
 		if (temp < 40)
 		{
 			mGame->CreateKnight(0);
-			mGame->CreateKnight(0);
-			mGame->CreateArcher(0);
 			mGame->CreateArcher(0);
 		}
 		else 

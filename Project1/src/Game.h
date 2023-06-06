@@ -13,6 +13,7 @@
 #include "UI/UI.h"
 #include "units/AxeKnight.h"
 #include "units/Archer.h"
+#include "Constants.h"
 
 class Game
 {
@@ -24,7 +25,7 @@ public:
 	const std::vector<GameObject*>& GetGameObjectVector() { return mObjects; }
 	GameObject* RangedAttackDetection(GameObject* gameObject, int range);
 	GameObject* CollisionDetection(GameObject* gameObject);
-	SDL_Texture* getTexture(std::string path, std::string name);
+	SDL_Texture* getTexture(int id);
 	void RemoveObject(GameObject* target);
 	void CreateKnight(bool isPlayer);
 	void CreateSpearKnight(bool isPlayer);
@@ -39,8 +40,9 @@ private:
 	void Render();
 	void ProcessInput();
 	void ApplyPlayerUpgrade();
-	
-	std::map<std::string, SDL_Texture*> mTextureMap;
+	void LoadData();
+	SDL_Texture* getTexture(std::string path, int name);
+	std::map<int, SDL_Texture*> mTextureMap;
 	SDL_Renderer* mRenderer;
 	SDL_Window* mWindow;
 	std::vector<GameObject*> mObjects;
@@ -58,10 +60,7 @@ private:
 	int mPlayerArmorUpgradeCount = 0;
 	int mPlayerAttackUpgradeCount = 0;
 
-	const int WIDTH = 1024;
-	const int HEIGHT = 768;
-	const int PLAYER_CREATE_UNIT_POSITION = WIDTH - 934;
-	const int AI_CREATE_UNIT_POSITION = WIDTH - 130;
+	
 	int mKills;
 	int mDeaths;
 	int mPlayerGold;

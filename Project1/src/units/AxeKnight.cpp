@@ -19,7 +19,7 @@ AxeKnight::AxeKnight(SDL_Renderer* renderer, int x, int y, Game* game, bool isPl
 	mCurrentFrame = 0;
 	mFrameCount = 0;
 	eState = WALKING;
-	LoadAnimations();
+	LoadAnimation();
 }
 
 void AxeKnight::Update(float deltaTime)
@@ -141,29 +141,29 @@ void AxeKnight::TakeDamage(int DMG)
 	mPercentHPBar = (float)mHP / (float)MAX_HP;
 }
 
-void AxeKnight::LoadAnimations()
+void AxeKnight::LoadAnimation()
 {
-	mWalkingAnimVec.emplace_back(mGame->getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_00.png", "GreekWalk0"));
-	mWalkingAnimVec.emplace_back(mGame->getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_01.png", "GreekWalk1"));
-	mWalkingAnimVec.emplace_back(mGame->getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_02.png", "GreekWalk2"));
-	mWalkingAnimVec.emplace_back(mGame->getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_03.png", "GreekWalk3"));
-	mWalkingAnimVec.emplace_back(mGame->getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_04.png", "GreekWalk4"));
-	mWalkingAnimVec.emplace_back(mGame->getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_05.png", "GreekWalk5"));
-	mWalkingAnimVec.emplace_back(mGame->getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_06.png", "GreekWalk6"));
-	mWalkingAnimVec.emplace_back(mGame->getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_07.png", "GreekWalk7"));
-	mWalkingAnimVec.emplace_back(mGame->getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_08.png", "GreekWalk8"));
-	mWalkingAnimVec.emplace_back(mGame->getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_09.png", "GreekWalk9"));
-	mWalkingAnimVec.emplace_back(mGame->getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_10.png", "GreekWalk10"));
-	mWalkingAnimVec.emplace_back(mGame->getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_11.png", "GreekWalk11"));
+	mWalkingAnimVec.emplace_back(mGame->getTexture(GREEK_WALK0));
+	mWalkingAnimVec.emplace_back(mGame->getTexture(GREEK_WALK1));
+	mWalkingAnimVec.emplace_back(mGame->getTexture(GREEK_WALK2));
+	mWalkingAnimVec.emplace_back(mGame->getTexture(GREEK_WALK3));
+	mWalkingAnimVec.emplace_back(mGame->getTexture(GREEK_WALK4));
+	mWalkingAnimVec.emplace_back(mGame->getTexture(GREEK_WALK5));
+	mWalkingAnimVec.emplace_back(mGame->getTexture(GREEK_WALK6));
+	mWalkingAnimVec.emplace_back(mGame->getTexture(GREEK_WALK7));
+	mWalkingAnimVec.emplace_back(mGame->getTexture(GREEK_WALK8));
+	mWalkingAnimVec.emplace_back(mGame->getTexture(GREEK_WALK9));
+	mWalkingAnimVec.emplace_back(mGame->getTexture(GREEK_WALK10));
+	mWalkingAnimVec.emplace_back(mGame->getTexture(GREEK_WALK11));
 
-	mAttackingAnimVec.emplace_back(mGame->getTexture("assets/GreekSoldier/Attack/GreekBasic_Attack_0.png", "GreekAttack0"));
-	mAttackingAnimVec.emplace_back(mGame->getTexture("assets/GreekSoldier/Attack/GreekBasic_Attack_1.png", "GreekAttack1"));
-	mAttackingAnimVec.emplace_back(mGame->getTexture("assets/GreekSoldier/Attack/GreekBasic_Attack_2.png", "GreekAttack2"));
-	mAttackingAnimVec.emplace_back(mGame->getTexture("assets/GreekSoldier/Attack/GreekBasic_Attack_3.png", "GreekAttack3"));
-	mAttackingAnimVec.emplace_back(mGame->getTexture("assets/GreekSoldier/Attack/GreekBasic_Attack_4.png", "GreekAttack4"));
-	mAttackingAnimVec.emplace_back(mGame->getTexture("assets/GreekSoldier/Attack/GreekBasic_Attack_5.png", "GreekAttack5"));
-	mAttackingAnimVec.emplace_back(mGame->getTexture("assets/GreekSoldier/Attack/GreekBasic_Attack_6.png", "GreekAttack6"));
-	mAttackingAnimVec.emplace_back(mGame->getTexture("assets/GreekSoldier/Attack/GreekBasic_Attack_7.png", "GreekAttack7"));
+	mAttackingAnimVec.emplace_back(mGame->getTexture(GREEK_ATTACK0));
+	mAttackingAnimVec.emplace_back(mGame->getTexture(GREEK_ATTACK1));
+	mAttackingAnimVec.emplace_back(mGame->getTexture(GREEK_ATTACK2));
+	mAttackingAnimVec.emplace_back(mGame->getTexture(GREEK_ATTACK3));
+	mAttackingAnimVec.emplace_back(mGame->getTexture(GREEK_ATTACK4));
+	mAttackingAnimVec.emplace_back(mGame->getTexture(GREEK_ATTACK5));
+	mAttackingAnimVec.emplace_back(mGame->getTexture(GREEK_ATTACK6));
+	mAttackingAnimVec.emplace_back(mGame->getTexture(GREEK_ATTACK7));
 }
 
 void AxeKnight::RenderHPBar(int x, int y, int w, int h, float Percent, SDL_Color FGColor, SDL_Color BGColor)

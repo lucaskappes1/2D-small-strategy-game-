@@ -11,6 +11,7 @@ public:
 	virtual void TakeDamage(int DMG);
 	inline static const int getStaticGoldCost() { return mGoldCost; }
 	inline const int getGoldCost() const override { return mGoldCost; }
+	void static StaticLoadAnimation(); //this will load the animation into texture map
 private:
 	SDL_Texture* mTextureAttack;
 	enum State {ATTACKING, WALKING} eState;
