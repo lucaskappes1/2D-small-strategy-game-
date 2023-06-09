@@ -22,7 +22,7 @@ public:
 	void RunLoop();
 	bool Initialize();
 	void Shutdown();
-	const std::vector<GameObject*>& GetGameObjectVector() { return mObjects; }
+	inline const std::vector<GameObject*>& GetGameObjectVector() { return mObjects; }
 	GameObject* RangedAttackDetection(GameObject* gameObject, int range);
 	GameObject* CollisionDetection(GameObject* gameObject);
 	SDL_Texture* getTexture(int id);
@@ -34,6 +34,7 @@ public:
 	void ClearAIQueue();
 	void PlayerUpgradeArmor();
 	void PlayerUpgradeAttack();
+	void StartGame();
 	inline int getPlayerGold() { return mPlayerGold; }
 private:
 	void Update();
@@ -55,6 +56,7 @@ private:
 	UI* mUI;
 	bool mIsUpdatingObjects;
 	bool mIsRunning;
+	bool mIsMenuActive;
 	int mTicksCount;
 
 	int mPlayerArmorUpgradeCount = 0;

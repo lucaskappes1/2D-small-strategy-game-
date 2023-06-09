@@ -18,17 +18,26 @@ UI::~UI()
 	delete mMouse;
 	delete mUpgradeArmorButton;
 	delete mUpgradeAttackButton;
+	delete mStartGameButton;
 }
 
 void UI::Initialize()
 {
 	mFont = TTF_OpenFont("assets/stocky.ttf", 24);
+	mStartGameButton = new Button(mRenderer, mMouse, 400, 400, mFont, "Start");
+	mStartGameButton->Show();
 	mKnightButton = new Button(mGame->getTexture(KNIGHT_BUTTON), mRenderer, mMouse, 50, 50, {130, 50, 106, 186}, mFont);
 	mSpearKnightButton = new Button(mGame->getTexture(SPEARMAN_BUTTON), mRenderer, mMouse, 100, 50, {0, 0, 172, 177}, mFont);
 	mAxeKnightButton = new Button(mGame->getTexture(GREEK_BUTTON), mRenderer, mMouse, 150, 50, {0, 0, 362, 586}, mFont);
 	mAcherButton = new Button(mGame->getTexture(ARCHER_BUTTON), mRenderer, mMouse, 200, 50, {0, 0, 303, 525}, mFont);
 	mUpgradeArmorButton = new Button(mGame->getTexture(ARMOR_UPGRADE_BUTTON), mRenderer, mMouse, 50, 100, { 0, 0, 64, 64 }, mFont);
 	mUpgradeAttackButton = new Button(mGame->getTexture(ATTACK_UPGRADE_BUTTON), mRenderer, mMouse, 100, 100, { 0, 0, 64, 64 }, mFont);
+	mKnightButton->Hide();
+	mSpearKnightButton->Hide();
+	mAxeKnightButton->Hide();
+	mAcherButton->Hide();
+	mUpgradeArmorButton->Hide();
+	mUpgradeAttackButton->Hide();
 	mKnightButton->addTooltip("Cost: 35 gold\nStrong all around infantry");
 	mSpearKnightButton->addTooltip("Cost: 80 gold\nStronger than Knight, but slower");
 	mAxeKnightButton->addTooltip("Cost: 60 gold\nVery weak, but does a lot of damage");
@@ -48,6 +57,7 @@ void UI::Update()
 	mAcherButton->Update();
 	mUpgradeArmorButton->Update();
 	mUpgradeAttackButton->Update();
+	mStartGameButton->Update();
 	mMouse->Update();
 }
 
@@ -59,6 +69,7 @@ void UI::Draw()
 	mAcherButton->Draw();
 	mUpgradeArmorButton->Draw();
 	mUpgradeAttackButton->Draw();
+	mStartGameButton->Draw();
 	SDL_RenderCopy(mRenderer, mTextTexture, NULL, &mTextRect);
 	mMouse->Draw();
 }
@@ -89,6 +100,11 @@ void UI::OnMouseClickEvent()
 	{
 		mGame->PlayerUpgradeAttack();
 	}
+	else if (mStartGameButton->IsSelected())
+	{
+		mGame->StartGame();
+		mStartGameButton->Hide();
+	}
 }
 
 void UI::UpdateGoldText()
@@ -98,4 +114,14 @@ void UI::UpdateGoldText()
 	SDL_DestroyTexture(mTextTexture);
 	mTextSurface = TTF_RenderText_Solid(mFont, mGold.c_str(), mTextColor);
 	mTextTexture = SDL_CreateTextureFromSurface(mRenderer, mTextSurface);
+}
+
+void UI::StartGame()
+{
+	mKnightButton->Show();
+	mSpearKnightButton->Show();
+	mAxeKnightButton->Show();
+	mAcherButton->Show();
+	mUpgradeArmorButton->Show();
+	mUpgradeAttackButton->Show();
 }

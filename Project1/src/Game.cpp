@@ -44,11 +44,9 @@ bool Game::Initialize()
 	}
 	LoadData();
 	BG = new Background(getTexture("assets/Background.png", BACKGROUND_TEXTURE), mRenderer, WIDTH, HEIGHT);
-	mObjects.emplace_back(new Castle(mRenderer, getTexture("assets/Castle.png", CASTLE), WIDTH - 974, HEIGHT - 175, this, 1));
-	mObjects.emplace_back(new Castle(mRenderer, getTexture("assets/Castle.png", CASTLE), WIDTH - 50, HEIGHT - 175, this, 0));
-	mObjects.at(1)->setArmor(50);
 	mUI = new UI(this, mRenderer);
 	mUI->Initialize();
+	mIsMenuActive = true;
 	mAI = new AIhard(this);
 	mIsRunning = true;
 	return true;
@@ -395,6 +393,15 @@ void Game::PlayerUpgradeAttack()
 	}
 }
 
+void Game::StartGame()
+{
+	mObjects.emplace_back(new Castle(mRenderer, getTexture("assets/Castle.png", CASTLE), WIDTH - 974, HEIGHT - 175, this, 1));
+	mObjects.emplace_back(new Castle(mRenderer, getTexture("assets/Castle.png", CASTLE), WIDTH - 50, HEIGHT - 175, this, 0));
+	mObjects.at(1)->setArmor(50);
+	mIsMenuActive = false;
+	mUI->StartGame();
+}
+
 SDL_Texture* Game::getTexture(std::string path, int name)
 {
 	auto temp = mTextureMap.find(name);
@@ -411,93 +418,100 @@ SDL_Texture* Game::getTexture(std::string path, int name)
 
 void Game::Update()
 {
-	bool ChangedVector = false;
-	// Compute delta time
-	// Wait until 16ms has elapsed since last frame
-	while (!SDL_TICKS_PASSED(SDL_GetTicks(), mTicksCount + 16));
-
-	float deltaTime = (SDL_GetTicks() - mTicksCount) / 1000.0f;
-	if (deltaTime > 0.05f)
+	if (mIsMenuActive)
 	{
-		deltaTime = 0.05f;
+		mUI->Update();
 	}
-	mTicksCount = SDL_GetTicks();
+	else
+	{
+		bool ChangedVector = false;
+		// Compute delta time
+		// Wait until 16ms has elapsed since last frame
+		while (!SDL_TICKS_PASSED(SDL_GetTicks(), mTicksCount + 16));
 
-	mUI->Update();
-	mIsUpdatingObjects = true;
-	for (auto& i : mObjects)
-	{
-		i->Update(deltaTime);
-	}
-	mIsUpdatingObjects = false;
-	if (mDeadObjects.size() > 0)
-	{
-		for (auto& i : mDeadObjects)
+		float deltaTime = (SDL_GetTicks() - mTicksCount) / 1000.0f;
+		if (deltaTime > 0.05f)
 		{
-			auto iter = std::find(mObjects.begin(), mObjects.end(), i);
-			std::iter_swap(iter, mObjects.end() - 1);
-			mObjects.pop_back();
-			delete i;
+			deltaTime = 0.05f;
 		}
-		mDeadObjects.clear();
-		ChangedVector = true;
-	}
-	if (mPendingPlayerObjects.size() > 0)
-	{
-		bool temp = true;
+		mTicksCount = SDL_GetTicks();
+
+		mUI->Update();
+		mIsUpdatingObjects = true;
 		for (auto& i : mObjects)
 		{
-			if (i->getIsPlayer()) 
-			{
-				int d = i->getX() - PLAYER_CREATE_UNIT_POSITION;
-				if (d <= 32 && d >= 0)
-				{
-					temp = false;
-					break;
-				}
-			}
+			i->Update(deltaTime);
 		}
-		if (temp)
+		mIsUpdatingObjects = false;
+		if (mDeadObjects.size() > 0)
 		{
-			GameObject* aux = mPendingPlayerObjects.front();
-			mPendingPlayerObjects.pop();
-			mObjects.emplace_back(aux);
+			for (auto& i : mDeadObjects)
+			{
+				auto iter = std::find(mObjects.begin(), mObjects.end(), i);
+				std::iter_swap(iter, mObjects.end() - 1);
+				mObjects.pop_back();
+				delete i;
+			}
+			mDeadObjects.clear();
 			ChangedVector = true;
 		}
-	}
-	if (mPendingAIObjects.size() > 0)
-	{
-		bool temp = true;
-		for (auto& i : mObjects)
+		if (mPendingPlayerObjects.size() > 0)
 		{
-			if (!i->getIsPlayer())
+			bool temp = true;
+			for (auto& i : mObjects)
 			{
-				int d = i->getX() - AI_CREATE_UNIT_POSITION;
-				if (d <= 0 && d >= -32)
+				if (i->getIsPlayer())
 				{
-					temp = false;
-					break;
+					int d = i->getX() - PLAYER_CREATE_UNIT_POSITION;
+					if (d <= 32 && d >= 0)
+					{
+						temp = false;
+						break;
+					}
 				}
 			}
+			if (temp)
+			{
+				GameObject* aux = mPendingPlayerObjects.front();
+				mPendingPlayerObjects.pop();
+				mObjects.emplace_back(aux);
+				ChangedVector = true;
+			}
 		}
-		if (temp)
+		if (mPendingAIObjects.size() > 0)
 		{
-			GameObject* aux = mPendingAIObjects.front();
-			mPendingAIObjects.pop();
-			mObjects.emplace_back(aux);
-			ChangedVector = true;
+			bool temp = true;
+			for (auto& i : mObjects)
+			{
+				if (!i->getIsPlayer())
+				{
+					int d = i->getX() - AI_CREATE_UNIT_POSITION;
+					if (d <= 0 && d >= -32)
+					{
+						temp = false;
+						break;
+					}
+				}
+			}
+			if (temp)
+			{
+				GameObject* aux = mPendingAIObjects.front();
+				mPendingAIObjects.pop();
+				mObjects.emplace_back(aux);
+				ChangedVector = true;
+			}
 		}
-	}
-	if (SDL_GetTicks() - mTimeSeconds > 4000)
-	{
-		mTimeSeconds = SDL_GetTicks();
-		mAI->Act();
-	}
-	if (ChangedVector)
-	{
-		std::sort(mObjects.begin(), mObjects.end(), [](const GameObject* a, const GameObject* b) {
-			return a->getX() < b->getX();
-			});
+		if (SDL_GetTicks() - mTimeSeconds > 4000)
+		{
+			mTimeSeconds = SDL_GetTicks();
+			mAI->Act();
+		}
+		if (ChangedVector)
+		{
+			std::sort(mObjects.begin(), mObjects.end(), [](const GameObject* a, const GameObject* b) {
+				return a->getX() < b->getX();
+				});
+		}
 	}
 }
 

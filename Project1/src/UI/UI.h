@@ -12,6 +12,7 @@ public:
 	void Draw();
 	void OnMouseClickEvent();
 	void UpdateGoldText();
+	void StartGame();
 private:
 	Game* mGame;
 	SDL_Renderer* mRenderer;
@@ -24,6 +25,7 @@ private:
 	Button* mAcherButton;
 	Button* mUpgradeArmorButton;
 	Button* mUpgradeAttackButton;
+	Button* mStartGameButton;
 	std::string mGold;
 	TTF_Font* mFont;
 	SDL_Color mTextColor = { 255, 0, 0 };
