@@ -19,12 +19,16 @@ UI::~UI()
 	delete mUpgradeArmorButton;
 	delete mUpgradeAttackButton;
 	delete mStartGameButton;
+	delete mPauseButton;
+	delete mContinueButton;
 }
 
 void UI::Initialize()
 {
 	mFont = TTF_OpenFont("assets/stocky.ttf", 24);
 	mStartGameButton = new Button(mRenderer, mMouse, 400, 400, mFont, "Start");
+	mPauseButton = new Button(mRenderer, mMouse, 500, 100, mFont, "Pause");
+	mContinueButton = new Button(mRenderer, mMouse, 500, 100, mFont, "Continue");
 	mStartGameButton->Show();
 	mKnightButton = new Button(mGame->getTexture(KNIGHT_BUTTON), mRenderer, mMouse, 50, 50, {130, 50, 106, 186}, mFont);
 	mSpearKnightButton = new Button(mGame->getTexture(SPEARMAN_BUTTON), mRenderer, mMouse, 100, 50, {0, 0, 172, 177}, mFont);
@@ -32,12 +36,9 @@ void UI::Initialize()
 	mAcherButton = new Button(mGame->getTexture(ARCHER_BUTTON), mRenderer, mMouse, 200, 50, {0, 0, 303, 525}, mFont);
 	mUpgradeArmorButton = new Button(mGame->getTexture(ARMOR_UPGRADE_BUTTON), mRenderer, mMouse, 50, 100, { 0, 0, 64, 64 }, mFont);
 	mUpgradeAttackButton = new Button(mGame->getTexture(ATTACK_UPGRADE_BUTTON), mRenderer, mMouse, 100, 100, { 0, 0, 64, 64 }, mFont);
-	mKnightButton->Hide();
-	mSpearKnightButton->Hide();
-	mAxeKnightButton->Hide();
-	mAcherButton->Hide();
-	mUpgradeArmorButton->Hide();
-	mUpgradeAttackButton->Hide();
+	HideGameplayButtons();
+	mContinueButton->Hide();
+	mPauseButton->Hide();
 	mKnightButton->addTooltip("Cost: 35 gold\nStrong all around infantry");
 	mSpearKnightButton->addTooltip("Cost: 80 gold\nStronger than Knight, but slower");
 	mAxeKnightButton->addTooltip("Cost: 60 gold\nVery weak, but does a lot of damage");
@@ -58,6 +59,8 @@ void UI::Update()
 	mUpgradeArmorButton->Update();
 	mUpgradeAttackButton->Update();
 	mStartGameButton->Update();
+	mPauseButton->Update();
+	mContinueButton->Update();
 	mMouse->Update();
 }
 
@@ -70,6 +73,8 @@ void UI::Draw()
 	mUpgradeArmorButton->Draw();
 	mUpgradeAttackButton->Draw();
 	mStartGameButton->Draw();
+	mPauseButton->Draw();
+	mContinueButton->Draw();
 	SDL_RenderCopy(mRenderer, mTextTexture, NULL, &mTextRect);
 	mMouse->Draw();
 }
@@ -105,6 +110,20 @@ void UI::OnMouseClickEvent()
 		mGame->StartGame();
 		mStartGameButton->Hide();
 	}
+	else if (mPauseButton->IsSelected())
+	{
+		mGame->Pause();
+		HideGameplayButtons();
+		mContinueButton->Show();
+		mPauseButton->Hide();
+	}
+	else if (mContinueButton->IsSelected())
+	{
+		mGame->Continue();
+		ShowGameplayButtons();
+		mPauseButton->Show();
+		mContinueButton->Hide();
+	}
 }
 
 void UI::UpdateGoldText()
@@ -117,6 +136,22 @@ void UI::UpdateGoldText()
 }
 
 void UI::StartGame()
+{
+	ShowGameplayButtons();
+	mPauseButton->Show();
+}
+
+void UI::HideGameplayButtons()
+{
+	mKnightButton->Hide();
+	mSpearKnightButton->Hide();
+	mAxeKnightButton->Hide();
+	mAcherButton->Hide();
+	mUpgradeArmorButton->Hide();
+	mUpgradeAttackButton->Hide();
+}
+
+void UI::ShowGameplayButtons()
 {
 	mKnightButton->Show();
 	mSpearKnightButton->Show();

@@ -8,6 +8,9 @@ public:
 	AI(class Game* game);
 	virtual void Act();
 	inline const float& getGoldMultiplier() const { return mGoldMultiplier; }
+	inline void Activate() { mIsActive = true; }
+	inline void Deactivate() { mIsActive = false; }
+	bool mIsActive;
 protected:
 	float mGoldMultiplier = 1;
 	virtual void ChangeState();

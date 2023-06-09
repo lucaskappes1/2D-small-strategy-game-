@@ -3,7 +3,7 @@
 #include <vector>
 #include <iostream>
 
-AI::AI(Game* game) : mRng(mRd()), mVariation(1,100)
+AI::AI(Game* game) : mRng(mRd()), mVariation(1,100), mIsActive(false)
 {
 	mGame = game;
 	eState = UNDERATTACK;
@@ -11,7 +11,10 @@ AI::AI(Game* game) : mRng(mRd()), mVariation(1,100)
 
 void AI::Act()
 {
-	//int temp = mVariation(mRng);
+	if (!mIsActive)
+	{
+		return;
+	}
 	ChangeState();
 	switch (eState)
 	{
@@ -88,6 +91,10 @@ void AI::ChangeState()
 
 void AIhard::Act()
 {
+	if (!mIsActive)
+	{
+		return;
+	}
 	int temp = mVariation(mRng);
 	ChangeState();
 	switch (eState)

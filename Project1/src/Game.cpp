@@ -400,6 +400,19 @@ void Game::StartGame()
 	mObjects.at(1)->setArmor(50);
 	mIsMenuActive = false;
 	mUI->StartGame();
+	mAI->Activate();
+}
+
+void Game::Pause()
+{
+	mIsMenuActive = true;
+	mAI->Deactivate();
+}
+
+void Game::Continue()
+{
+	mIsMenuActive = false;
+	mAI->Activate();
 }
 
 SDL_Texture* Game::getTexture(std::string path, int name)
@@ -501,17 +514,17 @@ void Game::Update()
 				ChangedVector = true;
 			}
 		}
-		if (SDL_GetTicks() - mTimeSeconds > 4000)
-		{
-			mTimeSeconds = SDL_GetTicks();
-			mAI->Act();
-		}
 		if (ChangedVector)
 		{
 			std::sort(mObjects.begin(), mObjects.end(), [](const GameObject* a, const GameObject* b) {
 				return a->getX() < b->getX();
 				});
 		}
+	}
+	if (SDL_GetTicks() - mTimeSeconds > 4000)
+	{
+		mTimeSeconds = SDL_GetTicks();
+		mAI->Act();
 	}
 }
 

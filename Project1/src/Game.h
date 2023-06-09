@@ -35,6 +35,8 @@ public:
 	void PlayerUpgradeArmor();
 	void PlayerUpgradeAttack();
 	void StartGame();
+	void Pause();
+	void Continue();
 	inline int getPlayerGold() { return mPlayerGold; }
 private:
 	void Update();

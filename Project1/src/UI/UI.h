@@ -14,6 +14,8 @@ public:
 	void UpdateGoldText();
 	void StartGame();
 private:
+	void HideGameplayButtons();
+	void ShowGameplayButtons();
 	Game* mGame;
 	SDL_Renderer* mRenderer;
 	SDL_Surface* mTextSurface;
@@ -26,6 +28,8 @@ private:
 	Button* mUpgradeArmorButton;
 	Button* mUpgradeAttackButton;
 	Button* mStartGameButton;
+	Button* mPauseButton;
+	Button* mContinueButton;
 	std::string mGold;
 	TTF_Font* mFont;
 	SDL_Color mTextColor = { 255, 0, 0 };
