@@ -17,6 +17,7 @@ Archer::Archer(SDL_Renderer* renderer, int x, int y, Game* game, bool isPlayer)
 	mArmor = 4;
 	mDamage = 18;
 	mFrameCount = 0;
+	mDeathAnimFrameCount = 0;
 	LoadAnimation();
 }
 
@@ -24,7 +25,10 @@ void Archer::Update(float deltaTime)
 {
 	if (mHP <= 0)
 	{
-		mGame->RemoveObject(this);
+		eLastFrameState = eState;
+		eState = DEATH;
+		DisableCollision();
+		return;
 	}
 	GameObject* res = mGame->RangedAttackDetection(this, 210);
 	GameObject* res2 = mGame->CollisionDetection(this);	
@@ -43,19 +47,25 @@ void Archer::Update(float deltaTime)
 		eLastFrameState = eState;
 		eState = WALKING;
 	}
-	if (res != nullptr)
+	else if (res != nullptr)
 	{
 		Attack(res);
 		eLastFrameState = eState;
 		eState = ATTACKING;
+	}
+	else
+	{
+		eLastFrameState = eState;
+		eState = IDLE;
 	}
 	mReloadCount--;
 }
 
 void Archer::Draw()
 {
-	if (eState == ATTACKING)
+	switch (eState)
 	{
+	case Archer::ATTACKING:	
 		if (eState != eLastFrameState)
 		{
 			mSrcR = { 0, 0, 756, 1070 };
@@ -84,11 +94,9 @@ void Archer::Draw()
 				}
 			}
 		}
-
-	}
-
-	if (eState == WALKING)
-	{
+		RenderHPBar(mX, mY - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
+		break;
+	case Archer::WALKING:		
 		if (eState != eLastFrameState)
 		{
 			mSrcR = { 0, 0, 686, 1055 };
@@ -117,10 +125,55 @@ void Archer::Draw()
 				}
 			}
 		}
+		RenderHPBar(mX, mY - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
+		break;
+	case Archer::IDLE:		
+		if (mIsPlayer)
+		{
+			SDL_RenderCopyEx(mRenderer, mIdleTexture, NULL, &mDestR, 0, nullptr, SDL_FLIP_HORIZONTAL);
+		}
+		else
+		{
+			SDL_RenderCopy(mRenderer, mIdleTexture, NULL, &mDestR);
+		}
+		RenderHPBar(mX, mY - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
+		break;
+	case Archer::DEATH:
+		if (eState != eLastFrameState)
+		{
+			mSrcR = { 0, 0, 683, 1122 };
+			mFrameCount = 0;
+		}
+		if (mIsPlayer)
+		{
+			SDL_RenderCopyEx(mRenderer, mDeathTexture, &mSrcR, &mDestR, 0, nullptr, SDL_FLIP_HORIZONTAL);
+		}
+		else
+		{
+			SDL_RenderCopy(mRenderer, mDeathTexture, &mSrcR, &mDestR);
+		}
+		mFrameCount++;
+		if (mFrameCount >= 5)
+		{
+			mFrameCount = 0;
+			mSrcR.x += 683;
+			mDeathAnimFrameCount++;
+			if (mDeathAnimFrameCount >= 6)
+			{
+				mGame->RemoveObject(this);
+			}
+			if (mSrcR.x >= 3415)
+			{
+				mSrcR.x = 0;
+				mSrcR.y += 1122;
+				if (mSrcR.y >= 2244)
+				{
+					mSrcR.y = 0;
+				}
+			}
+		}
+		break;
 	}
-
-	float temp = mHP / MAX_HP;
-	RenderHPBar(mX, mY - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
 }
 
 void Archer::Attack(GameObject* target)
@@ -146,11 +199,6 @@ void Archer::TakeDamage(int DMG)
 	mPercentHPBar = (float)mHP / (float)MAX_HP;
 }
 
-void Archer::StaticLoadAnimation()
-{
-	
-}
-
 void Archer::RenderHPBar(int x, int y, int w, int h, float Percent, SDL_Color FGColor, SDL_Color BGColor)
 {
 	Percent = Percent > 1.f ? 1.f : Percent < 0.f ? 0.f : Percent;
@@ -169,6 +217,8 @@ void Archer::RenderHPBar(int x, int y, int w, int h, float Percent, SDL_Color FG
 
 void Archer::LoadAnimation()
 {
-	mTexture = mGame->getTexture( ARCHER_WALK);
+	mTexture = mGame->getTexture(ARCHER_WALK);
+	mIdleTexture = mGame->getTexture(ARCHER_IDLE);
 	mAttackTexture = mGame->getTexture(ARCHER_ATTACK);
+	mDeathTexture = mGame->getTexture(ARCHER_DEATH);
 }

@@ -19,10 +19,9 @@ public:
 	inline const SDL_Rect& getCollisionRect() const { return mCollisionR; }
 	virtual void setArmor(int Armor) { mArmor = Armor; }
 	virtual void setAttack(int Damage) { mDamage = Damage; }
-
+	enum State { ATTACKING, WALKING, IDLE, DEATH } eState;
+	void DisableCollision() { mCollisionR = { 5000, 5000, 0, 0 }; }
 protected:
-	//enum Type{ARCHER, AXEKNIGHT, CASTLE, KNIGHT, SPEARKNIGHT} eType;
-	enum State{ATTACKING, WALKING, RELOADING} eState;
 	int mX;
 	int mY;
 	int mHP;

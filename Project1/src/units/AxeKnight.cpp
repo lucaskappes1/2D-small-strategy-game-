@@ -26,7 +26,10 @@ void AxeKnight::Update(float deltaTime)
 {
 	if (mHP <= 0)
 	{
-		mGame->RemoveObject(this);
+		eLastFrameState = eState;
+		eState = DEATH;
+		DisableCollision();
+		return;
 	}
 	GameObject* res = mGame->CollisionDetection(this);
 	if (res == nullptr)
@@ -44,22 +47,25 @@ void AxeKnight::Update(float deltaTime)
 		eLastFrameState = eState;
 		eState = WALKING;
 	}
+	else if ((res->getIsPlayer() && !mIsPlayer) || (mIsPlayer && !res->getIsPlayer()))
+	{
+		eLastFrameState = eState;
+		eState = ATTACKING;
+		Attack(res);
+	}
 	else
 	{
-		if ((res->getIsPlayer() && !mIsPlayer) || (mIsPlayer && !res->getIsPlayer()))
-		{
-			eLastFrameState = eState;
-			eState = ATTACKING;
-			Attack(res);
-		}
+		eLastFrameState = eState;
+		eState = IDLE;
 	}
 	mReloadCount--;
 }
 
 void AxeKnight::Draw()
 {
-	if (eState == ATTACKING)
+	switch (eState)
 	{
+	case AxeKnight::ATTACKING:
 		mDestR.w = 77;
 		if (eState != eLastFrameState)
 		{
@@ -86,9 +92,9 @@ void AxeKnight::Draw()
 				mCurrentFrame = 0;
 			}
 		}
-	}
-	if (eState == WALKING)
-	{
+		RenderHPBar(mX, mY - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
+		break;
+	case AxeKnight::WALKING:
 		mDestR.w = 32;
 		if (eState != eLastFrameState)
 		{
@@ -113,9 +119,49 @@ void AxeKnight::Draw()
 				mCurrentFrame = 0;
 			}
 		}
+		RenderHPBar(mX, mY - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
+		break;
+	case AxeKnight::IDLE:
+		if (!mIsPlayer)
+		{
+			SDL_RenderCopyEx(mRenderer, mIdleTexture, NULL, &mDestR, 0, nullptr, SDL_FLIP_HORIZONTAL);
+		}
+		else
+		{
+			SDL_RenderCopy(mRenderer, mIdleTexture, NULL, &mDestR);
+		}
+		RenderHPBar(mX, mY - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
+		break;
+	case AxeKnight::DEATH:
+		mDestR.w = 59;
+		mDestR.h = 50;
+		if (eState != eLastFrameState)
+		{
+			mFrameCount = 0;
+			mCurrentFrame = 0;
+		}
+		if (!mIsPlayer)
+		{
+			mDestR.x = mX - 5;
+			SDL_RenderCopyEx(mRenderer, mDeathAnimVec.at(mCurrentFrame), NULL, &mDestR, 0, nullptr, SDL_FLIP_HORIZONTAL);
+		}
+		else
+		{
+			mDestR.x = mX - 15;
+			SDL_RenderCopy(mRenderer, mDeathAnimVec.at(mCurrentFrame), NULL, &mDestR);
+		}
+		mFrameCount++;
+		if (mFrameCount >= 5)
+		{
+			mFrameCount = 0;
+			mCurrentFrame++;
+			if (mCurrentFrame > 11)
+			{
+				mGame->RemoveObject(this);
+			}
+		}
+		break;
 	}
-	float temp = mHP / MAX_HP;
-	RenderHPBar(mX, mY - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
 }
 
 void AxeKnight::Attack(GameObject* target)
@@ -164,6 +210,21 @@ void AxeKnight::LoadAnimation()
 	mAttackingAnimVec.emplace_back(mGame->getTexture(GREEK_ATTACK5));
 	mAttackingAnimVec.emplace_back(mGame->getTexture(GREEK_ATTACK6));
 	mAttackingAnimVec.emplace_back(mGame->getTexture(GREEK_ATTACK7));
+
+	mDeathAnimVec.emplace_back(mGame->getTexture(GREEK_DEATH0));
+	mDeathAnimVec.emplace_back(mGame->getTexture(GREEK_DEATH1));
+	mDeathAnimVec.emplace_back(mGame->getTexture(GREEK_DEATH2));
+	mDeathAnimVec.emplace_back(mGame->getTexture(GREEK_DEATH3));
+	mDeathAnimVec.emplace_back(mGame->getTexture(GREEK_DEATH4));
+	mDeathAnimVec.emplace_back(mGame->getTexture(GREEK_DEATH5));
+	mDeathAnimVec.emplace_back(mGame->getTexture(GREEK_DEATH6));
+	mDeathAnimVec.emplace_back(mGame->getTexture(GREEK_DEATH7));
+	mDeathAnimVec.emplace_back(mGame->getTexture(GREEK_DEATH8));
+	mDeathAnimVec.emplace_back(mGame->getTexture(GREEK_DEATH9));
+	mDeathAnimVec.emplace_back(mGame->getTexture(GREEK_DEATH10));
+	mDeathAnimVec.emplace_back(mGame->getTexture(GREEK_DEATH11));
+
+	mIdleTexture = mGame->getTexture(GREEK_IDLE);
 }
 
 void AxeKnight::RenderHPBar(int x, int y, int w, int h, float Percent, SDL_Color FGColor, SDL_Color BGColor)

@@ -24,7 +24,10 @@ void SpearKnight::Update(float deltaTime)
 {
 	if (mHP <= 0)
 	{
-		mGame->RemoveObject(this);
+		eLastFrameState = eState;
+		eState = DEATH;
+		DisableCollision();
+		return;
 	}
 	GameObject* res = mGame->CollisionDetection(this);
 	if (res == nullptr)
@@ -42,22 +45,25 @@ void SpearKnight::Update(float deltaTime)
 		eLastFrameState = eState;
 		eState = WALKING;
 	}
+	else if ((res->getIsPlayer() && !mIsPlayer) || (mIsPlayer && !res->getIsPlayer()))
+	{
+		eLastFrameState = eState;
+		eState = ATTACKING;
+		Attack(res);
+	}
 	else
 	{
-		if ((res->getIsPlayer() && !mIsPlayer) || (mIsPlayer && !res->getIsPlayer()))
-		{
-			eLastFrameState = eState;
-			eState = ATTACKING;
-			Attack(res);
-		}
+		eLastFrameState = eState;
+		eState = IDLE;
 	}
 	mReloadCount--;
 }
 
 void SpearKnight::Draw()
 {
-	if (eState == ATTACKING)
+	switch (eState)
 	{
+	case GameObject::ATTACKING:
 		if (eLastFrameState != eState)
 		{
 			mSrcR.x = 0;
@@ -81,9 +87,9 @@ void SpearKnight::Draw()
 				mSrcR.x = 0;
 			}
 		}
-	}
-	else if (eState == WALKING)
-	{
+		RenderHPBar(mX, mY - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
+		break;
+	case GameObject::WALKING:
 		if (eLastFrameState != eState)
 		{
 			mSrcR.x = 0;
@@ -107,9 +113,46 @@ void SpearKnight::Draw()
 				mSrcR.x = 0;
 			}
 		}
+		RenderHPBar(mX, mY - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
+		break;
+	case GameObject::IDLE:
+		mSrcR.x = 1281;
+		if (!mIsPlayer)
+		{
+			SDL_RenderCopyEx(mRenderer, mIdleTexture, &mSrcR, &mDestR, 0, nullptr, SDL_FLIP_HORIZONTAL);
+		}
+		else
+		{
+			SDL_RenderCopy(mRenderer, mIdleTexture, &mSrcR, &mDestR);
+		}
+		RenderHPBar(mX, mY - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
+		break;
+	case GameObject::DEATH:
+		if (eLastFrameState != eState)
+		{
+			mSrcR.x = 0;
+			mFrameCount = 0;
+		}
+		if (!mIsPlayer)
+		{
+			SDL_RenderCopyEx(mRenderer, mDeathTexture, &mSrcR, &mDestR, 0, nullptr, SDL_FLIP_HORIZONTAL);
+		}
+		else
+		{
+			SDL_RenderCopy(mRenderer, mDeathTexture, &mSrcR, &mDestR);
+		}
+		mFrameCount++;
+		if (mFrameCount >= 5)
+		{
+			mFrameCount = 0;
+			mSrcR.x += 163;
+			if (mSrcR.x >= 1630)
+			{
+				mGame->RemoveObject(this);
+			}
+		}
+		break;
 	}
-	float temp = mHP / MAX_HP;
-	RenderHPBar(mX, mY - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
 }
 
 void SpearKnight::Attack(GameObject* target)
@@ -155,4 +198,6 @@ void SpearKnight::LoadAnimation()
 {
 	mTexture = mGame->getTexture(SPEARMAN_WALK);
 	mTextureAttack = mGame->getTexture(SPEARKMAN_ATTACK);
+	mIdleTexture = mGame->getTexture(SPEARMAN_IDLE);
+	mDeathTexture = mGame->getTexture(SPEARMAN_DEATH);
 }

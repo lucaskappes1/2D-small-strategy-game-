@@ -12,13 +12,13 @@ public:
 	virtual void TakeDamage(int DMG);
 	inline static const int getStaticGoldCost() { return mGoldCost; }
 	inline const int getGoldCost() const override { return mGoldCost; }
-	void static StaticLoadAnimation(); //this will load the animation into texture map
 	
 private:
-	enum State{ATTACKING, WALKING} eState;
 	enum State eLastFrameState;
 	std::vector<SDL_Texture*> mWalkingAnimVec;
 	std::vector<SDL_Texture*> mAttackingAnimVec;
+	std::vector<SDL_Texture*> mDeathAnimVec;
+	SDL_Texture* mIdleTexture;
 	void RenderHPBar(int x, int y, int w, int h, float Percent, SDL_Color FGColor, SDL_Color BGColor);
 	float mPercentHPBar;
 	const int MAX_HP = 160;

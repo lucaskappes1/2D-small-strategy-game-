@@ -97,7 +97,7 @@ GameObject* Game::RangedAttackDetection(GameObject* gameObject, int range)
 	{
 		for (int i = index + 1; i < mObjects.size(); i++)
 		{
-			if (!mObjects.at(i)->getIsPlayer())
+			if (!mObjects.at(i)->getIsPlayer() && mObjects.at(i)->eState != GameObject::DEATH)
 			{
 				if(mObjects.at(i)->getX() - gameObject->getX() < range)
 				{
@@ -114,7 +114,7 @@ GameObject* Game::RangedAttackDetection(GameObject* gameObject, int range)
 	{
 		for (int i = index - 1; i < mObjects.size(); i--)
 		{
-			if (mObjects.at(i)->getIsPlayer())
+			if (mObjects.at(i)->getIsPlayer() && mObjects.at(i)->eState != GameObject::DEATH)
 			{
 				if (gameObject->getX() - mObjects.at(i)->getX() < range)
 				{
@@ -139,13 +139,15 @@ GameObject* Game::CollisionDetection(GameObject* gameObject)
 	}
 	try
 	{
-		if (gameObject->getIsPlayer() && SDL_HasIntersection(&gameObject->getCollisionRect(), &mObjects.at(index + 1)->getCollisionRect()))
+		if (gameObject->getIsPlayer() && mObjects.at(index + 1)->eState != GameObject::DEATH
+			&& SDL_HasIntersection(&gameObject->getCollisionRect(), &mObjects.at(index + 1)->getCollisionRect()))
 		{
 			return mObjects.at(index + 1);
 		}
-		else if (!gameObject->getIsPlayer() && SDL_HasIntersection(&gameObject->getCollisionRect(), &mObjects.at(index - 1)->getCollisionRect()))
+		else if (!gameObject->getIsPlayer() && mObjects.at(index - 1)->eState != GameObject::DEATH
+			&& SDL_HasIntersection(&gameObject->getCollisionRect(), &mObjects.at(index - 1)->getCollisionRect()))
 		{
-			return mObjects.at(index - 1);
+			return mObjects.at(index - 1); 
 		}
 	}
 	catch (const std::out_of_range& e)
@@ -224,6 +226,8 @@ void Game::LoadData()
 {
 	getTexture("assets/ArcherSkeleton/Walk/walk.png", ARCHER_WALK);
 	getTexture("assets/ArcherSkeleton/Attack/attack.png", ARCHER_ATTACK);
+	getTexture("assets/ArcherSkeleton/Idle/Separate sp/idle (1).png", ARCHER_IDLE);
+	getTexture("assets/ArcherSkeleton/Dead/dead.png", ARCHER_DEATH);
 
 	getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_00.png", GREEK_WALK0);
 	getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_01.png", GREEK_WALK1);
@@ -245,6 +249,20 @@ void Game::LoadData()
 	getTexture("assets/GreekSoldier/Attack/GreekBasic_Attack_5.png", GREEK_ATTACK5);
 	getTexture("assets/GreekSoldier/Attack/GreekBasic_Attack_6.png", GREEK_ATTACK6);
 	getTexture("assets/GreekSoldier/Attack/GreekBasic_Attack_7.png", GREEK_ATTACK7);
+	getTexture("assets/GreekSoldier/Idle/GreekBasic_Idle_00.png", GREEK_IDLE);
+	getTexture("assets/GreekSoldier/Die/GreekBasic_Die_00.png", GREEK_DEATH0);
+	getTexture("assets/GreekSoldier/Die/GreekBasic_Die_01.png", GREEK_DEATH1);
+	getTexture("assets/GreekSoldier/Die/GreekBasic_Die_02.png", GREEK_DEATH2);
+	getTexture("assets/GreekSoldier/Die/GreekBasic_Die_03.png", GREEK_DEATH3);
+	getTexture("assets/GreekSoldier/Die/GreekBasic_Die_04.png", GREEK_DEATH4);
+	getTexture("assets/GreekSoldier/Die/GreekBasic_Die_05.png", GREEK_DEATH5);
+	getTexture("assets/GreekSoldier/Die/GreekBasic_Die_06.png", GREEK_DEATH6);
+	getTexture("assets/GreekSoldier/Die/GreekBasic_Die_07.png", GREEK_DEATH7);
+	getTexture("assets/GreekSoldier/Die/GreekBasic_Die_08.png", GREEK_DEATH8);
+	getTexture("assets/GreekSoldier/Die/GreekBasic_Die_09.png", GREEK_DEATH9);
+	getTexture("assets/GreekSoldier/Die/GreekBasic_Die_10.png", GREEK_DEATH10);
+	getTexture("assets/GreekSoldier/Die/GreekBasic_Die_11.png", GREEK_DEATH11);
+
 
 	getTexture("assets/Knight/Walk/Tuscan_Walk_20000.png", KNIGHT_WALK0);
 	getTexture("assets/Knight/Walk/Tuscan_Walk_20001.png", KNIGHT_WALK1);
@@ -279,9 +297,28 @@ void Game::LoadData()
 	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20015.png", KNIGHT_ATTACK15);
 	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20016.png", KNIGHT_ATTACK16);
 	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20017.png", KNIGHT_ATTACK17);
+	getTexture("assets/Knight/Idle/Tuscan_Idle_20000.png", KNIGHT_IDLE);
+	getTexture("assets/Knight/Death/Tuscan_Death_20000.png", KNIGHT_DEATH0);
+	getTexture("assets/Knight/Death/Tuscan_Death_20001.png", KNIGHT_DEATH1);
+	getTexture("assets/Knight/Death/Tuscan_Death_20002.png", KNIGHT_DEATH2);
+	getTexture("assets/Knight/Death/Tuscan_Death_20003.png", KNIGHT_DEATH3);
+	getTexture("assets/Knight/Death/Tuscan_Death_20004.png", KNIGHT_DEATH4);
+	getTexture("assets/Knight/Death/Tuscan_Death_20005.png", KNIGHT_DEATH5);
+	getTexture("assets/Knight/Death/Tuscan_Death_20006.png", KNIGHT_DEATH6);
+	getTexture("assets/Knight/Death/Tuscan_Death_20007.png", KNIGHT_DEATH7);
+	getTexture("assets/Knight/Death/Tuscan_Death_20008.png", KNIGHT_DEATH8);
+	getTexture("assets/Knight/Death/Tuscan_Death_20009.png", KNIGHT_DEATH9);
+	getTexture("assets/Knight/Death/Tuscan_Death_20010.png", KNIGHT_DEATH10);
+	getTexture("assets/Knight/Death/Tuscan_Death_20011.png", KNIGHT_DEATH11);
+	getTexture("assets/Knight/Death/Tuscan_Death_20012.png", KNIGHT_DEATH12);
+	getTexture("assets/Knight/Death/Tuscan_Death_20013.png", KNIGHT_DEATH13);
+	getTexture("assets/Knight/Death/Tuscan_Death_20014.png", KNIGHT_DEATH14);
+	getTexture("assets/Knight/Death/Tuscan_Death_20015.png", KNIGHT_DEATH15);
 
 	getTexture("assets/bSpearman/_walk/bSpearman_Walk_Right_strip10.png", SPEARMAN_WALK);
 	getTexture("assets/bSpearman/_attack/bSpearman_Attack01_Right_strip8.png", SPEARKMAN_ATTACK);
+	getTexture("assets/bSpearman/bSpearman_Idle_strip8.png", SPEARMAN_IDLE);
+	getTexture("assets/bSpearman/_death/bSpearman_Die_Right_strip8.png", SPEARMAN_DEATH);
 
 	getTexture("assets/Knight/Idle/Tuscan_Idle_10000.png", KNIGHT_BUTTON);
 	getTexture("assets/bSpearman/Button.png", SPEARMAN_BUTTON);
@@ -437,7 +474,6 @@ void Game::Update()
 	}
 	else
 	{
-		bool ChangedVector = false;
 		// Compute delta time
 		// Wait until 16ms has elapsed since last frame
 		while (!SDL_TICKS_PASSED(SDL_GetTicks(), mTicksCount + 16));
@@ -466,7 +502,6 @@ void Game::Update()
 				delete i;
 			}
 			mDeadObjects.clear();
-			ChangedVector = true;
 		}
 		if (mPendingPlayerObjects.size() > 0)
 		{
@@ -488,7 +523,6 @@ void Game::Update()
 				GameObject* aux = mPendingPlayerObjects.front();
 				mPendingPlayerObjects.pop();
 				mObjects.emplace_back(aux);
-				ChangedVector = true;
 			}
 		}
 		if (mPendingAIObjects.size() > 0)
@@ -511,16 +545,12 @@ void Game::Update()
 				GameObject* aux = mPendingAIObjects.front();
 				mPendingAIObjects.pop();
 				mObjects.emplace_back(aux);
-				ChangedVector = true;
 			}
 		}
-		if (ChangedVector)
-		{
-			std::sort(mObjects.begin(), mObjects.end(), [](const GameObject* a, const GameObject* b) {
-				return a->getX() < b->getX();
-				});
-		}
 	}
+	std::sort(mObjects.begin(), mObjects.end(), [](const GameObject* a, const GameObject* b) {
+		return a->getCollisionRect().x < b->getCollisionRect().x;
+		});
 	if (SDL_GetTicks() - mTimeSeconds > 4000)
 	{
 		mTimeSeconds = SDL_GetTicks();

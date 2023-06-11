@@ -26,7 +26,10 @@ void Knight::Update(float deltaTime)
 {
 	if (mHP <= 0)
 	{
-		mGame->RemoveObject(this);
+		eLastFrameState = eState;
+		eState = DEATH;
+		DisableCollision();
+		return;
 	}
 	GameObject* res = mGame->CollisionDetection(this);
 	if (res == nullptr)
@@ -44,22 +47,25 @@ void Knight::Update(float deltaTime)
 		eLastFrameState = eState;
 		eState = WALKING;
 	}
+	else if ((res->getIsPlayer() && !mIsPlayer) || (mIsPlayer && !res->getIsPlayer()))
+	{
+		Attack(res);
+		eLastFrameState = eState;
+		eState = ATTACKING;
+	} 
 	else
 	{
-		if ((res->getIsPlayer() && !mIsPlayer) || (mIsPlayer && !res->getIsPlayer()))
-		{
-			Attack(res);
-			eLastFrameState = eState;
-			eState = ATTACKING;
-		} 
+		eLastFrameState = eState;
+		eState = IDLE;
 	}
 	mReloadCount--;
 }
 
 void Knight::Draw()
 {
-	if (eState == ATTACKING)
+	switch (eState)
 	{
+	case Knight::ATTACKING:
 		if (eState != eLastFrameState)
 		{
 			mCurrentFrame = 0;
@@ -83,9 +89,9 @@ void Knight::Draw()
 				mCurrentFrame = 0;
 			}
 		}
-	}
-	if (eState == WALKING)
-	{
+		RenderHPBar(mX, mY - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
+		break;
+	case Knight::WALKING:
 		if (eState != eLastFrameState)
 		{
 			mCurrentFrame = 0;
@@ -109,8 +115,49 @@ void Knight::Draw()
 				mCurrentFrame = 0;
 			}
 		}
+		RenderHPBar(mX, mY - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
+		break;
+	case Knight::IDLE:
+		if (!mIsPlayer)
+		{
+			SDL_RenderCopyEx(mRenderer, mIdleTexture, &mSrcR, &mDestR, 0, nullptr, SDL_FLIP_HORIZONTAL);
+		}
+		else
+		{
+			SDL_RenderCopy(mRenderer, mIdleTexture, &mSrcR, &mDestR);
+		}
+		RenderHPBar(mX, mY - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
+		break;
+	case Knight::DEATH:
+		mSrcR.w = 223;
+		mDestR.w = 50;
+		if (eState != eLastFrameState)
+		{
+			mCurrentFrame = 0;
+			mFrameCount = 0;
+		}
+		if (!mIsPlayer)
+		{
+			mDestR.x = mX - 22;
+			SDL_RenderCopyEx(mRenderer, mDeathAnimVec.at(mCurrentFrame), &mSrcR, &mDestR, 0, nullptr, SDL_FLIP_HORIZONTAL);
+		}
+		else
+		{
+			mDestR.x = mX + 10;
+			SDL_RenderCopy(mRenderer, mDeathAnimVec.at(mCurrentFrame), &mSrcR, &mDestR);
+		}
+		mFrameCount++;
+		if (mFrameCount >= 6)
+		{
+			mFrameCount = 0;
+			mCurrentFrame++;
+			if (mCurrentFrame > 15)
+			{
+				mGame->RemoveObject(this);
+			}
+		}
+		break;
 	}
-	RenderHPBar(mX, mY - 5, 28, 3, mPercentHPBar, {0, 255, 0, 255}, {255, 0, 0, 255});
 }
 
 void Knight::Attack(GameObject* target)
@@ -188,4 +235,23 @@ void Knight::LoadAnimation()
 	mAttackingAnimVec.emplace_back(mGame->getTexture(KNIGHT_ATTACK15));
 	mAttackingAnimVec.emplace_back(mGame->getTexture(KNIGHT_ATTACK16));
 	mAttackingAnimVec.emplace_back(mGame->getTexture(KNIGHT_ATTACK17));
+
+	mDeathAnimVec.emplace_back(mGame->getTexture(KNIGHT_DEATH0));
+	mDeathAnimVec.emplace_back(mGame->getTexture(KNIGHT_DEATH1));
+	mDeathAnimVec.emplace_back(mGame->getTexture(KNIGHT_DEATH2));
+	mDeathAnimVec.emplace_back(mGame->getTexture(KNIGHT_DEATH3));
+	mDeathAnimVec.emplace_back(mGame->getTexture(KNIGHT_DEATH4));
+	mDeathAnimVec.emplace_back(mGame->getTexture(KNIGHT_DEATH5));
+	mDeathAnimVec.emplace_back(mGame->getTexture(KNIGHT_DEATH6));
+	mDeathAnimVec.emplace_back(mGame->getTexture(KNIGHT_DEATH7));
+	mDeathAnimVec.emplace_back(mGame->getTexture(KNIGHT_DEATH8));
+	mDeathAnimVec.emplace_back(mGame->getTexture(KNIGHT_DEATH9));
+	mDeathAnimVec.emplace_back(mGame->getTexture(KNIGHT_DEATH10));
+	mDeathAnimVec.emplace_back(mGame->getTexture(KNIGHT_DEATH11));
+	mDeathAnimVec.emplace_back(mGame->getTexture(KNIGHT_DEATH12));
+	mDeathAnimVec.emplace_back(mGame->getTexture(KNIGHT_DEATH13));
+	mDeathAnimVec.emplace_back(mGame->getTexture(KNIGHT_DEATH14));
+	mDeathAnimVec.emplace_back(mGame->getTexture(KNIGHT_DEATH15));
+
+	mIdleTexture = mGame->getTexture(KNIGHT_IDLE);
 }
