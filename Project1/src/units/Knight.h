@@ -5,7 +5,7 @@
 class Knight :  public GameObject
 {
 public:
-	Knight(SDL_Renderer* renderer, int x, int y, class Game* game, bool isPlayer);
+	Knight(SDL_Renderer* renderer, int x, int y, class Game* game, bool isPlayer, bool isAdvancing);
 	void Update(float deltaTime);
 	void Draw();
 	void Attack(GameObject* target);

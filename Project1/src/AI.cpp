@@ -19,32 +19,32 @@ void AI::Act()
 	switch (eState)
 	{
 	case ATTACKING:
-		mGame->CreateSpearKnight(0);
-		mGame->CreateKnight(0);
-		mGame->CreateArcher(0);
+		mGame->CreateSpearKnight(0, 1);
+		mGame->CreateKnight(0, 1);
+		mGame->CreateArcher(0, 1);
 		break;
 	case UNDERATTACK:
-		mGame->CreateSpearKnight(0);
-		mGame->CreateArcher(0);
-		mGame->CreateArcher(0);
+		mGame->CreateSpearKnight(0, 1);
+		mGame->CreateArcher(0, 1);
+		mGame->CreateArcher(0, 1);
 		break;
 	case NUMBERDISADVANTAGE:
-		mGame->CreateSpearKnight(0);
-		mGame->CreateArcher(0);
-		mGame->CreateKnight(0);
-		mGame->CreateArcher(0);
-		mGame->CreateAxeKnight(0);
-		mGame->CreateArcher(0);
+		mGame->CreateSpearKnight(0, 1);
+		mGame->CreateArcher(0, 1);
+		mGame->CreateKnight(0, 1);
+		mGame->CreateArcher(0, 1);
+		mGame->CreateAxeKnight(0, 1);
+		mGame->CreateArcher(0, 1);
 		break;
 	case NUMBERADVANTAGE:
-		mGame->CreateArcher(0);
-		mGame->CreateArcher(0);
+		mGame->CreateArcher(0, 1);
+		mGame->CreateArcher(0, 1);
 		break;
 	case ENEMYATTHEGATES:
 		mGame->ClearAIQueue();
-		mGame->CreateSpearKnight(0);
-		mGame->CreateSpearKnight(0);
-		mGame->CreateSpearKnight(0);
+		mGame->CreateSpearKnight(0, 1);
+		mGame->CreateSpearKnight(0, 1);
+		mGame->CreateSpearKnight(0, 1);
 		break;
 	}
 }
@@ -102,63 +102,63 @@ void AIhard::Act()
 	case ATTACKING:
 		if (temp < 50 && temp > 20)
 		{
-			mGame->CreateSpearKnight(0);
-			mGame->CreateAxeKnight(0);
-			mGame->CreateArcher(0);
-			mGame->CreateSpearKnight(0);
-			mGame->CreateKnight(0);
+			mGame->CreateSpearKnight(0, 1);
+			mGame->CreateAxeKnight(0, 1);
+			mGame->CreateArcher(0, 1);
+			mGame->CreateSpearKnight(0, 1);
+			mGame->CreateKnight(0, 1);
 		}
 		else if (temp <= 20)
 		{
-			mGame->CreateSpearKnight(0);
-			mGame->CreateAxeKnight(0);
-			mGame->CreateArcher(0);
-			mGame->CreateArcher(0);
-			mGame->CreateKnight(0);
+			mGame->CreateSpearKnight(0, 1);
+			mGame->CreateAxeKnight(0, 1);
+			mGame->CreateArcher(0, 1);
+			mGame->CreateArcher(0, 1);
+			mGame->CreateKnight(0, 1);
 		}
 		else
 		{
-			mGame->CreateSpearKnight(0);
-			mGame->CreateKnight(0);
-			mGame->CreateArcher(0);
-			mGame->CreateArcher(0);
-			mGame->CreateAxeKnight(0);
+			mGame->CreateSpearKnight(0, 1);
+			mGame->CreateKnight(0, 1);
+			mGame->CreateArcher(0, 1);
+			mGame->CreateArcher(0, 1);
+			mGame->CreateAxeKnight(0, 1);
 		}
 		break;
 	case UNDERATTACK:
-		mGame->CreateSpearKnight(0);
-		mGame->CreateSpearKnight(0);
-		mGame->CreateArcher(0);
-		mGame->CreateArcher(0);
+		mGame->CreateSpearKnight(0, 1);
+		mGame->CreateSpearKnight(0, 1);
+		mGame->CreateArcher(0, 1);
+		mGame->CreateArcher(0, 1);
 		break;
 	case NUMBERDISADVANTAGE:
-		mGame->CreateSpearKnight(0);
-		mGame->CreateArcher(0);
-		mGame->CreateKnight(0);
-		mGame->CreateArcher(0);
-		mGame->CreateAxeKnight(0);
-		mGame->CreateArcher(0);
-		mGame->CreateArcher(0);
+		mGame->CreateSpearKnight(0, 1);
+		mGame->CreateArcher(0, 1);
+		mGame->CreateKnight(0, 1);
+		mGame->CreateArcher(0, 1);
+		mGame->CreateAxeKnight(0, 1);
+		mGame->CreateArcher(0, 1);
+		mGame->CreateArcher(0, 1);
 		break;
 	case NUMBERADVANTAGE:
 		if (temp < 40)
 		{
-			mGame->CreateKnight(0);
-			mGame->CreateArcher(0);
+			mGame->CreateKnight(0, 1);
+			mGame->CreateArcher(0, 1);
 		}
 		else 
 		{
-			mGame->CreateSpearKnight(0);
-			mGame->CreateArcher(0);
+			mGame->CreateSpearKnight(0, 1);
+			mGame->CreateArcher(0, 1);
 		}
 		break;
 	case ENEMYATTHEGATES:
 		mGame->ClearAIQueue();
-		mGame->CreateSpearKnight(0);
-		mGame->CreateSpearKnight(0);
-		mGame->CreateSpearKnight(0);
-		mGame->CreateSpearKnight(0);
-		mGame->CreateSpearKnight(0);
+		mGame->CreateSpearKnight(0, 1);
+		mGame->CreateSpearKnight(0, 1);
+		mGame->CreateSpearKnight(0, 1);
+		mGame->CreateSpearKnight(0, 1);
+		mGame->CreateSpearKnight(0, 1);
 		break;
 	}
 }

@@ -27,13 +27,14 @@ public:
 	GameObject* CollisionDetection(GameObject* gameObject);
 	SDL_Texture* getTexture(int id);
 	void RemoveObject(GameObject* target);
-	void CreateKnight(bool isPlayer);
-	void CreateSpearKnight(bool isPlayer);
-	void CreateAxeKnight(bool isPlayer);
-	void CreateArcher(bool isPlayer);
+	void CreateKnight(bool isPlayer, bool isAdvancing);
+	void CreateSpearKnight(bool isPlayer, bool isAdvancing);
+	void CreateAxeKnight(bool isPlayer, bool isAdvancing);
+	void CreateArcher(bool isPlayer, bool isAdvancing);
 	void ClearAIQueue();
 	void PlayerUpgradeArmor();
 	void PlayerUpgradeAttack();
+	void PlayerChangeOrder();
 	void StartGame();
 	void Pause();
 	void Continue();

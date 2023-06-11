@@ -13,9 +13,11 @@ public:
 	void OnMouseClickEvent();
 	void UpdateGoldText();
 	void StartGame();
+	inline bool getIsPlayerAdvancing() { return mPlayerIsAdvancing; }
 private:
 	void HideGameplayButtons();
 	void ShowGameplayButtons();
+	bool mPlayerIsAdvancing;
 	Game* mGame;
 	SDL_Renderer* mRenderer;
 	SDL_Surface* mTextSurface;
@@ -30,6 +32,7 @@ private:
 	Button* mStartGameButton;
 	Button* mPauseButton;
 	Button* mContinueButton;
+	Button* mChangeOrderButton;
 	std::string mGold;
 	TTF_Font* mFont;
 	SDL_Color mTextColor = { 255, 0, 0 };

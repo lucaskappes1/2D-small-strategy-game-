@@ -7,6 +7,7 @@ UI::UI(Game* game, SDL_Renderer* renderer)
 	mGame = game;
 	mRenderer = renderer;
 	mMouse = new Mouse(mGame->getTexture(MOUSE_BUTTON), mRenderer);
+	mPlayerIsAdvancing = true;
 }
 
 UI::~UI()
@@ -36,6 +37,7 @@ void UI::Initialize()
 	mAcherButton = new Button(mGame->getTexture(ARCHER_BUTTON), mRenderer, mMouse, 200, 50, {0, 0, 303, 525}, mFont);
 	mUpgradeArmorButton = new Button(mGame->getTexture(ARMOR_UPGRADE_BUTTON), mRenderer, mMouse, 50, 100, { 0, 0, 64, 64 }, mFont);
 	mUpgradeAttackButton = new Button(mGame->getTexture(ATTACK_UPGRADE_BUTTON), mRenderer, mMouse, 100, 100, { 0, 0, 64, 64 }, mFont);
+	mChangeOrderButton = new Button(mGame->getTexture(CHANGE_ORDER_BUTTON), mRenderer, mMouse, 150, 100, { 0, 0, 64, 64 }, mFont);
 	HideGameplayButtons();
 	mContinueButton->Hide();
 	mPauseButton->Hide();
@@ -45,6 +47,7 @@ void UI::Initialize()
 	mAcherButton->addTooltip("Cost: 55 gold\nVery weak, but attacks from distance");
 	mUpgradeArmorButton->addTooltip("Cost: 500 gold\nIncrease armor of next units by 1");
 	mUpgradeAttackButton->addTooltip("Cost: 500 gold\nIncrease attack of next units by 1");
+	mChangeOrderButton->addTooltip("Click to Change Order between advance or stand still");
 	mGold = "Gold: 100";
 	mTextSurface = TTF_RenderText_Solid(mFont, mGold.c_str(), mTextColor);
 	mTextTexture = SDL_CreateTextureFromSurface(mRenderer, mTextSurface);
@@ -61,6 +64,7 @@ void UI::Update()
 	mStartGameButton->Update();
 	mPauseButton->Update();
 	mContinueButton->Update();
+	mChangeOrderButton->Update();
 	mMouse->Update();
 }
 
@@ -75,6 +79,7 @@ void UI::Draw()
 	mStartGameButton->Draw();
 	mPauseButton->Draw();
 	mContinueButton->Draw();
+	mChangeOrderButton->Draw();
 	SDL_RenderCopy(mRenderer, mTextTexture, NULL, &mTextRect);
 	mMouse->Draw();
 }
@@ -83,19 +88,19 @@ void UI::OnMouseClickEvent()
 {
 	if (mKnightButton->IsSelected())
 	{
-		mGame->CreateKnight(true);
+		mGame->CreateKnight(true, mPlayerIsAdvancing);
 	}
 	else if (mSpearKnightButton->IsSelected())
 	{
-		mGame->CreateSpearKnight(true);
+		mGame->CreateSpearKnight(true, mPlayerIsAdvancing);
 	}
 	else if (mAxeKnightButton->IsSelected())
 	{
-		mGame->CreateAxeKnight(true);
+		mGame->CreateAxeKnight(true, mPlayerIsAdvancing);
 	}
 	else if (mAcherButton->IsSelected())
 	{
-		mGame->CreateArcher(true);
+		mGame->CreateArcher(true, mPlayerIsAdvancing);
 	}
 	else if (mUpgradeArmorButton->IsSelected())
 	{
@@ -124,6 +129,11 @@ void UI::OnMouseClickEvent()
 		mPauseButton->Show();
 		mContinueButton->Hide();
 	}
+	else if (mChangeOrderButton->IsSelected())
+	{
+		mGame->PlayerChangeOrder();
+		mPlayerIsAdvancing = !mPlayerIsAdvancing;
+	}
 }
 
 void UI::UpdateGoldText()
@@ -149,6 +159,7 @@ void UI::HideGameplayButtons()
 	mAcherButton->Hide();
 	mUpgradeArmorButton->Hide();
 	mUpgradeAttackButton->Hide();
+	mChangeOrderButton->Hide();
 }
 
 void UI::ShowGameplayButtons()
@@ -159,4 +170,5 @@ void UI::ShowGameplayButtons()
 	mAcherButton->Show();
 	mUpgradeArmorButton->Show();
 	mUpgradeAttackButton->Show();
+	mChangeOrderButton->Show();
 }

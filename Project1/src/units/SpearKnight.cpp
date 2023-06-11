@@ -1,8 +1,9 @@
 #include "SpearKnight.h"
 #include "../Game.h"
 
-SpearKnight::SpearKnight(SDL_Renderer* renderer, int x, int y, class Game* game, bool isPlayer)
+SpearKnight::SpearKnight(SDL_Renderer* renderer, int x, int y, class Game* game, bool isPlayer, bool isAdvancing)
 {
+	mAdvancing = isAdvancing;
 	mIsPlayer = isPlayer;
 	mRenderer = renderer;
 	mX = x;
@@ -30,7 +31,7 @@ void SpearKnight::Update(float deltaTime)
 		return;
 	}
 	GameObject* res = mGame->CollisionDetection(this);
-	if (res == nullptr)
+	if (res == nullptr && mAdvancing)
 	{
 		if (mIsPlayer)
 		{
@@ -45,11 +46,14 @@ void SpearKnight::Update(float deltaTime)
 		eLastFrameState = eState;
 		eState = WALKING;
 	}
-	else if ((res->getIsPlayer() && !mIsPlayer) || (mIsPlayer && !res->getIsPlayer()))
+	else if (res != nullptr)
 	{
-		eLastFrameState = eState;
-		eState = ATTACKING;
-		Attack(res);
+		if ((res->getIsPlayer() && !mIsPlayer) || (mIsPlayer && !res->getIsPlayer()))
+		{
+			eLastFrameState = eState;
+			eState = ATTACKING;
+			Attack(res);
+		}
 	}
 	else
 	{

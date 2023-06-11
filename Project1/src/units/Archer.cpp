@@ -1,8 +1,9 @@
 #include "Archer.h"
 #include "../Game.h"
 
-Archer::Archer(SDL_Renderer* renderer, int x, int y, Game* game, bool isPlayer)
+Archer::Archer(SDL_Renderer* renderer, int x, int y, Game* game, bool isPlayer, bool isAdvancing)
 {
+	mAdvancing = isAdvancing;
 	mRenderer = renderer;
 	mX = x;
 	mY = y;
@@ -32,7 +33,7 @@ void Archer::Update(float deltaTime)
 	}
 	GameObject* res = mGame->RangedAttackDetection(this, 210);
 	GameObject* res2 = mGame->CollisionDetection(this);	
-	if (res == nullptr && res2 == nullptr)
+	if (res2 == nullptr && mAdvancing)
 	{
 		if (mIsPlayer)
 		{

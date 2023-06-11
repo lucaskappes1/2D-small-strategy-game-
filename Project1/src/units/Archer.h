@@ -6,7 +6,7 @@ class Archer :
     public GameObject
 {
 public:
-	Archer(SDL_Renderer* renderer, int x, int y, class Game* game, bool isPlayer);
+	Archer(SDL_Renderer* renderer, int x, int y, class Game* game, bool isPlayer, bool isAdvancing);
 	void Update(float deltaTime);
 	void Draw();
 	void Attack(GameObject* target);

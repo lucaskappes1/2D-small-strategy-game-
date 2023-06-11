@@ -1,8 +1,9 @@
 #include "Knight.h"
 #include "../Game.h"
 
-Knight::Knight(SDL_Renderer* renderer, int x, int y, class Game* game, bool isPlayer)
+Knight::Knight(SDL_Renderer* renderer, int x, int y, class Game* game, bool isPlayer, bool isAdvancing)
 {
+	mAdvancing = isAdvancing;
 	mIsPlayer = isPlayer;
 	mRenderer = renderer;
 	mX = x;
@@ -32,7 +33,7 @@ void Knight::Update(float deltaTime)
 		return;
 	}
 	GameObject* res = mGame->CollisionDetection(this);
-	if (res == nullptr)
+	if (res == nullptr && mAdvancing)
 	{
 		if (mIsPlayer)
 		{
@@ -47,12 +48,15 @@ void Knight::Update(float deltaTime)
 		eLastFrameState = eState;
 		eState = WALKING;
 	}
-	else if ((res->getIsPlayer() && !mIsPlayer) || (mIsPlayer && !res->getIsPlayer()))
+	else if (res != nullptr)
 	{
-		Attack(res);
-		eLastFrameState = eState;
-		eState = ATTACKING;
-	} 
+		if ((res->getIsPlayer() && !mIsPlayer) || (mIsPlayer && !res->getIsPlayer()))
+		{
+			eLastFrameState = eState;
+			eState = ATTACKING;
+			Attack(res);
+		}
+	}
 	else
 	{
 		eLastFrameState = eState;

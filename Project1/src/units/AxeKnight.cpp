@@ -1,8 +1,9 @@
 #include "AxeKnight.h"
 #include "../Game.h"
 
-AxeKnight::AxeKnight(SDL_Renderer* renderer, int x, int y, Game* game, bool isPlayer)
+AxeKnight::AxeKnight(SDL_Renderer* renderer, int x, int y, Game* game, bool isPlayer, bool isAdvancing)
 {
+	mAdvancing = isAdvancing;
 	mRenderer = renderer;
 	mDestR = { x, y, 32, 32 };
 	mCollisionR = { x, y, 32, 32 };
@@ -32,7 +33,7 @@ void AxeKnight::Update(float deltaTime)
 		return;
 	}
 	GameObject* res = mGame->CollisionDetection(this);
-	if (res == nullptr)
+	if (res == nullptr && mAdvancing)
 	{
 		if (mIsPlayer)
 		{
@@ -47,11 +48,14 @@ void AxeKnight::Update(float deltaTime)
 		eLastFrameState = eState;
 		eState = WALKING;
 	}
-	else if ((res->getIsPlayer() && !mIsPlayer) || (mIsPlayer && !res->getIsPlayer()))
+	else if (res != nullptr)
 	{
-		eLastFrameState = eState;
-		eState = ATTACKING;
-		Attack(res);
+		if ((res->getIsPlayer() && !mIsPlayer) || (mIsPlayer && !res->getIsPlayer()))
+		{
+			eLastFrameState = eState;
+			eState = ATTACKING;
+			Attack(res);
+		}
 	}
 	else
 	{
@@ -122,6 +126,8 @@ void AxeKnight::Draw()
 		RenderHPBar(mX, mY - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
 		break;
 	case AxeKnight::IDLE:
+		mDestR.w = 32;
+		mDestR.x = mX;
 		if (!mIsPlayer)
 		{
 			SDL_RenderCopyEx(mRenderer, mIdleTexture, NULL, &mDestR, 0, nullptr, SDL_FLIP_HORIZONTAL);
