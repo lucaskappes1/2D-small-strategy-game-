@@ -28,7 +28,7 @@ void Archer::Update(float deltaTime)
 	{
 		eLastFrameState = eState;
 		eState = DEATH;
-		DisableCollision();
+		mGame->KillObject(this);
 		return;
 	}
 	GameObject* res = mGame->RangedAttackDetection(this, 210);
@@ -144,6 +144,7 @@ void Archer::Draw()
 		{
 			mSrcR = { 0, 0, 683, 1122 };
 			mFrameCount = 0;
+			eLastFrameState = eState;
 		}
 		if (mIsPlayer)
 		{
@@ -161,7 +162,7 @@ void Archer::Draw()
 			mDeathAnimFrameCount++;
 			if (mDeathAnimFrameCount >= 6)
 			{
-				mGame->RemoveObject(this);
+				mSrcR.x -= 683;
 			}
 			if (mSrcR.x >= 3415)
 			{
@@ -170,6 +171,7 @@ void Archer::Draw()
 				if (mSrcR.y >= 2244)
 				{
 					mSrcR.y = 0;
+
 				}
 			}
 		}

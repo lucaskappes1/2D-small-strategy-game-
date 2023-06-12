@@ -26,7 +26,7 @@ public:
 	GameObject* RangedAttackDetection(GameObject* gameObject, int range);
 	GameObject* CollisionDetection(GameObject* gameObject);
 	SDL_Texture* getTexture(int id);
-	void RemoveObject(GameObject* target);
+	void KillObject(GameObject* target);
 	void CreateKnight(bool isPlayer, bool isAdvancing);
 	void CreateSpearKnight(bool isPlayer, bool isAdvancing);
 	void CreateAxeKnight(bool isPlayer, bool isAdvancing);
@@ -50,7 +50,8 @@ private:
 	SDL_Renderer* mRenderer;
 	SDL_Window* mWindow;
 	std::vector<GameObject*> mObjects;
-	std::vector<GameObject*> mDeadObjects;
+	std::vector<GameObject*> mDeadObjects;	//objects will be taken from mObjects into mNonCollidableObjects
+	std::vector<GameObject*> mNonCollidableObjects;
 	std::queue<GameObject*> mPendingPlayerObjects;
 	std::queue<GameObject*> mPendingAIObjects;
 	
@@ -65,7 +66,7 @@ private:
 	int mPlayerArmorUpgradeCount = 0;
 	int mPlayerAttackUpgradeCount = 0;
 
-	
+	int mClearFloorTimer = 0;
 	int mKills;
 	int mDeaths;
 	int mPlayerGold;

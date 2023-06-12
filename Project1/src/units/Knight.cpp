@@ -29,7 +29,7 @@ void Knight::Update(float deltaTime)
 	{
 		eLastFrameState = eState;
 		eState = DEATH;
-		DisableCollision();
+		mGame->KillObject(this);
 		return;
 	}
 	GameObject* res = mGame->CollisionDetection(this);
@@ -139,6 +139,7 @@ void Knight::Draw()
 		{
 			mCurrentFrame = 0;
 			mFrameCount = 0;
+			eLastFrameState = eState;
 		}
 		if (!mIsPlayer)
 		{
@@ -157,7 +158,7 @@ void Knight::Draw()
 			mCurrentFrame++;
 			if (mCurrentFrame > 15)
 			{
-				mGame->RemoveObject(this);
+				mCurrentFrame = 15;
 			}
 		}
 		break;

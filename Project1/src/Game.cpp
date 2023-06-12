@@ -139,13 +139,11 @@ GameObject* Game::CollisionDetection(GameObject* gameObject)
 	}
 	try
 	{
-		if (gameObject->getIsPlayer() && mObjects.at(index + 1)->eState != GameObject::DEATH
-			&& SDL_HasIntersection(&gameObject->getCollisionRect(), &mObjects.at(index + 1)->getCollisionRect()))
+		if (gameObject->getIsPlayer() && SDL_HasIntersection(&gameObject->getCollisionRect(), &mObjects.at(index + 1)->getCollisionRect()))
 		{
 			return mObjects.at(index + 1);
 		}
-		else if (!gameObject->getIsPlayer() && mObjects.at(index - 1)->eState != GameObject::DEATH
-			&& SDL_HasIntersection(&gameObject->getCollisionRect(), &mObjects.at(index - 1)->getCollisionRect()))
+		else if (!gameObject->getIsPlayer() && SDL_HasIntersection(&gameObject->getCollisionRect(), &mObjects.at(index - 1)->getCollisionRect()))
 		{
 			return mObjects.at(index - 1); 
 		}
@@ -167,7 +165,7 @@ SDL_Texture* Game::getTexture(int id)
 	return temp->second;
 }
 
-void Game::RemoveObject(GameObject* target)
+void Game::KillObject(GameObject* target)
 {
 	if (target->getIsPlayer())
 	{
@@ -511,9 +509,14 @@ void Game::Update()
 				auto iter = std::find(mObjects.begin(), mObjects.end(), i);
 				std::iter_swap(iter, mObjects.end() - 1);
 				mObjects.pop_back();
-				delete i;
+				mNonCollidableObjects.emplace_back(i);
 			}
 			mDeadObjects.clear();
+		}
+		if (SDL_GetTicks() - mClearFloorTimer > 30000)
+		{
+			mClearFloorTimer = SDL_GetTicks();
+			mNonCollidableObjects.clear();
 		}
 		if (mPendingPlayerObjects.size() > 0)
 		{
@@ -575,6 +578,10 @@ void Game::Render()
 {
 	SDL_RenderClear(mRenderer);
 	BG->Draw();
+	for (auto& i : mNonCollidableObjects)
+	{
+		i->Draw();
+	}
 	for (auto& i : mObjects)
 	{
 		i->Draw();

@@ -29,7 +29,7 @@ void AxeKnight::Update(float deltaTime)
 	{
 		eLastFrameState = eState;
 		eState = DEATH;
-		DisableCollision();
+		mGame->KillObject(this);
 		return;
 	}
 	GameObject* res = mGame->CollisionDetection(this);
@@ -145,6 +145,7 @@ void AxeKnight::Draw()
 		{
 			mFrameCount = 0;
 			mCurrentFrame = 0;
+			eLastFrameState = eState;
 		}
 		if (!mIsPlayer)
 		{
@@ -163,7 +164,7 @@ void AxeKnight::Draw()
 			mCurrentFrame++;
 			if (mCurrentFrame > 11)
 			{
-				mGame->RemoveObject(this);
+				mCurrentFrame = 11;
 			}
 		}
 		break;

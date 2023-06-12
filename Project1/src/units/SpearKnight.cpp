@@ -27,7 +27,7 @@ void SpearKnight::Update(float deltaTime)
 	{
 		eLastFrameState = eState;
 		eState = DEATH;
-		DisableCollision();
+		mGame->KillObject(this);
 		return;
 	}
 	GameObject* res = mGame->CollisionDetection(this);
@@ -136,6 +136,7 @@ void SpearKnight::Draw()
 		{
 			mSrcR.x = 0;
 			mFrameCount = 0;
+			eLastFrameState = eState;
 		}
 		if (!mIsPlayer)
 		{
@@ -150,9 +151,9 @@ void SpearKnight::Draw()
 		{
 			mFrameCount = 0;
 			mSrcR.x += 163;
-			if (mSrcR.x >= 1630)
+			if (mSrcR.x >= 1304)
 			{
-				mGame->RemoveObject(this);
+				mSrcR.x -= 163;
 			}
 		}
 		break;

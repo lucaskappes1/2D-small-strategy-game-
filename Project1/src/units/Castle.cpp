@@ -20,7 +20,7 @@ void Castle::Update(float deltaTime)
 {
 	if (mHP <= 0)
 	{
-		mGame->RemoveObject(this);
+		mGame->KillObject(this);
 	}
 	GameObject* res = mGame->RangedAttackDetection(this, 210);
 	if (res != nullptr)
