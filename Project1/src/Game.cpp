@@ -462,6 +462,21 @@ void Game::Continue()
 	mAI->Activate();
 }
 
+void Game::SplashDamage(int Damage, int x, int Radious)
+{
+	for (auto& i : mObjects)
+	{
+		int d = x - i->getX();
+		d = abs(d);
+		if (d < Radious)
+		{
+			float m = (float)x / Radious;
+			m = 1 - m;
+			i->TakeDamage(Damage * m);
+		}
+	}
+}
+
 SDL_Texture* Game::getTexture(std::string path, int name)
 {
 	auto temp = mTextureMap.find(name);

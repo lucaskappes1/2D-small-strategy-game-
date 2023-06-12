@@ -39,6 +39,7 @@ public:
 	void Pause();
 	void Continue();
 	inline int getPlayerGold() { return mPlayerGold; }
+	void SplashDamage(int Damage, int x, int Radious);
 private:
 	void Update();
 	void Render();
