@@ -60,6 +60,9 @@ void AI::ChangeState()
 		{
 			if (i->getX() > XPOSTHRESHOLD)
 			{
+				int temp = mVariation(mRng);
+				if(temp < 30)
+					mGame->SplashDamage(200, XPOSTHRESHOLD - 80, 200);
 				if (i->getX() > TOUGHXPOSTHRESHOLD)
 				{
 					eState = ENEMYATTHEGATES;
@@ -86,6 +89,7 @@ void AI::ChangeState()
 		return;
 	}
 	eState = ATTACKING;
+
 	return;
 }
 
@@ -114,12 +118,15 @@ void AIhard::Act()
 			mGame->CreateAxeKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 			mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 			mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+			mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+			mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 			mGame->CreateKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 		}
 		else
 		{
 			mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 			mGame->CreateKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+			mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 			mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 			mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 			mGame->CreateAxeKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);

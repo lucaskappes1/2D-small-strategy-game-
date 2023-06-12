@@ -329,6 +329,7 @@ void Game::LoadData()
 	getTexture("assets/AttackUpgrade.png", ATTACK_UPGRADE_BUTTON);
 	getTexture("assets/Mouse.png", MOUSE_BUTTON);
 	getTexture("assets/ChangeOrder.png", CHANGE_ORDER_BUTTON);
+	getTexture("assets/Rock.png", ROCK);
 }
 
 void Game::CreateKnight(bool isPlayer, bool isAdvancing, int AttackUpgradeCount, int ArmorUpgradeCount)
@@ -407,7 +408,7 @@ void Game::StartGame()
 {
 	mObjects.emplace_back(new Castle(mRenderer, getTexture("assets/Castle.png", CASTLE), WIDTH - 974, HEIGHT - 175, this, 1));
 	mObjects.emplace_back(new Castle(mRenderer, getTexture("assets/Castle.png", CASTLE), WIDTH - 50, HEIGHT - 175, this, 0));
-	mObjects.at(1)->setArmor(50);
+	mObjects.at(1)->setArmor(120);
 	mIsMenuActive = false;
 	mUI->StartGame();
 	mAI->Activate();
@@ -433,9 +434,11 @@ void Game::SplashDamage(int Damage, int x, int Radious)
 		d = abs(d);
 		if (d < Radious)
 		{
-			float m = (float)x / Radious;
+			int aux = 0;
+			float m = (float)d / Radious;
 			m = 1 - m;
-			i->TakeDamage(Damage * m);
+			aux = Damage * m;
+			i->TakeDamage(aux);
 		}
 	}
 }

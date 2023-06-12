@@ -16,6 +16,7 @@ public:
 private:
 	void HideGameplayButtons();
 	void ShowGameplayButtons();
+	bool mStoneButtonClicked;
 	class Player* mPlayer;
 	Game* mGame;
 	SDL_Renderer* mRenderer;
@@ -32,6 +33,7 @@ private:
 	Button* mPauseButton;
 	Button* mContinueButton;
 	Button* mChangeOrderButton;
+	Button* mRockButton;
 	std::string mGold;
 	TTF_Font* mFont;
 	SDL_Color mTextColor = { 255, 0, 0 };

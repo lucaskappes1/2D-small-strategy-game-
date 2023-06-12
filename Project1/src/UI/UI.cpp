@@ -3,7 +3,7 @@
 #include "../Player.h"
 
 
-UI::UI(Game* game, SDL_Renderer* renderer, Player* Player) : mPlayer(Player)
+UI::UI(Game* game, SDL_Renderer* renderer, Player* Player) : mPlayer(Player), mStoneButtonClicked(false)
 {
 	mGame = game;
 	mRenderer = renderer;
@@ -31,6 +31,7 @@ void UI::Initialize()
 	mPauseButton = new Button(mRenderer, mMouse, 500, 100, mFont, "Pause");
 	mContinueButton = new Button(mRenderer, mMouse, 500, 100, mFont, "Continue");
 	mStartGameButton->Show();
+	mRockButton = new Button(mGame->getTexture(ROCK), mRenderer, mMouse, 250, 50, { 0, 0, 64, 64 }, mFont);
 	mKnightButton = new Button(mGame->getTexture(KNIGHT_BUTTON), mRenderer, mMouse, 50, 50, {130, 50, 106, 186}, mFont);
 	mSpearKnightButton = new Button(mGame->getTexture(SPEARMAN_BUTTON), mRenderer, mMouse, 100, 50, {0, 0, 172, 177}, mFont);
 	mAxeKnightButton = new Button(mGame->getTexture(GREEK_BUTTON), mRenderer, mMouse, 150, 50, {0, 0, 362, 586}, mFont);
@@ -48,6 +49,7 @@ void UI::Initialize()
 	mUpgradeArmorButton->addTooltip("Cost: 500 gold\nIncrease armor of next units by 1");
 	mUpgradeAttackButton->addTooltip("Cost: 500 gold\nIncrease attack of next units by 1");
 	mChangeOrderButton->addTooltip("Click to Change Order between advance or stand still");
+	mRockButton->addTooltip("Cost: 150 gold. Throw a Rock which does splash damage on next mouse click");
 	mGold = "Gold: 100";
 	mTextSurface = TTF_RenderText_Solid(mFont, mGold.c_str(), mTextColor);
 	mTextTexture = SDL_CreateTextureFromSurface(mRenderer, mTextSurface);
@@ -65,6 +67,7 @@ void UI::Update()
 	mPauseButton->Update();
 	mContinueButton->Update();
 	mChangeOrderButton->Update();
+	mRockButton->Update();
 	mMouse->Update();
 }
 
@@ -80,13 +83,19 @@ void UI::Draw()
 	mPauseButton->Draw();
 	mContinueButton->Draw();
 	mChangeOrderButton->Draw();
+	mRockButton->Draw();
 	SDL_RenderCopy(mRenderer, mTextTexture, NULL, &mTextRect);
 	mMouse->Draw();
 }
 
 void UI::OnMouseClickEvent()
 {
-	if (mKnightButton->IsSelected())
+	if (mStoneButtonClicked)
+	{
+		mGame->SplashDamage(130, mMouse->getCollisionRect().x, 150);
+		mStoneButtonClicked = false;
+	}
+	else if (mKnightButton->IsSelected())
 	{
 		mPlayer->CreateKnight();
 	}
@@ -133,6 +142,11 @@ void UI::OnMouseClickEvent()
 	{
 		mPlayer->ChangeOrder();
 	}
+	else if (mRockButton->IsSelected())
+	{
+		if(mPlayer->LaunchRock())
+		mStoneButtonClicked = true;
+	}
 }
 
 void UI::UpdateGoldText()
@@ -159,6 +173,7 @@ void UI::HideGameplayButtons()
 	mUpgradeArmorButton->Hide();
 	mUpgradeAttackButton->Hide();
 	mChangeOrderButton->Hide();
+	mRockButton->Hide();
 }
 
 void UI::ShowGameplayButtons()
@@ -170,4 +185,5 @@ void UI::ShowGameplayButtons()
 	mUpgradeArmorButton->Show();
 	mUpgradeAttackButton->Show();
 	mChangeOrderButton->Show();
+	mRockButton->Show();
 }

@@ -20,8 +20,8 @@ protected:
 	virtual void ChangeState();
 	class Game* mGame;
 	enum State {UNDERATTACK, ATTACKING, NUMBERDISADVANTAGE, NUMBERADVANTAGE, ENEMYATTHEGATES} eState;
-	const int XPOSTHRESHOLD = 700;
-	const int TOUGHXPOSTHRESHOLD = 850;
+	const int XPOSTHRESHOLD = 600;
+	const int TOUGHXPOSTHRESHOLD = 800;
 	std::random_device mRd;
 	std::mt19937 mRng;
 	std::uniform_int_distribution<int> mVariation;

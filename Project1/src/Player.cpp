@@ -83,3 +83,14 @@ void Player::UpgradeAttack()
 	}
 	mUI->UpdateGoldText();
 }
+
+bool Player::LaunchRock()
+{
+	if (mGold >= 150)
+	{
+		mGold -= 150;
+		mUI->UpdateGoldText();
+		return true;
+	}
+	return false;
+}
