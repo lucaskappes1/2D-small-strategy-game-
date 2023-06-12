@@ -5,7 +5,7 @@
 class UI
 {
 public:
-	UI(class Game* game, SDL_Renderer* renderer);
+	UI(class Game* game, SDL_Renderer* renderer, class Player* Player);
 	~UI();
 	void Initialize();
 	void Update();
@@ -13,11 +13,10 @@ public:
 	void OnMouseClickEvent();
 	void UpdateGoldText();
 	void StartGame();
-	inline bool getIsPlayerAdvancing() { return mPlayerIsAdvancing; }
 private:
 	void HideGameplayButtons();
 	void ShowGameplayButtons();
-	bool mPlayerIsAdvancing;
+	class Player* mPlayer;
 	Game* mGame;
 	SDL_Renderer* mRenderer;
 	SDL_Surface* mTextSurface;

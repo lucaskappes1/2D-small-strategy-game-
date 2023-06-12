@@ -1,13 +1,13 @@
 #include "UI.h"
 #include "../Game.h"
+#include "../Player.h"
 
 
-UI::UI(Game* game, SDL_Renderer* renderer)
+UI::UI(Game* game, SDL_Renderer* renderer, Player* Player) : mPlayer(Player)
 {
 	mGame = game;
 	mRenderer = renderer;
 	mMouse = new Mouse(mGame->getTexture(MOUSE_BUTTON), mRenderer);
-	mPlayerIsAdvancing = true;
 }
 
 UI::~UI()
@@ -88,27 +88,27 @@ void UI::OnMouseClickEvent()
 {
 	if (mKnightButton->IsSelected())
 	{
-		mGame->CreateKnight(true, mPlayerIsAdvancing);
+		mPlayer->CreateKnight();
 	}
 	else if (mSpearKnightButton->IsSelected())
 	{
-		mGame->CreateSpearKnight(true, mPlayerIsAdvancing);
+		mPlayer->CreateSpearKnight();
 	}
 	else if (mAxeKnightButton->IsSelected())
 	{
-		mGame->CreateAxeKnight(true, mPlayerIsAdvancing);
+		mPlayer->CreateAxeKnight();
 	}
 	else if (mAcherButton->IsSelected())
 	{
-		mGame->CreateArcher(true, mPlayerIsAdvancing);
+		mPlayer->CreateArcher();
 	}
 	else if (mUpgradeArmorButton->IsSelected())
 	{
-		mGame->PlayerUpgradeArmor();
+		mPlayer->UpgradeArmor();
 	}
 	else if (mUpgradeAttackButton->IsSelected())
 	{
-		mGame->PlayerUpgradeAttack();
+		mPlayer->UpgradeAttack();
 	}
 	else if (mStartGameButton->IsSelected())
 	{
@@ -131,14 +131,13 @@ void UI::OnMouseClickEvent()
 	}
 	else if (mChangeOrderButton->IsSelected())
 	{
-		mGame->PlayerChangeOrder();
-		mPlayerIsAdvancing = !mPlayerIsAdvancing;
+		mPlayer->ChangeOrder();
 	}
 }
 
 void UI::UpdateGoldText()
 {
-	mGold = "Gold: " + std::to_string(mGame->getPlayerGold());
+	mGold = "Gold: " + std::to_string(mPlayer->getGold());
 	SDL_FreeSurface(mTextSurface);
 	SDL_DestroyTexture(mTextTexture);
 	mTextSurface = TTF_RenderText_Solid(mFont, mGold.c_str(), mTextColor);

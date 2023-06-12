@@ -10,8 +10,12 @@ public:
 	inline const float& getGoldMultiplier() const { return mGoldMultiplier; }
 	inline void Activate() { mIsActive = true; }
 	inline void Deactivate() { mIsActive = false; }
+	void UpgradeAttack() { mAttackUpgradeCount++; }
+	void UpgradeArmor() { mArmorUpgradeCount++; }
 	bool mIsActive;
 protected:
+	int mAttackUpgradeCount;
+	int mArmorUpgradeCount;
 	float mGoldMultiplier = 1;
 	virtual void ChangeState();
 	class Game* mGame;

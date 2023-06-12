@@ -133,6 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\AI.cpp" />
     <ClCompile Include="src\units\Archer.cpp" />
     <ClCompile Include="src\units\AxeKnight.cpp" />
@@ -147,6 +148,7 @@
     <ClCompile Include="src\UI\UI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\AI.h" />
     <ClInclude Include="src\Constants.h" />
     <ClInclude Include="src\units\Archer.h" />

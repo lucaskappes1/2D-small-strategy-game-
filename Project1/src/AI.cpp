@@ -3,7 +3,7 @@
 #include <vector>
 #include <iostream>
 
-AI::AI(Game* game) : mRng(mRd()), mVariation(1,100), mIsActive(false)
+AI::AI(Game* game) : mRng(mRd()), mVariation(1,100), mIsActive(false), mArmorUpgradeCount(0), mAttackUpgradeCount(0)
 {
 	mGame = game;
 	eState = UNDERATTACK;
@@ -19,32 +19,32 @@ void AI::Act()
 	switch (eState)
 	{
 	case ATTACKING:
-		mGame->CreateSpearKnight(0, 1);
-		mGame->CreateKnight(0, 1);
-		mGame->CreateArcher(0, 1);
+		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		mGame->CreateKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 		break;
 	case UNDERATTACK:
-		mGame->CreateSpearKnight(0, 1);
-		mGame->CreateArcher(0, 1);
-		mGame->CreateArcher(0, 1);
+		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 		break;
 	case NUMBERDISADVANTAGE:
-		mGame->CreateSpearKnight(0, 1);
-		mGame->CreateArcher(0, 1);
-		mGame->CreateKnight(0, 1);
-		mGame->CreateArcher(0, 1);
-		mGame->CreateAxeKnight(0, 1);
-		mGame->CreateArcher(0, 1);
+		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		mGame->CreateKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		mGame->CreateAxeKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 		break;
 	case NUMBERADVANTAGE:
-		mGame->CreateArcher(0, 1);
-		mGame->CreateArcher(0, 1);
+		mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 		break;
 	case ENEMYATTHEGATES:
 		mGame->ClearAIQueue();
-		mGame->CreateSpearKnight(0, 1);
-		mGame->CreateSpearKnight(0, 1);
-		mGame->CreateSpearKnight(0, 1);
+		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 		break;
 	}
 }
@@ -102,63 +102,63 @@ void AIhard::Act()
 	case ATTACKING:
 		if (temp < 50 && temp > 20)
 		{
-			mGame->CreateSpearKnight(0, 1);
-			mGame->CreateAxeKnight(0, 1);
-			mGame->CreateArcher(0, 1);
-			mGame->CreateSpearKnight(0, 1);
-			mGame->CreateKnight(0, 1);
+			mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+			mGame->CreateAxeKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+			mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+			mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+			mGame->CreateKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 		}
 		else if (temp <= 20)
 		{
-			mGame->CreateSpearKnight(0, 1);
-			mGame->CreateAxeKnight(0, 1);
-			mGame->CreateArcher(0, 1);
-			mGame->CreateArcher(0, 1);
-			mGame->CreateKnight(0, 1);
+			mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+			mGame->CreateAxeKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+			mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+			mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+			mGame->CreateKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 		}
 		else
 		{
-			mGame->CreateSpearKnight(0, 1);
-			mGame->CreateKnight(0, 1);
-			mGame->CreateArcher(0, 1);
-			mGame->CreateArcher(0, 1);
-			mGame->CreateAxeKnight(0, 1);
+			mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+			mGame->CreateKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+			mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+			mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+			mGame->CreateAxeKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 		}
 		break;
 	case UNDERATTACK:
-		mGame->CreateSpearKnight(0, 1);
-		mGame->CreateSpearKnight(0, 1);
-		mGame->CreateArcher(0, 1);
-		mGame->CreateArcher(0, 1);
+		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 		break;
 	case NUMBERDISADVANTAGE:
-		mGame->CreateSpearKnight(0, 1);
-		mGame->CreateArcher(0, 1);
-		mGame->CreateKnight(0, 1);
-		mGame->CreateArcher(0, 1);
-		mGame->CreateAxeKnight(0, 1);
-		mGame->CreateArcher(0, 1);
-		mGame->CreateArcher(0, 1);
+		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		mGame->CreateKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		mGame->CreateAxeKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 		break;
 	case NUMBERADVANTAGE:
 		if (temp < 40)
 		{
-			mGame->CreateKnight(0, 1);
-			mGame->CreateArcher(0, 1);
+			mGame->CreateKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+			mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 		}
 		else 
 		{
-			mGame->CreateSpearKnight(0, 1);
-			mGame->CreateArcher(0, 1);
+			mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+			mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 		}
 		break;
 	case ENEMYATTHEGATES:
 		mGame->ClearAIQueue();
-		mGame->CreateSpearKnight(0, 1);
-		mGame->CreateSpearKnight(0, 1);
-		mGame->CreateSpearKnight(0, 1);
-		mGame->CreateSpearKnight(0, 1);
-		mGame->CreateSpearKnight(0, 1);
+		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 		break;
 	}
 }

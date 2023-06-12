@@ -2,6 +2,7 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
+#include "Player.h"
 
 Game::Game()
 {
@@ -10,7 +11,6 @@ Game::Game()
 	mTicksCount = 0;
 	mKills = 0;
 	mDeaths = 0;
-	mPlayerGold = 100;
 }
 
 bool Game::Initialize()
@@ -44,11 +44,14 @@ bool Game::Initialize()
 	}
 	LoadData();
 	BG = new Background(getTexture("assets/Background.png", BACKGROUND_TEXTURE), mRenderer, WIDTH, HEIGHT);
-	mUI = new UI(this, mRenderer);
+	mPlayer = new Player(this);
+	mUI = new UI(this, mRenderer, mPlayer);
+	mPlayer->setUiPointer(mUI);
 	mUI->Initialize();
 	mIsMenuActive = true;
 	mAI = new AIhard(this);
 	mIsRunning = true;
+	
 	return true;
 }
 
@@ -71,8 +74,9 @@ void Game::Shutdown()
 	{
 		mPendingAIObjects.pop();
 	}
+	delete mPlayer;
 	mTextureMap.clear();
-	std::cout << "kills: " << mKills << " deaths: " << mDeaths << "gold: " << mPlayerGold << std::endl;
+	std::cout << "kills: " << mKills << " deaths: " << mDeaths << std::endl;
 	SDL_DestroyRenderer(mRenderer);
 	SDL_DestroyWindow(mWindow);
 	IMG_Quit();
@@ -173,9 +177,8 @@ void Game::KillObject(GameObject* target)
 	}
 	else
 	{
-		mPlayerGold += target->getGoldCost() * mAI->getGoldMultiplier();
+		mPlayer->IncreaseGold(target->getGoldCost() * mAI->getGoldMultiplier());
 		mKills++;
-		mUI->UpdateGoldText();
 	}
 	mDeadObjects.emplace_back(target);
 }
@@ -214,10 +217,10 @@ void Game::ProcessInput()
 	}
 }
 
-void Game::ApplyPlayerUpgrade()
+void Game::ApplyPlayerUpgrade(int AttackUpgradeCount, int ArmorUpgradeCount)
 {
-	mPendingPlayerObjects.back()->setAttack(mPendingPlayerObjects.back()->getAttack() + mPlayerAttackUpgradeCount);
-	mPendingPlayerObjects.back()->setArmor(mPendingPlayerObjects.back()->getArmor() + mPlayerArmorUpgradeCount);
+	mPendingPlayerObjects.back()->setAttack(mPendingPlayerObjects.back()->getAttack() + AttackUpgradeCount);
+	mPendingPlayerObjects.back()->setArmor(mPendingPlayerObjects.back()->getArmor() + ArmorUpgradeCount);
 }
 
 void Game::LoadData()
@@ -328,17 +331,12 @@ void Game::LoadData()
 	getTexture("assets/ChangeOrder.png", CHANGE_ORDER_BUTTON);
 }
 
-void Game::CreateKnight(bool isPlayer, bool isAdvancing)
+void Game::CreateKnight(bool isPlayer, bool isAdvancing, int AttackUpgradeCount, int ArmorUpgradeCount)
 {
 	if (isPlayer)
 	{
-		if (mPlayerGold >= Knight::getStaticGoldCost())
-		{
-			mPlayerGold -= Knight::getStaticGoldCost();
-			mPendingPlayerObjects.emplace(new Knight(mRenderer, PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, this, 1, isAdvancing));
-			ApplyPlayerUpgrade();
-			mUI->UpdateGoldText();
-		}
+		mPendingPlayerObjects.emplace(new Knight(mRenderer, PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, this, 1, isAdvancing));
+		ApplyPlayerUpgrade(AttackUpgradeCount, ArmorUpgradeCount);
 	}
 	else
 	{
@@ -346,18 +344,13 @@ void Game::CreateKnight(bool isPlayer, bool isAdvancing)
 	}
 }
 
-void Game::CreateSpearKnight(bool isPlayer, bool isAdvancing)
+void Game::CreateSpearKnight(bool isPlayer, bool isAdvancing, int AttackUpgradeCount, int ArmorUpgradeCount)
 {
 	
 	if (isPlayer)
 	{
-		if (mPlayerGold >= SpearKnight::getStaticGoldCost())
-		{
-			mPlayerGold -= SpearKnight::getStaticGoldCost();
-			mPendingPlayerObjects.emplace(new SpearKnight(mRenderer, PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, this, 1, isAdvancing));
-			ApplyPlayerUpgrade();
-			mUI->UpdateGoldText();
-		}
+		mPendingPlayerObjects.emplace(new SpearKnight(mRenderer, PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, this, 1, isAdvancing));
+		ApplyPlayerUpgrade(AttackUpgradeCount, ArmorUpgradeCount);
 	}
 	else
 	{
@@ -365,17 +358,12 @@ void Game::CreateSpearKnight(bool isPlayer, bool isAdvancing)
 	}
 }
 
-void Game::CreateAxeKnight(bool isPlayer, bool isAdvancing)
+void Game::CreateAxeKnight(bool isPlayer, bool isAdvancing, int AttackUpgradeCount, int ArmorUpgradeCount)
 {
 	if (isPlayer)
 	{
-		if (mPlayerGold >= AxeKnight::getStaticGoldCost())
-		{
-			mPlayerGold -= AxeKnight::getStaticGoldCost();
-			mPendingPlayerObjects.emplace(new AxeKnight(mRenderer, PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, this, 1, isAdvancing));
-			ApplyPlayerUpgrade();
-			mUI->UpdateGoldText();
-		}
+		mPendingPlayerObjects.emplace(new AxeKnight(mRenderer, PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, this, 1, isAdvancing));
+		ApplyPlayerUpgrade(AttackUpgradeCount, ArmorUpgradeCount);
 	}
 	else
 	{
@@ -383,17 +371,12 @@ void Game::CreateAxeKnight(bool isPlayer, bool isAdvancing)
 	}
 }
 
-void Game::CreateArcher(bool isPlayer, bool isAdvancing)
+void Game::CreateArcher(bool isPlayer, bool isAdvancing, int AttackUpgradeCount, int ArmorUpgradeCount)
 {
 	if (isPlayer)
 	{
-		if (mPlayerGold >= Archer::getStaticGoldCost())
-		{
-			mPlayerGold -= Archer::getStaticGoldCost();
-			mPendingPlayerObjects.emplace(new Archer(mRenderer, PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, this, 1, isAdvancing));
-			ApplyPlayerUpgrade();
-			mUI->UpdateGoldText();
-		}
+		mPendingPlayerObjects.emplace(new Archer(mRenderer, PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, this, 1, isAdvancing));
+		ApplyPlayerUpgrade(AttackUpgradeCount, ArmorUpgradeCount);
 	}
 	else
 	{
@@ -406,26 +389,6 @@ void Game::ClearAIQueue()
 	while (mPendingAIObjects.size() > 0)
 	{
 		mPendingAIObjects.pop();
-	}
-}
-
-void Game::PlayerUpgradeArmor()
-{
-	if (mPlayerGold >= 500)
-	{
-		mPlayerArmorUpgradeCount++;
-		mPlayerGold -= 500;
-		mUI->UpdateGoldText();
-	}
-}
-
-void Game::PlayerUpgradeAttack()
-{
-	if (mPlayerGold >= 500)
-	{
-		mPlayerAttackUpgradeCount++;
-		mPlayerGold -= 500;
-		mUI->UpdateGoldText();
 	}
 }
 
@@ -551,7 +514,7 @@ void Game::Update()
 			if (temp)
 			{
 				GameObject* aux = mPendingPlayerObjects.front();
-				aux->setOrder(mUI->getIsPlayerAdvancing());
+				aux->setOrder(mPlayer->getIsPlayerAdvancing());
 				mPendingPlayerObjects.pop();
 				mObjects.emplace_back(aux);
 			}

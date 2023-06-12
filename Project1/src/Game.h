@@ -27,25 +27,22 @@ public:
 	GameObject* CollisionDetection(GameObject* gameObject);
 	SDL_Texture* getTexture(int id);
 	void KillObject(GameObject* target);
-	void CreateKnight(bool isPlayer, bool isAdvancing);
-	void CreateSpearKnight(bool isPlayer, bool isAdvancing);
-	void CreateAxeKnight(bool isPlayer, bool isAdvancing);
-	void CreateArcher(bool isPlayer, bool isAdvancing);
+	void CreateKnight(bool isPlayer, bool isAdvancing, int AttackUpgradeCount, int ArmorUpgradeCount);
+	void CreateSpearKnight(bool isPlayer, bool isAdvancing, int AttackUpgradeCount, int ArmorUpgradeCount);
+	void CreateAxeKnight(bool isPlayer, bool isAdvancing, int AttackUpgradeCount, int ArmorUpgradeCount);
+	void CreateArcher(bool isPlayer, bool isAdvancing, int AttackUpgradeCount, int ArmorUpgradeCount);
 	void ClearAIQueue();
-	void PlayerUpgradeArmor();
-	void PlayerUpgradeAttack();
 	void PlayerChangeOrder();
 	void StartGame();
 	void Pause();
 	void Continue();
-	inline int getPlayerGold() { return mPlayerGold; }
 	void SplashDamage(int Damage, int x, int Radious);
 private:
 	void Update();
 	void Render();
 	void ProcessInput();
-	void ApplyPlayerUpgrade();
 	void LoadData();
+	void ApplyPlayerUpgrade(int AttackUpgradeCount, int ArmorUpgradeCount);
 	SDL_Texture* getTexture(std::string path, int name);
 	std::map<int, SDL_Texture*> mTextureMap;
 	SDL_Renderer* mRenderer;
@@ -55,6 +52,8 @@ private:
 	std::vector<GameObject*> mNonCollidableObjects;
 	std::queue<GameObject*> mPendingPlayerObjects;
 	std::queue<GameObject*> mPendingAIObjects;
+
+	class Player* mPlayer;
 	
 	int mTimeSeconds = 0;
 	AI* mAI;
@@ -64,13 +63,9 @@ private:
 	bool mIsMenuActive;
 	int mTicksCount;
 
-	int mPlayerArmorUpgradeCount = 0;
-	int mPlayerAttackUpgradeCount = 0;
-
 	int mClearFloorTimer = 0;
 	int mKills;
 	int mDeaths;
-	int mPlayerGold;
 
 	Background* BG;
 };
