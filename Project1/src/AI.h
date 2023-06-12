@@ -17,6 +17,7 @@ protected:
 	int mAttackUpgradeCount;
 	int mArmorUpgradeCount;
 	float mGoldMultiplier = 1;
+	int mEnemyMiddle;
 	virtual void ChangeState();
 	class Game* mGame;
 	enum State {UNDERATTACK, ATTACKING, NUMBERDISADVANTAGE, NUMBERADVANTAGE, ENEMYATTHEGATES} eState;

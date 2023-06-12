@@ -54,32 +54,41 @@ void AI::ChangeState()
 	const std::vector<GameObject*>& temp = mGame->GetGameObjectVector();
 	int playerCount= 0;
 	int AICount = 0;
+	int x = 0;;
 	for (GameObject* i : temp)
 	{
 		if (i->getIsPlayer())
 		{
 			if (i->getX() > XPOSTHRESHOLD)
 			{
-				int temp = mVariation(mRng);
-				if(temp < 30)
-					mGame->SplashDamage(200, XPOSTHRESHOLD - 80, 200);
 				if (i->getX() > TOUGHXPOSTHRESHOLD)
 				{
 					eState = ENEMYATTHEGATES;
-					return;
 				}
-				eState = UNDERATTACK;
-				return;
+				else
+				{
+					eState = UNDERATTACK;
+				}
 			}
 			playerCount++;
+			x += i->getX();
 		}
 		else
 		{
 			AICount++;
 		}
 	}
+	mEnemyMiddle = x / playerCount;
+	if (eState == UNDERATTACK || eState == ENEMYATTHEGATES)
+	{
+		return;
+	}
 	if (playerCount > AICount + 4)
 	{
+		if (playerCount >= AICount + 8)
+		{
+			mGame->SplashDamage(200, mEnemyMiddle, 200);
+		}
 		eState = NUMBERDISADVANTAGE;
 		return;
 	}
@@ -89,7 +98,6 @@ void AI::ChangeState()
 		return;
 	}
 	eState = ATTACKING;
-
 	return;
 }
 
@@ -133,6 +141,10 @@ void AIhard::Act()
 		}
 		break;
 	case UNDERATTACK:
+		if (temp < 15)
+		{
+			mGame->SplashDamage(200, mEnemyMiddle, 200);
+		}
 		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 		mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
@@ -160,6 +172,10 @@ void AIhard::Act()
 		}
 		break;
 	case ENEMYATTHEGATES:
+		if (temp < 25)
+		{
+			mGame->SplashDamage(200, mEnemyMiddle, 200);
+		}
 		mGame->ClearAIQueue();
 		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
