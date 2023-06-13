@@ -6,8 +6,8 @@ Knight::Knight(SDL_Renderer* renderer, int x, int y, class Game* game, bool isPl
 	mAdvancing = isAdvancing;
 	mIsPlayer = isPlayer;
 	mRenderer = renderer;
-	mX = x;
-	mY = y;
+	mPosition = { (float)x, (float)y };
+	mVelocity = isPlayer ? Vector2(60.0f, 0.0f) : Vector2(-60.0f, 0.0f);
 	mDestR = { x, y, 32,  32 };
 	mCollisionR = { x, y, 32, 32 };
 	mSrcR = { 135, 50, 106, 186 };
@@ -35,16 +35,9 @@ void Knight::Update(float deltaTime)
 	GameObject* res = mGame->CollisionDetection(this);
 	if (res == nullptr && mAdvancing)
 	{
-		if (mIsPlayer)
-		{
-			mX = mX + 1;
-		}
-		else
-		{
-			mX = mX - 1;
-		}
-		mDestR.x = mX;
-		mCollisionR.x = mX;
+		mPosition += mVelocity * deltaTime;
+		mDestR.x = mPosition.getIntX();
+		mCollisionR.x = mPosition.getIntX();
 		eLastFrameState = eState;
 		eState = WALKING;
 	}
@@ -93,7 +86,7 @@ void Knight::Draw()
 				mCurrentFrame = 0;
 			}
 		}
-		RenderHPBar(mX, mY - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
+		RenderHPBar(mPosition.getIntX(), mPosition.getIntY() - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
 		break;
 	case Knight::WALKING:
 		if (eState != eLastFrameState)
@@ -119,7 +112,7 @@ void Knight::Draw()
 				mCurrentFrame = 0;
 			}
 		}
-		RenderHPBar(mX, mY - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
+		RenderHPBar(mPosition.getIntX(), mPosition.getIntY() - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
 		break;
 	case Knight::IDLE:
 		if (!mIsPlayer)
@@ -130,7 +123,7 @@ void Knight::Draw()
 		{
 			SDL_RenderCopy(mRenderer, mIdleTexture, &mSrcR, &mDestR);
 		}
-		RenderHPBar(mX, mY - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
+		RenderHPBar(mPosition.getIntX(), mPosition.getIntY() - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
 		break;
 	case Knight::DEATH:
 		mSrcR.w = 223;
@@ -143,12 +136,12 @@ void Knight::Draw()
 		}
 		if (!mIsPlayer)
 		{
-			mDestR.x = mX - 22;
+			mDestR.x = mPosition.getIntX() - 22;
 			SDL_RenderCopyEx(mRenderer, mDeathAnimVec.at(mCurrentFrame), &mSrcR, &mDestR, 0, nullptr, SDL_FLIP_HORIZONTAL);
 		}
 		else
 		{
-			mDestR.x = mX + 10;
+			mDestR.x = mPosition.getIntX() + 10;
 			SDL_RenderCopy(mRenderer, mDeathAnimVec.at(mCurrentFrame), &mSrcR, &mDestR);
 		}
 		mFrameCount++;

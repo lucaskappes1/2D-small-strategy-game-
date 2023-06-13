@@ -7,9 +7,8 @@ AxeKnight::AxeKnight(SDL_Renderer* renderer, int x, int y, Game* game, bool isPl
 	mRenderer = renderer;
 	mDestR = { x, y, 32, 32 };
 	mCollisionR = { x, y, 32, 32 };
-	//mSrcR = { 170, 0, 1026, 597 };
-	mX = x;
-	mY = y;
+	mPosition = { (float)x, (float)y };
+	mVelocity = isPlayer ? Vector2(60.0f, 0.0f) : Vector2(-60.0f, 0.0f);
 	mGame = game;
 	mIsPlayer = isPlayer;
 	mHP = MAX_HP;
@@ -35,16 +34,9 @@ void AxeKnight::Update(float deltaTime)
 	GameObject* res = mGame->CollisionDetection(this);
 	if (res == nullptr && mAdvancing)
 	{
-		if (mIsPlayer)
-		{
-			mX = mX + 1;
-		}
-		else
-		{
-			mX = mX - 1;
-		}
-		mDestR.x = mX;
-		mCollisionR.x = mX;
+		mPosition += mVelocity * deltaTime;
+		mDestR.x = mPosition.getIntX();
+		mCollisionR.x = mPosition.getIntX();
 		eLastFrameState = eState;
 		eState = WALKING;
 	}
@@ -78,12 +70,12 @@ void AxeKnight::Draw()
 		}
 		if (!mIsPlayer)
 		{
-			mDestR.x = mX - 25;
+			mDestR.x = mPosition.getIntX() - 25;
 			SDL_RenderCopyEx(mRenderer, mAttackingAnimVec.at(mCurrentFrame), NULL, &mDestR, 0, nullptr, SDL_FLIP_HORIZONTAL);
 		}
 		else
 		{
-			mDestR.x = mX - 15;
+			mDestR.x = mPosition.getIntX() - 15;
 			SDL_RenderCopy(mRenderer, mAttackingAnimVec.at(mCurrentFrame), NULL, &mDestR);
 		}
 		mFrameCount++;
@@ -96,7 +88,7 @@ void AxeKnight::Draw()
 				mCurrentFrame = 0;
 			}
 		}
-		RenderHPBar(mX, mY - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
+		RenderHPBar(mPosition.getIntX(), mPosition.getIntY() - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
 		break;
 	case AxeKnight::WALKING:
 		mDestR.w = 32;
@@ -123,11 +115,11 @@ void AxeKnight::Draw()
 				mCurrentFrame = 0;
 			}
 		}
-		RenderHPBar(mX, mY - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
+		RenderHPBar(mPosition.getIntX(), mPosition.getIntY() - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
 		break;
 	case AxeKnight::IDLE:
 		mDestR.w = 32;
-		mDestR.x = mX;
+		mDestR.x = mPosition.getIntX();
 		if (!mIsPlayer)
 		{
 			SDL_RenderCopyEx(mRenderer, mIdleTexture, NULL, &mDestR, 0, nullptr, SDL_FLIP_HORIZONTAL);
@@ -136,7 +128,7 @@ void AxeKnight::Draw()
 		{
 			SDL_RenderCopy(mRenderer, mIdleTexture, NULL, &mDestR);
 		}
-		RenderHPBar(mX, mY - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
+		RenderHPBar(mPosition.getIntX(), mPosition.getIntY() - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
 		break;
 	case AxeKnight::DEATH:
 		mDestR.w = 59;
@@ -149,12 +141,12 @@ void AxeKnight::Draw()
 		}
 		if (!mIsPlayer)
 		{
-			mDestR.x = mX - 5;
+			mDestR.x = mPosition.getIntX() - 20;
 			SDL_RenderCopyEx(mRenderer, mDeathAnimVec.at(mCurrentFrame), NULL, &mDestR, 0, nullptr, SDL_FLIP_HORIZONTAL);
 		}
 		else
 		{
-			mDestR.x = mX - 15;
+			mDestR.x = mPosition.getIntX() - 20;
 			SDL_RenderCopy(mRenderer, mDeathAnimVec.at(mCurrentFrame), NULL, &mDestR);
 		}
 		mFrameCount++;

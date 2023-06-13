@@ -3,10 +3,10 @@
 
 Archer::Archer(SDL_Renderer* renderer, int x, int y, Game* game, bool isPlayer, bool isAdvancing)
 {
+	mPosition = { (float)x, (float)y };
+	mVelocity = isPlayer ? Vector2(60.0f, 0.0f) : Vector2(-60.0f, 0.0f);
 	mAdvancing = isAdvancing;
 	mRenderer = renderer;
-	mX = x;
-	mY = y;
 	mCollisionR = { x, y, 32, 32 };
 	mDestR = { x, y, 32, 32 };
 	mSrcR = { 0, 0, 686, 1055 };
@@ -35,16 +35,9 @@ void Archer::Update(float deltaTime)
 	GameObject* res2 = mGame->CollisionDetection(this);	
 	if (res2 == nullptr && mAdvancing)
 	{
-		if (mIsPlayer)
-		{
-			mX = mX + 1;
-		}
-		else
-		{
-			mX = mX - 1;
-		}
-		mDestR.x = mX;
-		mCollisionR.x = mX;
+		mPosition += mVelocity * deltaTime;
+		mDestR.x = mPosition.getIntX();
+		mCollisionR.x = mPosition.getIntX();
 		eLastFrameState = eState;
 		eState = WALKING;
 	}
@@ -95,7 +88,7 @@ void Archer::Draw()
 				}
 			}
 		}
-		RenderHPBar(mX, mY - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
+		RenderHPBar(mPosition.getIntX(), mPosition.getIntY() - 5, 28, 3, mPercentHPBar, {0, 255, 0, 255}, {255, 0, 0, 255});
 		break;
 	case Archer::WALKING:		
 		if (eState != eLastFrameState)
@@ -126,7 +119,7 @@ void Archer::Draw()
 				}
 			}
 		}
-		RenderHPBar(mX, mY - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
+		RenderHPBar(mPosition.getIntX(), mPosition.getIntY() - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
 		break;
 	case Archer::IDLE:		
 		if (mIsPlayer)
@@ -137,7 +130,7 @@ void Archer::Draw()
 		{
 			SDL_RenderCopy(mRenderer, mIdleTexture, NULL, &mDestR);
 		}
-		RenderHPBar(mX, mY - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
+		RenderHPBar(mPosition.getIntX(), mPosition.getIntY() - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
 		break;
 	case Archer::DEATH:
 		if (eState != eLastFrameState)

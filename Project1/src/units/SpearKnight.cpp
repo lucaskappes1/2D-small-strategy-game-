@@ -6,8 +6,8 @@ SpearKnight::SpearKnight(SDL_Renderer* renderer, int x, int y, class Game* game,
 	mAdvancing = isAdvancing;
 	mIsPlayer = isPlayer;
 	mRenderer = renderer;
-	mX = x;
-	mY = y;
+	mPosition = { (float)x, (float)y };
+	mVelocity = isPlayer ? Vector2(60.0f, 0.0f) : Vector2(-60.0f, 0.0f);
 	mDestR = { x, y, 32,  32 };
 	mCollisionR = { x, y, 32, 32 };
 	mGame = game;
@@ -33,16 +33,9 @@ void SpearKnight::Update(float deltaTime)
 	GameObject* res = mGame->CollisionDetection(this);
 	if (res == nullptr && mAdvancing)
 	{
-		if (mIsPlayer)
-		{
-			mX = mX + 1;
-		}
-		else
-		{
-			mX = mX - 1;
-		}
-		mDestR.x = mX;
-		mCollisionR.x = mX;
+		mPosition += mVelocity * deltaTime;
+		mDestR.x = mPosition.getIntX();
+		mCollisionR.x = mPosition.getIntX();
 		eLastFrameState = eState;
 		eState = WALKING;
 	}
@@ -91,7 +84,7 @@ void SpearKnight::Draw()
 				mSrcR.x = 0;
 			}
 		}
-		RenderHPBar(mX, mY - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
+		RenderHPBar(mPosition.getIntX(), mPosition.getIntY() - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
 		break;
 	case GameObject::WALKING:
 		if (eLastFrameState != eState)
@@ -117,7 +110,7 @@ void SpearKnight::Draw()
 				mSrcR.x = 0;
 			}
 		}
-		RenderHPBar(mX, mY - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
+		RenderHPBar(mPosition.getIntX(), mPosition.getIntY() - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
 		break;
 	case GameObject::IDLE:
 		mSrcR.x = 1281;
@@ -129,7 +122,7 @@ void SpearKnight::Draw()
 		{
 			SDL_RenderCopy(mRenderer, mIdleTexture, &mSrcR, &mDestR);
 		}
-		RenderHPBar(mX, mY - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
+		RenderHPBar(mPosition.getIntX(), mPosition.getIntY() - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
 		break;
 	case GameObject::DEATH:
 		if (eLastFrameState != eState)

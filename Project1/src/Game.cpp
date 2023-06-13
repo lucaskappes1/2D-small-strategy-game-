@@ -3,6 +3,7 @@
 #include <thread>
 #include <chrono>
 #include "Player.h"
+#include "Projectile.h"
 
 Game::Game()
 {
@@ -103,7 +104,9 @@ GameObject* Game::RangedAttackDetection(GameObject* gameObject, int range)
 		{
 			if (!mObjects.at(i)->getIsPlayer() && mObjects.at(i)->eState != GameObject::DEATH)
 			{
-				if(mObjects.at(i)->getX() - gameObject->getX() < range)
+				Vector2 distance = mObjects.at(i)->getPositionVec() - gameObject->getPositionVec();
+				int d = abs(distance.getIntX());
+				if(d < range)
 				{
 					return mObjects.at(i);
 				}
@@ -120,7 +123,9 @@ GameObject* Game::RangedAttackDetection(GameObject* gameObject, int range)
 		{
 			if (mObjects.at(i)->getIsPlayer() && mObjects.at(i)->eState != GameObject::DEATH)
 			{
-				if (gameObject->getX() - mObjects.at(i)->getX() < range)
+				Vector2 distance = mObjects.at(i)->getPositionVec() - gameObject->getPositionVec();
+				int d = abs(distance.getIntX());
+				if (d < range)
 				{
 					return mObjects.at(i);
 				}
@@ -475,7 +480,6 @@ void Game::Update()
 			deltaTime = 0.05f;
 		}
 		mTicksCount = SDL_GetTicks();
-
 		mUI->Update();
 		mIsUpdatingObjects = true;
 		for (auto& i : mObjects)

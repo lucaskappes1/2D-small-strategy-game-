@@ -1,5 +1,6 @@
 #pragma once
 #include "SDL.h"
+#include "../Vector2.h"
 
 class GameObject
 {
@@ -13,8 +14,9 @@ public:
 	virtual void TakeDamage(int DMG) = 0;
 	inline const int& getAttack() const { return mDamage; }
 	inline const int& getArmor() const { return mArmor; }
-	inline const int& getX() const { return mX; }
-	inline const int& getY() const { return mY; }
+	inline const int& getX() const { return mPosition.getIntX(); }
+	inline const int& getY() const { return mPosition.getIntY(); }
+	inline const Vector2& getPositionVec() const { return mPosition; }
 	inline const bool& getIsPlayer() const { return mIsPlayer; }
 	inline const SDL_Rect& getCollisionRect() const { return mCollisionR; }
 	virtual void setArmor(int Armor) { mArmor = Armor; }
@@ -24,8 +26,8 @@ public:
 	void ChangeOrder() { mAdvancing = !mAdvancing; }
 	void setOrder(bool isAdvancing) { mAdvancing = isAdvancing; }
 protected:
-	int mX;
-	int mY;
+	Vector2 mPosition;
+	Vector2 mVelocity;
 	int mHP;
 	bool mIsPlayer;
 	SDL_Rect mCollisionR;

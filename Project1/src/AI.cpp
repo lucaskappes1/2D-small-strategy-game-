@@ -6,7 +6,7 @@
 AI::AI(Game* game) : mRng(mRd()), mVariation(1,100), mIsActive(false), mArmorUpgradeCount(0), mAttackUpgradeCount(0)
 {
 	mGame = game;
-	eState = UNDERATTACK;
+	eState = ATTACKING;
 }
 
 void AI::Act()
@@ -112,13 +112,21 @@ void AIhard::Act()
 	switch (eState)
 	{
 	case ATTACKING:
-		if (temp < 50 && temp > 20)
+		if (temp < 70 && temp > 40)
 		{
 			mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 			mGame->CreateAxeKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 			mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 			mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 			mGame->CreateKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		}
+		else if (temp > 20 && temp <= 40)
+		{
+			mGame->CreateKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+			mGame->CreateKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+			mGame->CreateKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+			mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+			mGame->CreateAxeKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 		}
 		else if (temp <= 20)
 		{
@@ -141,9 +149,9 @@ void AIhard::Act()
 		}
 		break;
 	case UNDERATTACK:
-		if (temp < 15)
+		if (temp < 5)
 		{
-			mGame->SplashDamage(200, mEnemyMiddle, 200);
+			mGame->SplashDamage(150, mEnemyMiddle, 200);
 		}
 		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
@@ -172,9 +180,9 @@ void AIhard::Act()
 		}
 		break;
 	case ENEMYATTHEGATES:
-		if (temp < 25)
+		if (temp < 15)
 		{
-			mGame->SplashDamage(200, mEnemyMiddle, 200);
+			mGame->SplashDamage(150, mEnemyMiddle, 200);
 		}
 		mGame->ClearAIQueue();
 		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);

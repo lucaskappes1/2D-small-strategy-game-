@@ -54,7 +54,7 @@ private:
 	std::queue<GameObject*> mPendingAIObjects;
 
 	class Player* mPlayer;
-	
+
 	int mTimeSeconds = 0;
 	AI* mAI;
 	UI* mUI;
