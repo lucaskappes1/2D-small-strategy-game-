@@ -1,6 +1,6 @@
 #pragma once
 
-//MAX TEXTURE NUMBER UNTIL NOW: 102
+//MAX TEXTURE NUMBER UNTIL NOW: 103
 
 const int WIDTH = 1024;
 const int HEIGHT = 768;
@@ -117,5 +117,6 @@ const int ARMOR_UPGRADE_BUTTON = 63;
 const int ATTACK_UPGRADE_BUTTON = 64;
 const int MOUSE_BUTTON = 65;
 const int CHANGE_ORDER_BUTTON = 101;
+const int ROCK_UPGRADE_BUTTON = 103;
 
 const int BACKGROUND_TEXTURE = 66;

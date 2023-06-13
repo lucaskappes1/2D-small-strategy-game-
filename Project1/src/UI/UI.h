@@ -29,6 +29,7 @@ private:
 	Button* mAcherButton;
 	Button* mUpgradeArmorButton;
 	Button* mUpgradeAttackButton;
+	Button* mUpgradeRockButton;
 	Button* mStartGameButton;
 	Button* mPauseButton;
 	Button* mContinueButton;

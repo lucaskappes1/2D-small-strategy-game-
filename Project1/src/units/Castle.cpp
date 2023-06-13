@@ -20,6 +20,7 @@ void Castle::Update(float deltaTime)
 	if (mHP <= 0)
 	{
 		mGame->KillObject(this);
+		mGame->Shutdown();
 	}
 	GameObject* res = mGame->RangedAttackDetection(this, 210);
 	if (res != nullptr)

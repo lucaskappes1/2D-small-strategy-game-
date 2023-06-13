@@ -1,6 +1,7 @@
 #pragma once
 
 #include <random>
+#include "Vector2.h"
 
 class AI
 {
@@ -16,6 +17,7 @@ public:
 protected:
 	int mAttackUpgradeCount;
 	int mArmorUpgradeCount;
+	int mRockUpgradeLevel;
 	float mGoldMultiplier = 1;
 	int mEnemyMiddle;
 	virtual void ChangeState();

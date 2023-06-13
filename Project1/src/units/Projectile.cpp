@@ -1,43 +1,19 @@
 #include "Projectile.h"
 #include "../Game.h"
 
-Projectile::Projectile(const Vector2& position, const Vector2& destination, SDL_Renderer* renderer, class Game* game) :
+Projectile::Projectile(const Vector2& position, const Vector2& destination, SDL_Renderer* renderer, class Game* game, bool isPlayer) :
 	mDestination(destination),
 	mRenderer(renderer),
 	mGame(game)
 {
-	mAcceleration = { 0.0f, 30.0f };
-	mCollisionR = { 0, 0, 0, 0 };
-	mPosition = position;
-	mDestR = { mPosition.getIntX(), mPosition.getIntY(), 16, 16 };
-	LoadAnimation();
-	CalculateVelocity();
 }
 
-void Projectile::Update(float deltaTime)
+void Projectile::CalculateVelocity(float offset)
 {
-	mVelocity += mAcceleration * deltaTime;
-	mPosition += mVelocity * deltaTime;
-	mDestR.x = mPosition.getIntX();
-	mDestR.y = mPosition.getIntY();
-}
-
-void Projectile::Draw()
-{
-	SDL_RenderCopy(mRenderer, mTexture, NULL, &mDestR);
-}
-
-void Projectile::LoadAnimation()
-{
-	mTexture = mGame->getTexture(ROCK);
-}
-
-void Projectile::CalculateVelocity()
-{
-	Vector2 dtemp = mDestination - mPosition;
-	int d = abs(dtemp.getIntX());
-	float time = (float) d / 300.0f;
-	float temp = (pow(time, 2) * 30.0f) / 2.0f;
-	float Voy = (-temp - 58) / time;
-	mVelocity = { 300, Voy };
+	mDestination.setX(mDestination.getX() + offset);
+	int dx = mDestination.getIntX() - mPosition.getIntX();
+	float distanceX = dx * (dx >= 0 ? 1.0f : -1.0f);
+	float time = distanceX / mVelocity.getX();
+	float Voy = (mDestination.getIntY() - mPosition.getIntY() - (mAcceleration.getY() * time * time / 2)) / time;
+	mVelocity = { mVelocity.getX() * (dx >= 0 ? 1.0f : -1.0f), Voy};
 }

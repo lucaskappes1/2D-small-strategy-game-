@@ -2,8 +2,9 @@
 #include "Game.h"
 #include <vector>
 #include <iostream>
+#include "units/Rock.h"
 
-AI::AI(Game* game) : mRng(mRd()), mVariation(1,100), mIsActive(false), mArmorUpgradeCount(0), mAttackUpgradeCount(0)
+AI::AI(Game* game) : mRng(mRd()), mVariation(1,100), mIsActive(false), mArmorUpgradeCount(3), mAttackUpgradeCount(3), mRockUpgradeLevel(1)
 {
 	mGame = game;
 	eState = ATTACKING;
@@ -85,10 +86,6 @@ void AI::ChangeState()
 	}
 	if (playerCount > AICount + 4)
 	{
-		if (playerCount >= AICount + 8)
-		{
-			mGame->SplashDamage(200, mEnemyMiddle, 200);
-		}
 		eState = NUMBERDISADVANTAGE;
 		return;
 	}
@@ -149,9 +146,10 @@ void AIhard::Act()
 		}
 		break;
 	case UNDERATTACK:
-		if (temp < 5)
+		if (temp < 10)
 		{
-			mGame->SplashDamage(150, mEnemyMiddle, 200);
+			Vector2 Dest((float)(mEnemyMiddle - 80), 658.0f);
+			mGame->ThrowRock(new Rock({ 974.0f, 600.0f }, Dest, mGame->getRenderer(), mGame, 0, mRockUpgradeLevel));
 		}
 		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
@@ -180,9 +178,10 @@ void AIhard::Act()
 		}
 		break;
 	case ENEMYATTHEGATES:
-		if (temp < 15)
+		if (temp < 20)
 		{
-			mGame->SplashDamage(150, mEnemyMiddle, 200);
+			Vector2 Dest((float)(mEnemyMiddle - 80), 658.0f);
+			mGame->ThrowRock(new Rock({ 974.0f, 600.0f }, Dest, mGame->getRenderer(), mGame, 0, mRockUpgradeLevel));
 		}
 		mGame->ClearAIQueue();
 		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);

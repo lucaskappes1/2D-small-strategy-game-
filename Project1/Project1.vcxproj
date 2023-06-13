@@ -133,6 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\units\Rock.cpp" />
     <ClCompile Include="src\units\Projectile.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\AI.cpp" />
@@ -150,6 +151,7 @@
     <ClCompile Include="src\Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\units\Rock.h" />
     <ClInclude Include="src\units\Projectile.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\AI.h" />

@@ -5,16 +5,16 @@
 class Projectile : public GameObject
 {
 public:
-    Projectile(const Vector2& position, const Vector2& destination, SDL_Renderer* renderer, class Game* game);
-    void Update(float deltaTime) override;
-    void Draw();
-    void LoadAnimation();
+    Projectile(const Vector2& position, const Vector2& destination, SDL_Renderer* renderer, class Game* game, bool isPlayer);
+    virtual void Update(float deltaTime) = 0;
+    virtual void Draw() = 0;
+    virtual void LoadAnimation() = 0;
     virtual void Attack(GameObject* target) {}
     virtual void TakeDamage(int DMG) {}
-private:
+protected:
     Vector2 mAcceleration;
     Vector2 mDestination;
-    void CalculateVelocity();
+    void CalculateVelocity(float offset);
     SDL_Renderer* mRenderer;
     SDL_Texture* mTexture;
     SDL_Rect mDestR;

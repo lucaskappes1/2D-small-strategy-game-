@@ -5,10 +5,10 @@
 #include "units/AxeKnight.h"
 #include "units/SpearKnight.h"
 #include "units/Archer.h"
-#include "units/Projectile.h"
+#include "units/Rock.h"
 #include "UI/UI.h"
 
-Player::Player( Game* game) : mGame(game), mGold(100), mArmorUpgradeCount(0), mAttackUpgradeCount(0)
+Player::Player( Game* game) : mGame(game), mGold(100), mArmorUpgradeCount(0), mAttackUpgradeCount(0), mRockUpgradeLevel(0)
 {
 }
 
@@ -85,13 +85,30 @@ void Player::UpgradeAttack()
 	mUI->UpdateGoldText();
 }
 
+void Player::UpgradeRock()
+{
+	if (mRockUpgradeLevel == 2)
+	{
+		return;
+	}
+	else
+	{
+		if (mGold >= 2000)
+		{
+			mGold -= 2000;
+			mRockUpgradeLevel++;
+			mUI->UpdateGoldText();
+		}
+	}
+}
+
 bool Player::LaunchRock(int xDest)
 {
-	if (mGold >= 50)
+	if (mGold >= 125)
 	{
-		mGold -= 150;
+		mGold -= 125;
 		Vector2 Dest((float)xDest, 658.0f);
-		mGame->ThrowRock(new Projectile({50.0f, 600.0f}, {(float)xDest, 658.0f}, mGame->getRenderer(), mGame));
+		mGame->ThrowRock(new Rock({50.0f, 600.0f}, Dest, mGame->getRenderer(), mGame, 1, mRockUpgradeLevel));
 		mUI->UpdateGoldText();
 		return true;
 	}

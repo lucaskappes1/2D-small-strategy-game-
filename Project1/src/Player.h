@@ -11,6 +11,7 @@ public:
 	void IncreaseGold(int amount);
 	void UpgradeArmor();
 	void UpgradeAttack();
+	void UpgradeRock();
 	bool LaunchRock(int xDest);
 	bool getIsPlayerAdvancing() { return mIsAdvancing; }
 	void setUiPointer(class UI* Ui) { mUI = Ui; }
@@ -20,6 +21,7 @@ private:
 	int mGold;
 	int mAttackUpgradeCount;
 	int mArmorUpgradeCount;
+	int mRockUpgradeLevel;
 	class UI* mUI;
 	class Game* mGame;
 };

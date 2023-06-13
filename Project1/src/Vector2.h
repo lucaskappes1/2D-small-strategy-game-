@@ -10,10 +10,12 @@ public:
     Vector2& operator-=(const Vector2& other);
     Vector2 operator*(float scalar) const;
     Vector2& operator*=(float scalar);
-    inline const int& getIntX() const { return (int)x; }
-    inline const int& getIntY() const { return (int)y; }
-    inline const float& getX() const { return x; }
-    inline const float& getY() const { return y; }
+    inline int getIntX() const { return static_cast<int>(x); }
+    inline int getIntY() const { return static_cast<int>(y); }
+    inline float getX() const { return x; }
+    inline float getY() const { return y; }
+    void setX(float _x) { x = _x; }
+    void setY(float _y) { x = _y; }
     float dot(const Vector2& other) const;
     float magnitude() const;
     Vector2 normalize() const;

@@ -335,6 +335,7 @@ void Game::LoadData()
 	getTexture("assets/Mouse.png", MOUSE_BUTTON);
 	getTexture("assets/ChangeOrder.png", CHANGE_ORDER_BUTTON);
 	getTexture("assets/Rock.png", ROCK);
+	getTexture("assets/RockUpgrade.png", ROCK_UPGRADE_BUTTON);
 }
 
 void Game::CreateKnight(bool isPlayer, bool isAdvancing, int AttackUpgradeCount, int ArmorUpgradeCount)
@@ -496,10 +497,19 @@ void Game::Update()
 		{
 			for (auto& i : mDeadObjects)
 			{
-				auto iter = std::find(mObjects.begin(), mObjects.end(), i);
-				std::iter_swap(iter, mObjects.end() - 1);
-				mObjects.pop_back();
-				mNonCollidableObjects.emplace_back(i);
+				if (dynamic_cast<Projectile*>(i))
+				{
+					auto iter = std::find(mObjects.begin(), mObjects.end(), i);
+					std::iter_swap(iter, mObjects.end() - 1);
+					mObjects.pop_back();
+				}
+				else
+				{
+					auto iter = std::find(mObjects.begin(), mObjects.end(), i);
+					std::iter_swap(iter, mObjects.end() - 1);
+					mObjects.pop_back();
+					mNonCollidableObjects.emplace_back(i);
+				}
 			}
 			mDeadObjects.clear();
 		}
