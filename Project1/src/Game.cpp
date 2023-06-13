@@ -3,7 +3,7 @@
 #include <thread>
 #include <chrono>
 #include "Player.h"
-#include "Projectile.h"
+#include "units/Projectile.h"
 
 Game::Game()
 {
@@ -446,6 +446,11 @@ void Game::SplashDamage(int Damage, int x, int Radious)
 			i->TakeDamage(aux);
 		}
 	}
+}
+
+void Game::ThrowRock(GameObject* projectile)
+{
+	mPendingPlayerObjects.emplace(projectile);
 }
 
 SDL_Texture* Game::getTexture(std::string path, int name)

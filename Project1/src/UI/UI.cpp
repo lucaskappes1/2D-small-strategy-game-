@@ -92,7 +92,7 @@ void UI::OnMouseClickEvent()
 {
 	if (mStoneButtonClicked)
 	{
-		mGame->SplashDamage(130, mMouse->getCollisionRect().x, 150);
+		mPlayer->LaunchRock(mMouse->getCollisionRect().x);
 		mStoneButtonClicked = false;
 	}
 	else if (mKnightButton->IsSelected())
@@ -144,7 +144,6 @@ void UI::OnMouseClickEvent()
 	}
 	else if (mRockButton->IsSelected())
 	{
-		if(mPlayer->LaunchRock())
 		mStoneButtonClicked = true;
 	}
 }

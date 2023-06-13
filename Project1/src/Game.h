@@ -26,6 +26,7 @@ public:
 	GameObject* RangedAttackDetection(GameObject* gameObject, int range);
 	GameObject* CollisionDetection(GameObject* gameObject);
 	SDL_Texture* getTexture(int id);
+	SDL_Renderer* getRenderer() { return mRenderer; }
 	void KillObject(GameObject* target);
 	void CreateKnight(bool isPlayer, bool isAdvancing, int AttackUpgradeCount, int ArmorUpgradeCount);
 	void CreateSpearKnight(bool isPlayer, bool isAdvancing, int AttackUpgradeCount, int ArmorUpgradeCount);
@@ -37,6 +38,7 @@ public:
 	void Pause();
 	void Continue();
 	void SplashDamage(int Damage, int x, int Radious);
+	void ThrowRock(GameObject* projectile);
 private:
 	void Update();
 	void Render();
