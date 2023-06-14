@@ -16,5 +16,6 @@ https://opengameart.org/content/spearman-bleeds-game-art
 https://opengameart.org/content/skeleton-archer-0
 https://opengameart.org/content/tuscan-knight-bleeds-game-art-hd
 https://opengameart.org/content/castle-2d
+https://opengameart.org/content/isometric-hero-and-heroine
 
 Feel free to modify the structure according to your needs, and let me know if there's anything else I can help you with!
