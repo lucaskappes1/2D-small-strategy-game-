@@ -13,6 +13,7 @@ public:
 	inline void Deactivate() { mIsActive = false; }
 	void UpgradeAttack() { mAttackUpgradeCount++; }
 	void UpgradeArmor() { mArmorUpgradeCount++; }
+	virtual void ChangeState();
 	bool mIsActive;
 protected:
 	int mAttackUpgradeCount;
@@ -20,7 +21,6 @@ protected:
 	int mRockUpgradeLevel;
 	float mGoldMultiplier = 1;
 	int mEnemyMiddle;
-	virtual void ChangeState();
 	class Game* mGame;
 	enum State {UNDERATTACK, ATTACKING, NUMBERDISADVANTAGE, NUMBERADVANTAGE, ENEMYATTHEGATES} eState;
 	const int XPOSTHRESHOLD = 600;

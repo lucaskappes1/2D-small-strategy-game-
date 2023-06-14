@@ -105,7 +105,6 @@ void AIhard::Act()
 		return;
 	}
 	int temp = mVariation(mRng);
-	ChangeState();
 	switch (eState)
 	{
 	case ATTACKING:

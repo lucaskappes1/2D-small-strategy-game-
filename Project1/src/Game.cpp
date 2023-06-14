@@ -581,6 +581,7 @@ void Game::Update()
 	if (SDL_GetTicks() - mTimeSeconds > 6000)
 	{
 		mTimeSeconds = SDL_GetTicks();
+		mAI->ChangeState();
 		mAI->Act();
 	}
 }
