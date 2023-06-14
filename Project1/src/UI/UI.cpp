@@ -33,11 +33,12 @@ void UI::Initialize()
 	mPauseButton = new Button(mRenderer, mMouse, 500, 100, mFont, "Pause");
 	mContinueButton = new Button(mRenderer, mMouse, 500, 100, mFont, "Continue");
 	mStartGameButton->Show();
-	mRockButton = new Button(mGame->getTexture(ROCK), mRenderer, mMouse, 250, 50, { 0, 0, 64, 64 }, mFont);
 	mKnightButton = new Button(mGame->getTexture(KNIGHT_BUTTON), mRenderer, mMouse, 50, 50, {130, 50, 106, 186}, mFont);
 	mSpearKnightButton = new Button(mGame->getTexture(SPEARMAN_BUTTON), mRenderer, mMouse, 100, 50, {0, 0, 172, 177}, mFont);
 	mAxeKnightButton = new Button(mGame->getTexture(GREEK_BUTTON), mRenderer, mMouse, 150, 50, {0, 0, 362, 586}, mFont);
 	mAcherButton = new Button(mGame->getTexture(ARCHER_BUTTON), mRenderer, mMouse, 200, 50, {0, 0, 303, 525}, mFont);
+	mHeavyInfantryButton = new Button(mGame->getTexture(HEAVY_INFANTRY_BUTTON), mRenderer, mMouse, 250, 50, { 0, 0, 65, 63 }, mFont);
+	mRockButton = new Button(mGame->getTexture(ROCK), mRenderer, mMouse, 300, 50, { 0, 0, 64, 64 }, mFont);
 	mUpgradeArmorButton = new Button(mGame->getTexture(ARMOR_UPGRADE_BUTTON), mRenderer, mMouse, 50, 100, { 0, 0, 64, 64 }, mFont);
 	mUpgradeAttackButton = new Button(mGame->getTexture(ATTACK_UPGRADE_BUTTON), mRenderer, mMouse, 100, 100, { 0, 0, 64, 64 }, mFont);
 	mUpgradeRockButton = new Button(mGame->getTexture(ROCK_UPGRADE_BUTTON), mRenderer, mMouse, 150, 100, { 0, 0, 128, 128 }, mFont);
@@ -49,6 +50,7 @@ void UI::Initialize()
 	mSpearKnightButton->addTooltip("Cost: 80 gold\nStronger than Knight, but slower");
 	mAxeKnightButton->addTooltip("Cost: 60 gold\nVery weak, but does a lot of damage");
 	mAcherButton->addTooltip("Cost: 55 gold\nVery weak, but attacks from distance");
+	mHeavyInfantryButton->addTooltip("Cost 380 gold. Very Strong");
 	mUpgradeArmorButton->addTooltip("Cost: 500 gold\nIncrease armor of next units by 1");
 	mUpgradeAttackButton->addTooltip("Cost: 500 gold\nIncrease attack of next units by 1");
 	mChangeOrderButton->addTooltip("Click to Change Order between advance or stand still");
@@ -65,6 +67,7 @@ void UI::Update()
 	mSpearKnightButton->Update();
 	mAxeKnightButton->Update();
 	mAcherButton->Update();
+	mHeavyInfantryButton->Update();
 	mUpgradeArmorButton->Update();
 	mUpgradeAttackButton->Update();
 	mStartGameButton->Update();
@@ -82,6 +85,7 @@ void UI::Draw()
 	mSpearKnightButton->Draw();
 	mAxeKnightButton->Draw();
 	mAcherButton->Draw();
+	mHeavyInfantryButton->Draw();
 	mUpgradeArmorButton->Draw();
 	mUpgradeAttackButton->Draw();
 	mStartGameButton->Draw();
@@ -116,6 +120,10 @@ void UI::OnMouseClickEvent()
 	else if (mAcherButton->IsSelected())
 	{
 		mPlayer->CreateArcher();
+	}
+	else if (mHeavyInfantryButton->IsSelected())
+	{
+		mPlayer->CreateHeavyInfantry();
 	}
 	else if (mUpgradeArmorButton->IsSelected())
 	{
@@ -179,6 +187,7 @@ void UI::HideGameplayButtons()
 	mSpearKnightButton->Hide();
 	mAxeKnightButton->Hide();
 	mAcherButton->Hide();
+	mHeavyInfantryButton->Hide();
 	mUpgradeArmorButton->Hide();
 	mUpgradeAttackButton->Hide();
 	mChangeOrderButton->Hide();
@@ -192,6 +201,7 @@ void UI::ShowGameplayButtons()
 	mSpearKnightButton->Show();
 	mAxeKnightButton->Show();
 	mAcherButton->Show();
+	mHeavyInfantryButton->Show();
 	mUpgradeArmorButton->Show();
 	mUpgradeAttackButton->Show();
 	mChangeOrderButton->Show();

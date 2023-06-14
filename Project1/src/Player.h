@@ -7,6 +7,7 @@ public:
 	void CreateSpearKnight();
 	void CreateAxeKnight();
 	void CreateArcher();
+	void CreateHeavyInfantry();
 	void ChangeOrder();
 	void IncreaseGold(int amount);
 	void UpgradeArmor();

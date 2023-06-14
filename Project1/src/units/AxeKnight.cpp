@@ -15,7 +15,7 @@ AxeKnight::AxeKnight(SDL_Renderer* renderer, int x, int y, Game* game, bool isPl
 	mReloadCount = 0;
 	mPercentHPBar = 1.0f;
 	mArmor = 0;
-	mDamage = 80;
+	mDamage = 65;
 	mCurrentFrame = 0;
 	mFrameCount = 0;
 	eState = WALKING;

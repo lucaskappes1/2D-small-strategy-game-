@@ -82,7 +82,7 @@ void AI::ChangeState()
 	mEnemyMiddle = x / playerCount;
 	if (eState == UNDERATTACK || eState == ENEMYATTHEGATES)
 	{
-		return;
+		Act();
 	}
 	if (playerCount > AICount + 4)
 	{
@@ -127,8 +127,7 @@ void AIhard::Act()
 		}
 		else if (temp <= 20)
 		{
-			mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-			mGame->CreateAxeKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+			mGame->CreateHeavyInfantry(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 			mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 			mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 			mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
@@ -169,12 +168,14 @@ void AIhard::Act()
 		if (temp < 40)
 		{
 			mGame->CreateKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+			mGame->CreateAxeKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 			mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 		}
 		else 
 		{
 			mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 			mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+			mGame->CreateAxeKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 		}
 		break;
 	case ENEMYATTHEGATES:
@@ -184,7 +185,7 @@ void AIhard::Act()
 			mGame->ThrowRock(new Rock({ 974.0f, 600.0f }, Dest, mGame->getRenderer(), mGame, 0, mRockUpgradeLevel));
 		}
 		mGame->ClearAIQueue();
-		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		mGame->CreateHeavyInfantry(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);

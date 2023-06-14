@@ -27,6 +27,7 @@ private:
 	Button* mSpearKnightButton;
 	Button* mAxeKnightButton;
 	Button* mAcherButton;
+	Button* mHeavyInfantryButton;
 	Button* mUpgradeArmorButton;
 	Button* mUpgradeAttackButton;
 	Button* mUpgradeRockButton;

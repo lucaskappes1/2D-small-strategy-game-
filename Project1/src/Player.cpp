@@ -6,6 +6,7 @@
 #include "units/SpearKnight.h"
 #include "units/Archer.h"
 #include "units/Rock.h"
+#include "units/HeavyInfantry.h"
 #include "UI/UI.h"
 
 Player::Player( Game* game) : mGame(game), mGold(100), mArmorUpgradeCount(0), mAttackUpgradeCount(0), mRockUpgradeLevel(0)
@@ -49,6 +50,16 @@ void Player::CreateArcher()
 	{
 		mGold -= Archer::getStaticGoldCost();
 		mGame->CreateArcher(1, mIsAdvancing, mAttackUpgradeCount, mArmorUpgradeCount);
+		mUI->UpdateGoldText();
+	}
+}
+
+void Player::CreateHeavyInfantry()
+{
+	if (mGold >= HeavyInfantry::getStaticGoldCost())
+	{
+		mGold -= HeavyInfantry::getStaticGoldCost();
+		mGame->CreateHeavyInfantry(1, mIsAdvancing, mAttackUpgradeCount, mArmorUpgradeCount);
 		mUI->UpdateGoldText();
 	}
 }

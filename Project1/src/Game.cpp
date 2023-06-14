@@ -59,14 +59,9 @@ bool Game::Initialize()
 void Game::Shutdown()
 {
 	delete BG;
-	for (auto& i : mObjects)
-	{
-		delete i;
-	}
-	for (auto& i : mDeadObjects)
-	{
-		delete i;
-	}
+	mObjects.clear();
+	mDeadObjects.clear();
+	mNonCollidableObjects.clear();
 	while (mPendingAIObjects.size() > 0)
 	{
 		mPendingAIObjects.pop();
@@ -326,6 +321,9 @@ void Game::LoadData()
 	getTexture("assets/bSpearman/bSpearman_Idle_strip8.png", SPEARMAN_IDLE);
 	getTexture("assets/bSpearman/_death/bSpearman_Die_Right_strip8.png", SPEARMAN_DEATH);
 
+	getTexture("assets/HeavyInfantry/HeavyInfantry.png", HEAVY_INFANTRY);
+	getTexture("assets/HeavyInfantry/HeavyInfantryButton.png", HEAVY_INFANTRY_BUTTON);
+
 	getTexture("assets/Knight/Idle/Tuscan_Idle_10000.png", KNIGHT_BUTTON);
 	getTexture("assets/bSpearman/Button.png", SPEARMAN_BUTTON);
 	getTexture("assets/GreekSoldier/Idle/GreekBasic_Idle_00.png", GREEK_BUTTON);
@@ -388,6 +386,19 @@ void Game::CreateArcher(bool isPlayer, bool isAdvancing, int AttackUpgradeCount,
 	else
 	{
 		mPendingAIObjects.emplace(new Archer(mRenderer, AI_CREATE_UNIT_POSITION, HEIGHT - 110, this, 0, isAdvancing));
+	}
+}
+
+void Game::CreateHeavyInfantry(bool isPlayer, bool isAdvancing, int AttackUpgradeCount, int ArmorUpgradeCount)
+{
+	if (isPlayer)
+	{
+		mPendingPlayerObjects.emplace(new HeavyInfantry(mRenderer, PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, this, 1, isAdvancing));
+		ApplyPlayerUpgrade(AttackUpgradeCount, ArmorUpgradeCount);
+	}
+	else
+	{
+		mPendingAIObjects.emplace(new HeavyInfantry(mRenderer, AI_CREATE_UNIT_POSITION, HEIGHT - 110, this, 0, isAdvancing));
 	}
 }
 
@@ -567,7 +578,7 @@ void Game::Update()
 	std::sort(mObjects.begin(), mObjects.end(), [](const GameObject* a, const GameObject* b) {
 		return a->getCollisionRect().x < b->getCollisionRect().x;
 		});
-	if (SDL_GetTicks() - mTimeSeconds > 4000)
+	if (SDL_GetTicks() - mTimeSeconds > 6000)
 	{
 		mTimeSeconds = SDL_GetTicks();
 		mAI->Act();

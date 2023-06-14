@@ -13,6 +13,7 @@
 #include "UI/UI.h"
 #include "units/AxeKnight.h"
 #include "units/Archer.h"
+#include "units/HeavyInfantry.h"
 #include "Constants.h"
 
 class Game
@@ -32,6 +33,7 @@ public:
 	void CreateSpearKnight(bool isPlayer, bool isAdvancing, int AttackUpgradeCount, int ArmorUpgradeCount);
 	void CreateAxeKnight(bool isPlayer, bool isAdvancing, int AttackUpgradeCount, int ArmorUpgradeCount);
 	void CreateArcher(bool isPlayer, bool isAdvancing, int AttackUpgradeCount, int ArmorUpgradeCount);
+	void CreateHeavyInfantry(bool isPlayer, bool isAdvancing, int AttackUpgradeCount, int ArmorUpgradeCount);
 	void ClearAIQueue();
 	void PlayerChangeOrder();
 	void StartGame();
