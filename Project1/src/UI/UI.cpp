@@ -54,7 +54,7 @@ void UI::Initialize()
 	mUpgradeArmorButton->addTooltip("Cost: 500 gold\nIncrease armor of next units by 1");
 	mUpgradeAttackButton->addTooltip("Cost: 500 gold\nIncrease attack of next units by 1");
 	mChangeOrderButton->addTooltip("Click to Change Order between advance or stand still");
-	mRockButton->addTooltip("Cost: 125 gold. Throw a Rock which does splash damage on next mouse click");
+	mRockButton->addTooltip("Cost: 150 gold. Throw a Rock which does splash damage on next mouse click");
 	mUpgradeRockButton->addTooltip("Cost 2000 gold. Adds 2 Rocks when throwing");
 	mGold = "Gold: 100";
 	mTextSurface = TTF_RenderText_Solid(mFont, mGold.c_str(), mTextColor);

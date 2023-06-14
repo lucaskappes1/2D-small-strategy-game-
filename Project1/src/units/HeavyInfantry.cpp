@@ -16,7 +16,7 @@ HeavyInfantry::HeavyInfantry(SDL_Renderer* renderer, int x, int y, Game* game, b
 	mReloadCount = 0;
 	mPercentHPBar = 1.0f;
 	mArmor = 14;
-	mDamage = 20;
+	mDamage = 17;
 	mFrameCount = 0;
 	LoadAnimation();
 }

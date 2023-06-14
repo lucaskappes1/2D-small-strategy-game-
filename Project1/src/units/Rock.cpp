@@ -4,8 +4,8 @@
 Rock::Rock(const Vector2& position, const Vector2& destination, SDL_Renderer* renderer, Game* game, bool isPlayer, int upgradeLevel) : 
 	Projectile(position, destination, renderer, game, isPlayer)
 {
-	mVelocity = { 120.0f, 0.0f };
-	mAcceleration = { 0.0f, 30.0f };
+	mVelocity = { 180.0f, 0.0f };
+	mAcceleration = { 0.0f, 50.0f };
 	mCollisionR = { -1000000, -100, 0, 0 };
 	mPosition = position;
 	mDestR = { mPosition.getIntX(), mPosition.getIntY(), 12, 12 };
@@ -29,8 +29,8 @@ Rock::Rock(const Vector2& position, const Vector2& destination, SDL_Renderer* re
 Rock::Rock(const Vector2& position, const Vector2& destination, SDL_Renderer* renderer, Game* game, bool isPlayer, float offset) : 
 	Projectile(position, destination, renderer, game, isPlayer)
 {
-	mVelocity = { 120.0f, 0.0f };
-	mAcceleration = { 0.0f, 30.0f };
+	mVelocity = { 180.0f, 0.0f };
+	mAcceleration = { 0.0f, 50.0f };
 	mCollisionR = { -10000, -100, 0, 0 };
 	mPosition = position;
 	mDestR = { mPosition.getIntX(), mPosition.getIntY(), 12, 12 };

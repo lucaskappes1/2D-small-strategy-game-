@@ -115,9 +115,13 @@ void Player::UpgradeRock()
 
 bool Player::LaunchRock(int xDest)
 {
-	if (mGold >= 125)
+	if (mGold >= 150)
 	{
-		mGold -= 125;
+		mGold -= 150;
+		if (xDest >= 650)
+		{
+			xDest = 650;
+		}
 		Vector2 Dest((float)xDest, 658.0f);
 		mGame->ThrowRock(new Rock({50.0f, 600.0f}, Dest, mGame->getRenderer(), mGame, 1, mRockUpgradeLevel));
 		mUI->UpdateGoldText();

@@ -146,7 +146,11 @@ void AIhard::Act()
 	case UNDERATTACK:
 		if (temp < 10)
 		{
-			Vector2 Dest((float)(mEnemyMiddle - 80), 658.0f);
+			if (mEnemyMiddle <= 220)
+			{
+				mEnemyMiddle = 220;
+			}
+			Vector2 Dest((float)(mEnemyMiddle), 658.0f);
 			mGame->ThrowRock(new Rock({ 974.0f, 600.0f }, Dest, mGame->getRenderer(), mGame, 0, mRockUpgradeLevel));
 		}
 		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
@@ -164,10 +168,16 @@ void AIhard::Act()
 		mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 		break;
 	case NUMBERADVANTAGE:
-		if (temp < 40)
+		if (temp < 60 && temp > 30)
 		{
 			mGame->CreateKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 			mGame->CreateAxeKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+			mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		}
+		else if (temp < 30)
+		{
+			mGame->CreateHeavyInfantry(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+			mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 			mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 		}
 		else 
@@ -180,7 +190,11 @@ void AIhard::Act()
 	case ENEMYATTHEGATES:
 		if (temp < 20)
 		{
-			Vector2 Dest((float)(mEnemyMiddle - 80), 658.0f);
+			if (mEnemyMiddle <= 220)
+			{
+				mEnemyMiddle = 220;
+			}
+			Vector2 Dest((float)(mEnemyMiddle), 658.0f);
 			mGame->ThrowRock(new Rock({ 974.0f, 600.0f }, Dest, mGame->getRenderer(), mGame, 0, mRockUpgradeLevel));
 		}
 		mGame->ClearAIQueue();

@@ -14,8 +14,8 @@ SpearKnight::SpearKnight(SDL_Renderer* renderer, int x, int y, class Game* game,
 	mHP = MAX_HP;
 	mReloadCount = 0;
 	mPercentHPBar = 1.0f;
-	mArmor = 10;
-	mDamage = 32;
+	mArmor = 12;
+	mDamage = 36;
 	mFrameCount = 0;
 	mSrcR = { 0, 0, 191, 123 };
 	LoadAnimation();
