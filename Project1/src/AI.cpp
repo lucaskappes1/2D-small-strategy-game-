@@ -4,10 +4,51 @@
 #include <iostream>
 #include "units/Rock.h"
 
-AI::AI(Game* game) : mRng(mRd()), mVariation(1,100), mIsActive(false), mArmorUpgradeCount(3), mAttackUpgradeCount(3), mRockUpgradeLevel(1)
+AI::AI(Game* game) : mRng(mRd()),
+	mVariation(1,100),
+	mIsActive(false), 
+	mArmorUpgradeCount(3), 
+	mAttackUpgradeCount(3), 
+	mRockUpgradeLevel(1),
+	mIsAdvancing(1)
 {
 	mGame = game;
 	eState = ATTACKING;
+}
+
+void AI::CreateKnight()
+{
+	GameObject* temp = new Knight(mGame->getRenderer(), AI_CREATE_UNIT_POSITION, HEIGHT - 110, mGame, 0, mIsAdvancing);
+	ApplyUpgrade(temp);
+	mGame->CreateUnit(temp);
+}
+
+void AI::CreateSpearKnight()
+{
+	GameObject* temp = new SpearKnight(mGame->getRenderer(), AI_CREATE_UNIT_POSITION, HEIGHT - 110, mGame, 0, mIsAdvancing);
+	ApplyUpgrade(temp);
+	mGame->CreateUnit(temp);
+}
+
+void AI::CreateAxeKnight()
+{
+	GameObject* temp = new AxeKnight(mGame->getRenderer(), AI_CREATE_UNIT_POSITION, HEIGHT - 110, mGame, 0, mIsAdvancing);
+	ApplyUpgrade(temp);
+	mGame->CreateUnit(temp);
+}
+
+void AI::CreateArcher()
+{
+	GameObject* temp = new Archer(mGame->getRenderer(), AI_CREATE_UNIT_POSITION, HEIGHT - 110, mGame, 0, mIsAdvancing);
+	ApplyUpgrade(temp);
+	mGame->CreateUnit(temp);
+}
+
+void AI::CreateHeavyInfantry()
+{
+	GameObject* temp = new HeavyInfantry(mGame->getRenderer(), AI_CREATE_UNIT_POSITION, HEIGHT - 110, mGame, 0, mIsAdvancing);
+	ApplyUpgrade(temp);
+	mGame->CreateUnit(temp);
 }
 
 void AI::Act()
@@ -20,32 +61,32 @@ void AI::Act()
 	switch (eState)
 	{
 	case ATTACKING:
-		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-		mGame->CreateKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-		mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		CreateSpearKnight();
+		CreateKnight();
+		CreateArcher();
 		break;
 	case UNDERATTACK:
-		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-		mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-		mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		CreateSpearKnight();
+		CreateArcher();
+		CreateArcher();
 		break;
 	case NUMBERDISADVANTAGE:
-		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-		mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-		mGame->CreateKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-		mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-		mGame->CreateAxeKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-		mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		CreateSpearKnight();
+		CreateArcher();
+		CreateKnight();
+		CreateArcher();
+		CreateAxeKnight();
+		CreateArcher();
 		break;
 	case NUMBERADVANTAGE:
-		mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-		mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		CreateArcher();
+		CreateArcher();
 		break;
 	case ENEMYATTHEGATES:
 		mGame->ClearAIQueue();
-		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		CreateSpearKnight();
+		CreateSpearKnight();
+		CreateSpearKnight();
 		break;
 	}
 }
@@ -98,6 +139,12 @@ void AI::ChangeState()
 	return;
 }
 
+void AI::ApplyUpgrade(GameObject* unit)
+{
+	unit->setAttack(unit->getAttack() + mAttackUpgradeCount);
+	unit->setArmor(unit->getArmor() + mArmorUpgradeCount);
+}
+
 void AIhard::Act()
 {
 	if (!mIsActive)
@@ -110,37 +157,37 @@ void AIhard::Act()
 	case ATTACKING:
 		if (temp < 70 && temp > 40)
 		{
-			mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-			mGame->CreateAxeKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-			mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-			mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-			mGame->CreateKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+			CreateSpearKnight();
+			CreateAxeKnight();
+			CreateArcher();
+			CreateSpearKnight();
+			CreateKnight();
 		}
 		else if (temp > 20 && temp <= 40)
 		{
-			mGame->CreateKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-			mGame->CreateKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-			mGame->CreateKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-			mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-			mGame->CreateAxeKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+			CreateKnight();
+			CreateKnight();
+			CreateKnight();
+			CreateSpearKnight();
+			CreateAxeKnight();
 		}
 		else if (temp <= 20)
 		{
-			mGame->CreateHeavyInfantry(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-			mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-			mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-			mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-			mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-			mGame->CreateKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+			CreateHeavyInfantry();
+			CreateArcher();
+			CreateArcher();
+			CreateArcher();
+			CreateArcher();
+			CreateKnight();
 		}
 		else
 		{
-			mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-			mGame->CreateKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-			mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-			mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-			mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-			mGame->CreateAxeKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+			CreateSpearKnight();
+			CreateKnight();
+			CreateArcher();
+			CreateArcher();
+			CreateArcher();
+			CreateAxeKnight();
 		}
 		break;
 	case UNDERATTACK:
@@ -153,38 +200,38 @@ void AIhard::Act()
 			Vector2 Dest((float)(mEnemyMiddle), 658.0f);
 			mGame->AddProjectile(new Rock({ 974.0f, 600.0f }, Dest, mGame->getRenderer(), mGame, mRockUpgradeLevel));
 		}
-		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-		mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-		mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		CreateSpearKnight();
+		CreateSpearKnight();
+		CreateArcher();
+		CreateArcher();
 		break;
 	case NUMBERDISADVANTAGE:
-		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-		mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-		mGame->CreateKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-		mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-		mGame->CreateAxeKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-		mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-		mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		CreateSpearKnight();
+		CreateArcher();
+		CreateKnight();
+		CreateArcher();
+		CreateAxeKnight();
+		CreateArcher();
+		CreateArcher();
 		break;
 	case NUMBERADVANTAGE:
 		if (temp < 60 && temp > 30)
 		{
-			mGame->CreateKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-			mGame->CreateAxeKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-			mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+			CreateKnight();
+			CreateAxeKnight();
+			CreateArcher();
 		}
 		else if (temp < 30)
 		{
-			mGame->CreateHeavyInfantry(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-			mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-			mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+			CreateHeavyInfantry();
+			CreateArcher();
+			CreateArcher();
 		}
 		else 
 		{
-			mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-			mGame->CreateArcher(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-			mGame->CreateAxeKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+			CreateSpearKnight();
+			CreateArcher();
+			CreateAxeKnight();
 		}
 		break;
 	case ENEMYATTHEGATES:
@@ -198,11 +245,11 @@ void AIhard::Act()
 			mGame->AddProjectile(new Rock({ 974.0f, 600.0f }, Dest, mGame->getRenderer(), mGame, mRockUpgradeLevel));
 		}
 		mGame->ClearAIQueue();
-		mGame->CreateHeavyInfantry(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
-		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
+		CreateHeavyInfantry();
+		CreateSpearKnight();
+		CreateSpearKnight();
+		CreateSpearKnight();
+		CreateSpearKnight();
 		break;
 	}
 }

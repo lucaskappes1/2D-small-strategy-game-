@@ -8,7 +8,7 @@ Arrow::Arrow(const Vector2& position, GameObject* target, SDL_Renderer* renderer
 {
 	if (mDestination.getY() < mPosition.getY())
 	{
-		mDestination.setY(mPosition.getY() + 1.0f);
+		mDestination.setY(mPosition.getY() + 3.0f);
 	}
 	mVelocity = { 600.0f, 0.0f };
 	mAcceleration = { 0.0f, 900.0f };

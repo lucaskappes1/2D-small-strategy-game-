@@ -18,18 +18,21 @@ void Player::CreateKnight()
 	if (mGold >= Knight::getStaticGoldCost())
 	{
 		mGold -= Knight::getStaticGoldCost();
-		mGame->CreateKnight(1, mIsAdvancing, mAttackUpgradeCount, mArmorUpgradeCount);
+		GameObject* temp = new Knight(mGame->getRenderer(), PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, mGame, 1, mIsAdvancing);
+		ApplyUpgrade(temp);
+		mGame->CreateUnit(temp);
 		mUI->UpdateGoldText();
 	}
 }
 
 void Player::CreateSpearKnight()
 {
-	int x = SpearKnight::getStaticGoldCost();
 	if (mGold >= SpearKnight::getStaticGoldCost())
 	{
 		mGold -= SpearKnight::getStaticGoldCost();
-		mGame->CreateSpearKnight(1, mIsAdvancing, mAttackUpgradeCount, mArmorUpgradeCount);
+		GameObject* temp = new SpearKnight(mGame->getRenderer(), PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, mGame, 1, mIsAdvancing);
+		ApplyUpgrade(temp);
+		mGame->CreateUnit(temp);
 		mUI->UpdateGoldText();
 	}
 }
@@ -39,7 +42,9 @@ void Player::CreateAxeKnight()
 	if (mGold >= AxeKnight::getStaticGoldCost())
 	{
 		mGold -= AxeKnight::getStaticGoldCost();
-		mGame->CreateAxeKnight(1, mIsAdvancing, mAttackUpgradeCount, mArmorUpgradeCount);
+		GameObject* temp = new AxeKnight(mGame->getRenderer(), PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, mGame, 1, mIsAdvancing);
+		ApplyUpgrade(temp);
+		mGame->CreateUnit(temp);
 		mUI->UpdateGoldText();
 	}
 }
@@ -49,7 +54,9 @@ void Player::CreateArcher()
 	if (mGold >= Archer::getStaticGoldCost())
 	{
 		mGold -= Archer::getStaticGoldCost();
-		mGame->CreateArcher(1, mIsAdvancing, mAttackUpgradeCount, mArmorUpgradeCount);
+		GameObject* temp = new Archer(mGame->getRenderer(), PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, mGame, 1, mIsAdvancing);
+		ApplyUpgrade(temp);
+		mGame->CreateUnit(temp);
 		mUI->UpdateGoldText();
 	}
 }
@@ -59,7 +66,9 @@ void Player::CreateHeavyInfantry()
 	if (mGold >= HeavyInfantry::getStaticGoldCost())
 	{
 		mGold -= HeavyInfantry::getStaticGoldCost();
-		mGame->CreateHeavyInfantry(1, mIsAdvancing, mAttackUpgradeCount, mArmorUpgradeCount);
+		GameObject* temp = new HeavyInfantry(mGame->getRenderer(), PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, mGame, 1, mIsAdvancing);
+		ApplyUpgrade(temp);
+		mGame->CreateUnit(temp);
 		mUI->UpdateGoldText();
 	}
 }
@@ -128,4 +137,10 @@ bool Player::LaunchRock(int xDest)
 		return true;
 	}
 	return false;
+}
+
+void Player::ApplyUpgrade(GameObject* unit)
+{
+	unit->setAttack(unit->getAttack() + mAttackUpgradeCount);
+	unit->setArmor(unit->getArmor() + mArmorUpgradeCount);
 }

@@ -1,4 +1,5 @@
 #pragma once
+
 class Player
 {
 public:
@@ -18,6 +19,7 @@ public:
 	void setUiPointer(class UI* Ui) { mUI = Ui; }
 	inline int getGold() { return mGold; }
 private:
+	void ApplyUpgrade(class GameObject* unit);
 	bool mIsAdvancing;
 	int mGold;
 	int mAttackUpgradeCount;

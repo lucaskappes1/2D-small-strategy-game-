@@ -1,5 +1,4 @@
 #pragma once
-
 #include <random>
 #include "Vector2.h"
 
@@ -16,9 +15,16 @@ public:
 	virtual void ChangeState();
 	bool mIsActive;
 protected:
+	void CreateKnight();
+	void CreateSpearKnight();
+	void CreateAxeKnight();
+	void CreateArcher();
+	void CreateHeavyInfantry();
+	void ApplyUpgrade(class GameObject* unit);
 	int mAttackUpgradeCount;
 	int mArmorUpgradeCount;
 	int mRockUpgradeLevel;
+	bool mIsAdvancing;
 	float mGoldMultiplier = 1;
 	int mEnemyMiddle;
 	class Game* mGame;

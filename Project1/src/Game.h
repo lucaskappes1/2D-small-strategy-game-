@@ -29,11 +29,7 @@ public:
 	SDL_Texture* getTexture(int id);
 	SDL_Renderer* getRenderer() { return mRenderer; }
 	void KillObject(GameObject* target);
-	void CreateKnight(bool isPlayer, bool isAdvancing, int AttackUpgradeCount, int ArmorUpgradeCount);
-	void CreateSpearKnight(bool isPlayer, bool isAdvancing, int AttackUpgradeCount, int ArmorUpgradeCount);
-	void CreateAxeKnight(bool isPlayer, bool isAdvancing, int AttackUpgradeCount, int ArmorUpgradeCount);
-	void CreateArcher(bool isPlayer, bool isAdvancing, int AttackUpgradeCount, int ArmorUpgradeCount);
-	void CreateHeavyInfantry(bool isPlayer, bool isAdvancing, int AttackUpgradeCount, int ArmorUpgradeCount);
+	void CreateUnit(GameObject* unit);
 	void ClearAIQueue();
 	void PlayerChangeOrder();
 	void StartGame();
@@ -46,7 +42,6 @@ private:
 	void Render();
 	void ProcessInput();
 	void LoadData();
-	void ApplyPlayerUpgrade(int AttackUpgradeCount, int ArmorUpgradeCount);
 	SDL_Texture* getTexture(std::string path, int name);
 	std::map<int, SDL_Texture*> mTextureMap;
 	SDL_Renderer* mRenderer;

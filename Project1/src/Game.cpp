@@ -218,12 +218,6 @@ void Game::ProcessInput()
 	}
 }
 
-void Game::ApplyPlayerUpgrade(int AttackUpgradeCount, int ArmorUpgradeCount)
-{
-	mPendingPlayerObjects.back()->setAttack(mPendingPlayerObjects.back()->getAttack() + AttackUpgradeCount);
-	mPendingPlayerObjects.back()->setArmor(mPendingPlayerObjects.back()->getArmor() + ArmorUpgradeCount);
-}
-
 void Game::LoadData()
 {
 	getTexture("assets/ArcherSkeleton/Walk/walk.png", ARCHER_WALK);
@@ -339,69 +333,15 @@ void Game::LoadData()
 	getTexture("assets/Arrow.png", ARROW);
 }
 
-void Game::CreateKnight(bool isPlayer, bool isAdvancing, int AttackUpgradeCount, int ArmorUpgradeCount)
+void Game::CreateUnit(GameObject* unit)
 {
-	if (isPlayer)
+	if (unit->getIsPlayer())
 	{
-		mPendingPlayerObjects.emplace(new Knight(mRenderer, PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, this, 1, isAdvancing));
-		ApplyPlayerUpgrade(AttackUpgradeCount, ArmorUpgradeCount);
+		mPendingPlayerObjects.emplace(unit);
 	}
 	else
 	{
-		mPendingAIObjects.emplace(new Knight(mRenderer, AI_CREATE_UNIT_POSITION, HEIGHT - 110, this, 0, isAdvancing));
-	}
-}
-
-void Game::CreateSpearKnight(bool isPlayer, bool isAdvancing, int AttackUpgradeCount, int ArmorUpgradeCount)
-{
-	
-	if (isPlayer)
-	{
-		mPendingPlayerObjects.emplace(new SpearKnight(mRenderer, PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, this, 1, isAdvancing));
-		ApplyPlayerUpgrade(AttackUpgradeCount, ArmorUpgradeCount);
-	}
-	else
-	{
-		mPendingAIObjects.emplace(new SpearKnight(mRenderer, AI_CREATE_UNIT_POSITION, HEIGHT - 110, this, 0, isAdvancing));
-	}
-}
-
-void Game::CreateAxeKnight(bool isPlayer, bool isAdvancing, int AttackUpgradeCount, int ArmorUpgradeCount)
-{
-	if (isPlayer)
-	{
-		mPendingPlayerObjects.emplace(new AxeKnight(mRenderer, PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, this, 1, isAdvancing));
-		ApplyPlayerUpgrade(AttackUpgradeCount, ArmorUpgradeCount);
-	}
-	else
-	{
-		mPendingAIObjects.emplace(new AxeKnight(mRenderer, AI_CREATE_UNIT_POSITION, HEIGHT - 110, this, 0, isAdvancing));
-	}
-}
-
-void Game::CreateArcher(bool isPlayer, bool isAdvancing, int AttackUpgradeCount, int ArmorUpgradeCount)
-{
-	if (isPlayer)
-	{
-		mPendingPlayerObjects.emplace(new Archer(mRenderer, PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, this, 1, isAdvancing));
-		ApplyPlayerUpgrade(AttackUpgradeCount, ArmorUpgradeCount);
-	}
-	else
-	{
-		mPendingAIObjects.emplace(new Archer(mRenderer, AI_CREATE_UNIT_POSITION, HEIGHT - 110, this, 0, isAdvancing));
-	}
-}
-
-void Game::CreateHeavyInfantry(bool isPlayer, bool isAdvancing, int AttackUpgradeCount, int ArmorUpgradeCount)
-{
-	if (isPlayer)
-	{
-		mPendingPlayerObjects.emplace(new HeavyInfantry(mRenderer, PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, this, 1, isAdvancing));
-		ApplyPlayerUpgrade(AttackUpgradeCount, ArmorUpgradeCount);
-	}
-	else
-	{
-		mPendingAIObjects.emplace(new HeavyInfantry(mRenderer, AI_CREATE_UNIT_POSITION, HEIGHT - 110, this, 0, isAdvancing));
+		mPendingAIObjects.emplace(unit);
 	}
 }
 
