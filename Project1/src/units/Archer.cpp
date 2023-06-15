@@ -1,5 +1,6 @@
 #include "Archer.h"
 #include "../Game.h"
+#include "Arrow.h"
 
 Archer::Archer(SDL_Renderer* renderer, int x, int y, Game* game, bool isPlayer, bool isAdvancing)
 {
@@ -176,7 +177,7 @@ void Archer::Attack(GameObject* target)
 {
 	if (mReloadCount <= 0)
 	{
-		target->TakeDamage(mDamage);
+		mGame->AddProjectile(new Arrow(mPosition, target, mRenderer, mGame, mDamage));
 		mReloadCount = ATTACK_RELOAD_TIME;
 	}
 }

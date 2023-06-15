@@ -1,4 +1,5 @@
 #include "Castle.h"
+#include "Arrow.h"
 #include "../Game.h"
 
 Castle::Castle(SDL_Renderer* renderer, SDL_Texture* tex, int x, int y, Game* game, bool isPlayer)
@@ -11,7 +12,7 @@ Castle::Castle(SDL_Renderer* renderer, SDL_Texture* tex, int x, int y, Game* gam
 	mCollisionR = { mPosition.getIntX() - 50, mPosition.getIntY(), 100, 100};
 	mDestR = { mPosition.getIntX() - 50, mPosition.getIntY(), 100, 100 };
 	mHP = MAX_HP;
-	mDamage = 15;
+	mDamage = 65;
 	mPercentHPBar = 1;
 }
 
@@ -40,7 +41,7 @@ void Castle::Attack(GameObject* target)
 {
 	if (mReloadCount <= 0)
 	{
-		target->TakeDamage(mDamage);
+		mGame->AddProjectile(new Arrow(mPosition, target, mRenderer, mGame, mDamage));
 		mReloadCount = ATTACK_RELOAD_TIME;
 	}
 }

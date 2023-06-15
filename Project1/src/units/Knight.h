@@ -1,23 +1,15 @@
 #pragma once
-#include "GameObject.h"
+#include "MeleeUnit.h"
 #include <vector>
 
-class Knight :  public GameObject
+class Knight :  public MeleeUnit
 {
 public:
 	Knight(SDL_Renderer* renderer, int x, int y, class Game* game, bool isPlayer, bool isAdvancing);
-	void Update(float deltaTime);
 	void Draw();
-	void Attack(GameObject* target);
-	virtual void TakeDamage(int DMG);
 	inline static const int getStaticGoldCost() { return mGoldCost; }
 	inline const int getGoldCost() const override { return mGoldCost; }
 private:
-	enum State eLastFrameState;
-	float mPercentHPBar;
-	void RenderHPBar(int x, int y, int w, int h, float Percent, SDL_Color FGColor, SDL_Color BGColor);
-	const int MAX_HP = 120;
-	const int ATTACK_RELOAD_TIME = 20;
 	const static int mGoldCost = 35;
 	int mFrameCount;
 	int mCurrentFrame;

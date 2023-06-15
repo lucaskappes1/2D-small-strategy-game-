@@ -5,7 +5,7 @@
 class Projectile : public GameObject
 {
 public:
-    Projectile(const Vector2& position, const Vector2& destination, SDL_Renderer* renderer, class Game* game, bool isPlayer);
+    Projectile(const Vector2& position, const Vector2& destination, SDL_Renderer* renderer, class Game* game);
     virtual void Update(float deltaTime) = 0;
     virtual void Draw() = 0;
     virtual void LoadAnimation() = 0;

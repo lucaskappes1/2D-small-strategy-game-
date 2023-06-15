@@ -40,7 +40,7 @@ public:
 	void Pause();
 	void Continue();
 	void SplashDamage(int Damage, int x, int Radious);
-	void ThrowRock(GameObject* projectile);
+	void AddProjectile(GameObject* projectile);
 private:
 	void Update();
 	void Render();
@@ -56,6 +56,7 @@ private:
 	std::vector<GameObject*> mNonCollidableObjects;
 	std::queue<GameObject*> mPendingPlayerObjects;
 	std::queue<GameObject*> mPendingAIObjects;
+	std::vector<GameObject*> mPendingProjectiles;
 
 	class Player* mPlayer;
 

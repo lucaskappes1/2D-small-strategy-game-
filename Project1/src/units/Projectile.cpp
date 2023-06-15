@@ -1,11 +1,13 @@
 #include "Projectile.h"
 #include "../Game.h"
 
-Projectile::Projectile(const Vector2& position, const Vector2& destination, SDL_Renderer* renderer, class Game* game, bool isPlayer) :
+Projectile::Projectile(const Vector2& position, const Vector2& destination, SDL_Renderer* renderer, class Game* game) :
 	mDestination(destination),
 	mRenderer(renderer),
 	mGame(game)
 {
+	mPosition = position;
+	mCollisionR = { 10000, 100, 0, 0 };
 }
 
 void Projectile::CalculateVelocity(float offset)

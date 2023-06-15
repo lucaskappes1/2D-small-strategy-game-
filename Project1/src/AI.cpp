@@ -151,7 +151,7 @@ void AIhard::Act()
 				mEnemyMiddle = 220;
 			}
 			Vector2 Dest((float)(mEnemyMiddle), 658.0f);
-			mGame->ThrowRock(new Rock({ 974.0f, 600.0f }, Dest, mGame->getRenderer(), mGame, 0, mRockUpgradeLevel));
+			mGame->AddProjectile(new Rock({ 974.0f, 600.0f }, Dest, mGame->getRenderer(), mGame, mRockUpgradeLevel));
 		}
 		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
 		mGame->CreateSpearKnight(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);
@@ -195,7 +195,7 @@ void AIhard::Act()
 				mEnemyMiddle = 220;
 			}
 			Vector2 Dest((float)(mEnemyMiddle), 658.0f);
-			mGame->ThrowRock(new Rock({ 974.0f, 600.0f }, Dest, mGame->getRenderer(), mGame, 0, mRockUpgradeLevel));
+			mGame->AddProjectile(new Rock({ 974.0f, 600.0f }, Dest, mGame->getRenderer(), mGame, mRockUpgradeLevel));
 		}
 		mGame->ClearAIQueue();
 		mGame->CreateHeavyInfantry(0, 1, mAttackUpgradeCount, mArmorUpgradeCount);

@@ -62,6 +62,7 @@ void Game::Shutdown()
 	mObjects.clear();
 	mDeadObjects.clear();
 	mNonCollidableObjects.clear();
+	mPendingProjectiles.clear();
 	while (mPendingAIObjects.size() > 0)
 	{
 		mPendingAIObjects.pop();
@@ -171,11 +172,11 @@ SDL_Texture* Game::getTexture(int id)
 
 void Game::KillObject(GameObject* target)
 {
-	if (target->getIsPlayer())
+	if (target->getIsPlayer() && !dynamic_cast<Projectile*>(target))
 	{
 		mDeaths++;
 	}
-	else
+	else if(!target->getIsPlayer() && !dynamic_cast<Projectile*>(target))
 	{
 		mPlayer->IncreaseGold(target->getGoldCost() * mAI->getGoldMultiplier());
 		mKills++;
@@ -334,6 +335,8 @@ void Game::LoadData()
 	getTexture("assets/ChangeOrder.png", CHANGE_ORDER_BUTTON);
 	getTexture("assets/Rock.png", ROCK);
 	getTexture("assets/RockUpgrade.png", ROCK_UPGRADE_BUTTON);
+
+	getTexture("assets/Arrow.png", ARROW);
 }
 
 void Game::CreateKnight(bool isPlayer, bool isAdvancing, int AttackUpgradeCount, int ArmorUpgradeCount)
@@ -460,9 +463,9 @@ void Game::SplashDamage(int Damage, int x, int Radious)
 	}
 }
 
-void Game::ThrowRock(GameObject* projectile)
+void Game::AddProjectile(GameObject* projectile)
 {
-	mPendingPlayerObjects.emplace(projectile);
+	mPendingProjectiles.emplace_back(projectile);
 }
 
 SDL_Texture* Game::getTexture(std::string path, int name)
@@ -573,6 +576,14 @@ void Game::Update()
 				mPendingAIObjects.pop();
 				mObjects.emplace_back(aux);
 			}
+		}
+		if (mPendingProjectiles.size() > 0)
+		{
+			for (auto& i : mPendingProjectiles)
+			{
+				mObjects.emplace_back(i);
+			}
+			mPendingProjectiles.clear();
 		}
 	}
 	std::sort(mObjects.begin(), mObjects.end(), [](const GameObject* a, const GameObject* b) {

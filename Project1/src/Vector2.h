@@ -15,7 +15,7 @@ public:
     inline float getX() const { return x; }
     inline float getY() const { return y; }
     void setX(float _x) { x = _x; }
-    void setY(float _y) { x = _y; }
+    void setY(float _y) { y = _y; }
     float dot(const Vector2& other) const;
     float magnitude() const;
     Vector2 normalize() const;

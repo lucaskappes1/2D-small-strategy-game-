@@ -133,6 +133,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\units\Arrow.cpp" />
+    <ClCompile Include="src\units\MeleeUnit.cpp" />
     <ClCompile Include="src\units\HeavyInfantry.cpp" />
     <ClCompile Include="src\units\Rock.cpp" />
     <ClCompile Include="src\units\Projectile.cpp" />
@@ -152,6 +154,8 @@
     <ClCompile Include="src\Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\units\Arrow.h" />
+    <ClInclude Include="src\units\MeleeUnit.h" />
     <ClInclude Include="src\units\HeavyInfantry.h" />
     <ClInclude Include="src\units\Rock.h" />
     <ClInclude Include="src\units\Projectile.h" />

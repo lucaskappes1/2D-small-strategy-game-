@@ -4,8 +4,8 @@
 class Rock : public Projectile
 {
 public:
-	Rock(const Vector2& position, const Vector2& destination, SDL_Renderer* renderer, class Game* game, bool isPlayer, int upgradeLevel);
-    Rock(const Vector2& position, const Vector2& destination, SDL_Renderer* renderer, class Game* game, bool isPlayer, float offset);
+	Rock(const Vector2& position, const Vector2& destination, SDL_Renderer* renderer, class Game* game, int upgradeLevel);
+    Rock(const Vector2& position, const Vector2& destination, SDL_Renderer* renderer, class Game* game, float offset);
     void Update(float deltaTime);
     void Draw();
     void LoadAnimation();
