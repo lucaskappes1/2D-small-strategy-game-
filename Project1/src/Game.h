@@ -15,6 +15,8 @@
 #include "units/Archer.h"
 #include "units/HeavyInfantry.h"
 #include "Constants.h"
+#include "units/Tower1.h"
+#include "units/Tower2.h"
 
 class Game
 {

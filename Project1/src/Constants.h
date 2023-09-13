@@ -1,6 +1,6 @@
 #pragma once
 
-//MAX TEXTURE NUMBER UNTIL NOW: 106
+//MAX TEXTURE NUMBER UNTIL NOW: 108
 
 const int WIDTH = 1024;
 const int HEIGHT = 768;
@@ -109,6 +109,9 @@ const int SPEARMAN_DEATH = 100;
 const int HEAVY_INFANTRY = 104;
 
 const int ROCK = 102;
+
+const int TOWER1 = 107;
+const int TOWER2 = 108;
 
 //UI texture naming
 const int KNIGHT_BUTTON = 59;

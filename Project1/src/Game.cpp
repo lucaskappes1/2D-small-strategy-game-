@@ -176,7 +176,7 @@ void Game::KillObject(GameObject* target)
 	{
 		mDeaths++;
 	}
-	else if(!target->getIsPlayer() && !dynamic_cast<Projectile*>(target))
+	else if (!target->getIsPlayer() && !dynamic_cast<Projectile*>(target))
 	{
 		mPlayer->IncreaseGold(target->getGoldCost() * mAI->getGoldMultiplier());
 		mKills++;
@@ -220,6 +220,7 @@ void Game::ProcessInput()
 
 void Game::LoadData()
 {
+	getTexture("assets/castle.png", CASTLE);
 	getTexture("assets/ArcherSkeleton/Walk/walk.png", ARCHER_WALK);
 	getTexture("assets/ArcherSkeleton/Attack/attack.png", ARCHER_ATTACK);
 	getTexture("assets/ArcherSkeleton/Idle/Separate sp/idle (1).png", ARCHER_IDLE);
@@ -331,6 +332,10 @@ void Game::LoadData()
 	getTexture("assets/RockUpgrade.png", ROCK_UPGRADE_BUTTON);
 
 	getTexture("assets/Arrow.png", ARROW);
+
+	getTexture("assets/tower_2.png", TOWER2);
+	getTexture("assets/tower.png", TOWER1);
+	
 }
 
 void Game::CreateUnit(GameObject* unit)
@@ -366,8 +371,8 @@ void Game::PlayerChangeOrder()
 
 void Game::StartGame()
 {
-	mObjects.emplace_back(new Castle(mRenderer, getTexture("assets/Castle.png", CASTLE), WIDTH - 974, HEIGHT - 175, this, 1));
-	mObjects.emplace_back(new Castle(mRenderer, getTexture("assets/Castle.png", CASTLE), WIDTH - 50, HEIGHT - 175, this, 0));
+	mObjects.emplace_back(new Castle(mRenderer, WIDTH - 974, HEIGHT - 175, this, 1));
+	mObjects.emplace_back(new Castle(mRenderer, WIDTH - 50, HEIGHT - 175, this, 0));
 	mObjects.at(1)->setArmor(120);
 	mIsMenuActive = false;
 	mUI->StartGame();
@@ -451,7 +456,7 @@ void Game::Update()
 		{
 			for (auto& i : mDeadObjects)
 			{
-				if (dynamic_cast<Projectile*>(i))
+				if (dynamic_cast<Projectile*>(i) || dynamic_cast<Building*>(i))
 				{
 					auto iter = std::find(mObjects.begin(), mObjects.end(), i);
 					std::iter_swap(iter, mObjects.end() - 1);

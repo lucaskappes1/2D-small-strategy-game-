@@ -133,6 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\units\Building.cpp" />
     <ClCompile Include="src\units\RangedUnit.cpp" />
     <ClCompile Include="src\units\Arrow.cpp" />
     <ClCompile Include="src\units\MeleeUnit.cpp" />
@@ -153,8 +154,11 @@
     <ClCompile Include="src\UI\Mouse.cpp" />
     <ClCompile Include="src\UI\UI.cpp" />
     <ClCompile Include="src\Vector2.cpp" />
+    <ClCompile Include="src\units\Tower1.cpp" />
+    <ClCompile Include="src\units\Tower2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\units\Building.h" />
     <ClInclude Include="src\units\RangedUnit.h" />
     <ClInclude Include="src\units\Arrow.h" />
     <ClInclude Include="src\units\MeleeUnit.h" />
@@ -177,6 +181,8 @@
     <ClInclude Include="src\UI\Mouse.h" />
     <ClInclude Include="src\UI\UI.h" />
     <ClInclude Include="src\Vector2.h" />
+    <ClInclude Include="src\units\Tower1.h" />
+    <ClInclude Include="src\units\Tower2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

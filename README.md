@@ -18,5 +18,7 @@ https://opengameart.org/content/tuscan-knight-bleeds-game-art-hd
 https://opengameart.org/content/castle-2d
 https://opengameart.org/content/isometric-hero-and-heroine
 https://opengameart.org/content/arrow-0
+https://opengameart.org/content/old-tower
+https://opengameart.org/content/tower-v2
 
 Feel free to modify the structure according to your needs, and let me know if there's anything else I can help you with!
