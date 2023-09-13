@@ -28,7 +28,6 @@ public:
 	inline const std::vector<GameObject*>& GetGameObjectVector() { return mObjects; }
 	GameObject* RangedAttackDetection(GameObject* gameObject, int range);
 	GameObject* CollisionDetection(GameObject* gameObject);
-	GameObject* GetTarget(GameObject* gameObject);
 	SDL_Texture* getTexture(int id);
 	SDL_Renderer* getRenderer() { return mRenderer; }
 	void KillObject(GameObject* target);
@@ -40,6 +39,14 @@ public:
 	void Continue();
 	void SplashDamage(int Damage, int x, int Radious);
 	void AddProjectile(GameObject* projectile);
+	int getPlayerCreateUnitPosition() { return PLAYER_CREATE_UNIT_POSITION + mPlayerBuildingCount * 42; }
+	int getAICreateUnitPosition() { return AI_CREATE_UNIT_POSITION - mAIBuildingCount * 42; }
+	int getPlayerBuildingCount() { return mPlayerBuildingCount; }
+	int getAIBuildingCount() { return mAIBuildingCount; }
+	void IncreasePlayerBuildingCount();
+	void IncreaseAIBuildingCount();
+	void DecreasePlayerBuildingCount();
+	void DecreaseAIBuildingCount();
 private:
 	void Update();
 	void Render();
@@ -69,6 +76,9 @@ private:
 	int mClearFloorTimer = 0;
 	int mKills;
 	int mDeaths;
+
+	int mPlayerBuildingCount = 0;
+	int mAIBuildingCount = 0;
 
 	Background* BG;
 };

@@ -24,6 +24,8 @@ UI::~UI()
 	delete mContinueButton;
 	delete mChangeOrderButton;
 	delete mUpgradeRockButton;
+	delete mTower1Button;
+	delete mTower2Button;
 }
 
 void UI::Initialize()
@@ -43,6 +45,8 @@ void UI::Initialize()
 	mUpgradeAttackButton = new Button(mGame->getTexture(ATTACK_UPGRADE_BUTTON), mRenderer, mMouse, 100, 100, { 0, 0, 64, 64 }, mFont);
 	mUpgradeRockButton = new Button(mGame->getTexture(ROCK_UPGRADE_BUTTON), mRenderer, mMouse, 150, 100, { 0, 0, 128, 128 }, mFont);
 	mChangeOrderButton = new Button(mGame->getTexture(CHANGE_ORDER_BUTTON), mRenderer, mMouse, 200, 100, { 0, 0, 64, 64 }, mFont);
+	mTower1Button = new Button(mGame->getTexture(TOWER1), mRenderer, mMouse, 350, 50, { 0, 0, 239, 486 }, mFont);
+	mTower2Button = new Button(mGame->getTexture(TOWER2), mRenderer, mMouse, 400, 50, { 0, 0, 251, 481 }, mFont);
 	HideGameplayButtons();
 	mContinueButton->Hide();
 	mPauseButton->Hide();
@@ -56,6 +60,8 @@ void UI::Initialize()
 	mChangeOrderButton->addTooltip("Click to Change Order between advance or stand still");
 	mRockButton->addTooltip("Cost: 150 gold. Throw a Rock which does splash damage on next mouse click");
 	mUpgradeRockButton->addTooltip("Cost 2000 gold. Adds 2 Rocks when throwing");
+	mTower1Button->addTooltip("Cost: 500 gold. Build a weak tower");
+	mTower2Button->addTooltip("Cost: 850 gold. Build a strong tower");
 	mGold = "Gold: 100";
 	mTextSurface = TTF_RenderText_Solid(mFont, mGold.c_str(), mTextColor);
 	mTextTexture = SDL_CreateTextureFromSurface(mRenderer, mTextSurface);
@@ -76,6 +82,8 @@ void UI::Update()
 	mChangeOrderButton->Update();
 	mRockButton->Update();
 	mUpgradeRockButton->Update();
+	mTower1Button->Update();
+	mTower2Button->Update();
 	mMouse->Update();
 }
 
@@ -94,6 +102,8 @@ void UI::Draw()
 	mChangeOrderButton->Draw();
 	mRockButton->Draw();
 	mUpgradeRockButton->Draw();
+	mTower1Button->Draw();
+	mTower2Button->Draw();
 	SDL_RenderCopy(mRenderer, mTextTexture, NULL, &mTextRect);
 	mMouse->Draw();
 }
@@ -164,6 +174,14 @@ void UI::OnMouseClickEvent()
 	{
 		mPlayer->UpgradeRock();
 	}
+	else if (mTower1Button->IsSelected())
+	{
+		mPlayer->CreateTower1();
+	}
+	else if (mTower2Button->IsSelected())
+	{
+		mPlayer->CreateTower2();
+	}
 }
 
 void UI::UpdateGoldText()
@@ -193,6 +211,8 @@ void UI::HideGameplayButtons()
 	mChangeOrderButton->Hide();
 	mRockButton->Hide();
 	mUpgradeRockButton->Hide();
+	mTower1Button->Hide();
+	mTower2Button->Hide();
 }
 
 void UI::ShowGameplayButtons()
@@ -207,4 +227,6 @@ void UI::ShowGameplayButtons()
 	mChangeOrderButton->Show();
 	mRockButton->Show();
 	mUpgradeRockButton->Show();
+	mTower1Button->Show();
+	mTower2Button->Show();
 }

@@ -8,6 +8,7 @@ public:
 	void Update(float deltaTime);
 	virtual void TakeDamage(int DMG);
 protected:
+	GameObject* mTarget;
 	float mPercentHPBar;
 	int MAX_HP;
 	int ATTACK_RELOAD_TIME;

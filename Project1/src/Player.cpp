@@ -18,7 +18,7 @@ void Player::CreateKnight()
 	if (mGold >= Knight::getStaticGoldCost())
 	{
 		mGold -= Knight::getStaticGoldCost();
-		GameObject* temp = new Knight(mGame->getRenderer(), PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, mGame, 1, mIsAdvancing);
+		GameObject* temp = new Knight(mGame->getRenderer(), mGame->getPlayerCreateUnitPosition(), HEIGHT - 110, mGame, 1, mIsAdvancing);
 		ApplyUpgrade(temp);
 		mGame->CreateUnit(temp);
 		mUI->UpdateGoldText();
@@ -30,7 +30,7 @@ void Player::CreateSpearKnight()
 	if (mGold >= SpearKnight::getStaticGoldCost())
 	{
 		mGold -= SpearKnight::getStaticGoldCost();
-		GameObject* temp = new SpearKnight(mGame->getRenderer(), PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, mGame, 1, mIsAdvancing);
+		GameObject* temp = new SpearKnight(mGame->getRenderer(), mGame->getPlayerCreateUnitPosition(), HEIGHT - 110, mGame, 1, mIsAdvancing);
 		ApplyUpgrade(temp);
 		mGame->CreateUnit(temp);
 		mUI->UpdateGoldText();
@@ -42,7 +42,7 @@ void Player::CreateAxeKnight()
 	if (mGold >= AxeKnight::getStaticGoldCost())
 	{
 		mGold -= AxeKnight::getStaticGoldCost();
-		GameObject* temp = new AxeKnight(mGame->getRenderer(), PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, mGame, 1, mIsAdvancing);
+		GameObject* temp = new AxeKnight(mGame->getRenderer(), mGame->getPlayerCreateUnitPosition(), HEIGHT - 110, mGame, 1, mIsAdvancing);
 		ApplyUpgrade(temp);
 		mGame->CreateUnit(temp);
 		mUI->UpdateGoldText();
@@ -54,7 +54,7 @@ void Player::CreateArcher()
 	if (mGold >= Archer::getStaticGoldCost())
 	{
 		mGold -= Archer::getStaticGoldCost();
-		GameObject* temp = new Archer(mGame->getRenderer(), PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, mGame, 1, mIsAdvancing);
+		GameObject* temp = new Archer(mGame->getRenderer(), mGame->getPlayerCreateUnitPosition(), HEIGHT - 110, mGame, 1, mIsAdvancing);
 		ApplyUpgrade(temp);
 		mGame->CreateUnit(temp);
 		mUI->UpdateGoldText();
@@ -66,10 +66,34 @@ void Player::CreateHeavyInfantry()
 	if (mGold >= HeavyInfantry::getStaticGoldCost())
 	{
 		mGold -= HeavyInfantry::getStaticGoldCost();
-		GameObject* temp = new HeavyInfantry(mGame->getRenderer(), PLAYER_CREATE_UNIT_POSITION, HEIGHT - 110, mGame, 1, mIsAdvancing);
+		GameObject* temp = new HeavyInfantry(mGame->getRenderer(), mGame->getPlayerCreateUnitPosition(), HEIGHT - 110, mGame, 1, mIsAdvancing);
 		ApplyUpgrade(temp);
 		mGame->CreateUnit(temp);
 		mUI->UpdateGoldText();
+	}
+}
+
+void Player::CreateTower1()
+{
+	if (mGold >= Tower1::getStaticGoldCost() && mGame->getPlayerBuildingCount() < 3)
+	{
+		mGold -= Tower1::getStaticGoldCost();
+		GameObject* temp = new Tower1(mGame->getRenderer(), mGame->getPlayerCreateUnitPosition(), HEIGHT - 175, mGame, 1);
+		mGame->CreateUnit(temp);
+		mUI->UpdateGoldText();
+		mGame->IncreasePlayerBuildingCount();
+	}
+}
+
+void Player::CreateTower2()
+{
+	if (mGold >= Tower2::getStaticGoldCost() && mGame->getPlayerBuildingCount() < 3)
+	{
+		mGold -= Tower2::getStaticGoldCost();
+		GameObject* temp = new Tower2(mGame->getRenderer(), mGame->getPlayerCreateUnitPosition(), HEIGHT - 175, mGame, 1);
+		mGame->CreateUnit(temp);
+		mUI->UpdateGoldText();
+		mGame->IncreasePlayerBuildingCount();
 	}
 }
 

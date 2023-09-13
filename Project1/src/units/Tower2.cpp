@@ -11,6 +11,7 @@ Tower2::Tower2(SDL_Renderer* renderer, int x, int y, Game* game, bool isPlayer) 
 	mHP = MAX_HP;
 	mDamage = 50;
 	LoadAnimation();
+	mArmor = 18;
 }
 
 void Tower2::Draw()

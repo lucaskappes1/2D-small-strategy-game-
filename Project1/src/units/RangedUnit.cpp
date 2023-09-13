@@ -15,9 +15,18 @@ void RangedUnit::Update(float deltaTime)
 		mGame->KillObject(this);
 		return;
 	}
-	GameObject* res = mGame->RangedAttackDetection(this, 210);
 	GameObject* res2 = mGame->CollisionDetection(this);
-	if (res2 == nullptr && mAdvancing)
+	if (mReloadCount < 0)
+	{
+		mTarget = mGame->RangedAttackDetection(this, 210);
+		if (mTarget != nullptr)
+		{
+			Attack(mTarget);
+			eLastFrameState = eState;
+			eState = ATTACKING;
+		}
+	}
+	if (mTarget == nullptr && res2 == nullptr && mAdvancing)
 	{
 		mPosition += mVelocity * deltaTime;
 		mDestR.x = mPosition.getIntX();
@@ -25,13 +34,7 @@ void RangedUnit::Update(float deltaTime)
 		eLastFrameState = eState;
 		eState = WALKING;
 	}
-	else if (res != nullptr)
-	{
-		Attack(res);
-		eLastFrameState = eState;
-		eState = ATTACKING;
-	}
-	else
+	else if(mTarget == nullptr)
 	{
 		eLastFrameState = eState;
 		eState = IDLE;

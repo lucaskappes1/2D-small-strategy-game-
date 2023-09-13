@@ -36,6 +36,8 @@ private:
 	Button* mContinueButton;
 	Button* mChangeOrderButton;
 	Button* mRockButton;
+	Button* mTower1Button;
+	Button* mTower2Button;
 	std::string mGold;
 	TTF_Font* mFont;
 	SDL_Color mTextColor = { 255, 0, 0 };

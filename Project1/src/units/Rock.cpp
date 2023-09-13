@@ -9,15 +9,15 @@ Rock::Rock(const Vector2& position, const Vector2& destination, SDL_Renderer* re
 	mDestR = { mPosition.getIntX(), mPosition.getIntY(), 12, 12 };
 	if (upgradeLevel == 1)
 	{
-		mGame->AddProjectile(new Rock(position, destination, mRenderer, mGame, -60.0f));
-		mGame->AddProjectile(new Rock(position, destination, mRenderer, mGame, 60.0f));
+		mGame->AddProjectile(new Rock(position, {mDestination.getX() - 60.0f, mDestination.getY()}, mRenderer, mGame, -60.0f));
+		mGame->AddProjectile(new Rock(position, {mDestination.getX() + 60.0f, mDestination.getY() }, mRenderer, mGame, 60.0f));
 	}
 	if (upgradeLevel == 2)
 	{
-		mGame->AddProjectile(new Rock(position, destination, mRenderer, mGame, -60.0f));
-		mGame->AddProjectile(new Rock(position, destination, mRenderer, mGame, 60.0f));
-		mGame->AddProjectile(new Rock(position, destination, mRenderer, mGame, -120.0f));
-		mGame->AddProjectile(new Rock(position, destination, mRenderer, mGame, 120.0f));
+		mGame->AddProjectile(new Rock(position, {mDestination.getX() - 60.0f, mDestination.getY()}, mRenderer, mGame, -60.0f));
+		mGame->AddProjectile(new Rock(position, {mDestination.getX() + 60.0f, mDestination.getY() }, mRenderer, mGame, 60.0f));
+		mGame->AddProjectile(new Rock(position, {mDestination.getX() - 120.0f, mDestination.getY()}, mRenderer, mGame, -120.0f));
+		mGame->AddProjectile(new Rock(position, {mDestination.getX() + 120.0f, mDestination.getY() }, mRenderer, mGame, 120.0f));
 	}
 	LoadAnimation();
 	CalculateVelocity(0.0f);
@@ -26,7 +26,7 @@ Rock::Rock(const Vector2& position, const Vector2& destination, SDL_Renderer* re
 Rock::Rock(const Vector2& position, const Vector2& destination, SDL_Renderer* renderer, Game* game, float offset, float velocityOffset) : 
 	Projectile(position, destination, renderer, game)
 {
-	mVelocity = { 180.0f + velocityOffset, 0.0f };
+	mVelocity = { 180.0f, 0.0f };
 	mAcceleration = { 0.0f, 50.0f };
 	mPosition = position;
 	mDestR = { mPosition.getIntX(), mPosition.getIntY(), 12, 12 };

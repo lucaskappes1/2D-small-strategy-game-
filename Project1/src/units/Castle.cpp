@@ -10,6 +10,7 @@ Castle::Castle(SDL_Renderer* renderer, int x, int y, Game* game, bool isPlayer) 
 	MAX_HP = 2500;
 	mHP = MAX_HP;
 	mDamage = 65;
+	mArmor = 20;
 	LoadAnimation();
 }
 
@@ -21,11 +22,8 @@ void Castle::Draw()
 
 void Castle::Attack(GameObject* target)
 {
-	if (mReloadCount <= 0)
-	{
-		mGame->AddProjectile(new Arrow(mPosition, target, mRenderer, mGame, mDamage));
-		mReloadCount = ATTACK_RELOAD_TIME;
-	}
+	mGame->AddProjectile(new Arrow(mPosition, target, mRenderer, mGame, mDamage));
+	mReloadCount = ATTACK_RELOAD_TIME;
 }
 
 void Castle::LoadAnimation()

@@ -144,11 +144,8 @@ void Archer::Draw()
 
 void Archer::Attack(GameObject* target)
 {
-	if (mReloadCount <= 0)
-	{
-		mGame->AddProjectile(new Arrow(mPosition, target, mRenderer, mGame, mDamage));
-		mReloadCount = ATTACK_RELOAD_TIME;
-	}
+	mGame->AddProjectile(new Arrow(mPosition, target, mRenderer, mGame, mDamage));
+	mReloadCount = ATTACK_RELOAD_TIME;
 }
 
 void Archer::LoadAnimation()

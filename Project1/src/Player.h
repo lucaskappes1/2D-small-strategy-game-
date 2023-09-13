@@ -9,6 +9,8 @@ public:
 	void CreateAxeKnight();
 	void CreateArcher();
 	void CreateHeavyInfantry();
+	void CreateTower1();
+	void CreateTower2();
 	void ChangeOrder();
 	void IncreaseGold(int amount);
 	void UpgradeArmor();

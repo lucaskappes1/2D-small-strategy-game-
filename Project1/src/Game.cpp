@@ -89,7 +89,7 @@ GameObject* Game::RangedAttackDetection(GameObject* gameObject, int range)
 	GameObject* result = nullptr;
 	for (auto& i : mObjects)
 	{
-		if (i != gameObject && (i->getIsPlayer() != gameObject->getIsPlayer()))
+		if (i != gameObject && (i->getIsPlayer() != gameObject->getIsPlayer()) && !dynamic_cast<Projectile*>(i))
 		{
 			float temp = Vector2::CalculateDistance(i->getPositionVec(), gameObject->getPositionVec());
 			if (temp < d)
@@ -121,25 +121,6 @@ GameObject* Game::CollisionDetection(GameObject* gameObject)
 		}
 	}
 	return nullptr;
-}
-
-GameObject* Game::GetTarget(GameObject* gameObject)
-{
-	float d = INFINITY;
-	GameObject* result = nullptr;
-	for (auto& i : mObjects)
-	{
-		if (i != gameObject && (i->getIsPlayer() != gameObject->getIsPlayer()))
-		{
-			float temp = Vector2::CalculateDistance(i->getPositionVec(), gameObject->getPositionVec());
-			if (temp < d)
-			{
-				d = temp;
-				result = i;
-			}
-		}
-	}
-	return result;
 }
 
 SDL_Texture* Game::getTexture(int id)
@@ -328,7 +309,7 @@ void Game::CreateUnit(GameObject* unit)
 	}
 	else
 	{
-		mPendingAIObjects.emplace(unit);
+		mPendingAIObjects.emplace(unit);	
 	}
 }
 
@@ -391,6 +372,26 @@ void Game::SplashDamage(int Damage, int x, int Radious)
 void Game::AddProjectile(GameObject* projectile)
 {
 	mPendingProjectiles.emplace_back(projectile);
+}
+
+void Game::IncreasePlayerBuildingCount()
+{
+	mPlayerBuildingCount++;
+}
+
+void Game::IncreaseAIBuildingCount()
+{
+	mAIBuildingCount++;
+}
+
+void Game::DecreasePlayerBuildingCount()
+{
+	mPlayerBuildingCount--;
+}
+
+void Game::DecreaseAIBuildingCount()
+{
+	mAIBuildingCount--;
 }
 
 SDL_Texture* Game::getTexture(std::string path, int name)
@@ -464,7 +465,7 @@ void Game::Update()
 			{
 				if (i->getIsPlayer())
 				{
-					int d = i->getX() - PLAYER_CREATE_UNIT_POSITION;
+					int d = i->getX() - getPlayerCreateUnitPosition();
 					if (d <= 32 && d >= 0)
 					{
 						temp = false;
@@ -487,7 +488,7 @@ void Game::Update()
 			{
 				if (!i->getIsPlayer())
 				{
-					int d = i->getX() - AI_CREATE_UNIT_POSITION;
+					int d = i->getX() - getAICreateUnitPosition();
 					if (d <= 0 && d >= -32)
 					{
 						temp = false;

@@ -5,12 +5,13 @@
 Tower1::Tower1(SDL_Renderer* renderer, int x, int y, Game* game, bool isPlayer) :
 	Building(renderer, x, y, game, isPlayer)
 {
-	mCollisionR = { mPosition.getIntX() - 10, mPosition.getIntY(), 35, 100 };
-	mDestR = { mPosition.getIntX() - 10, mPosition.getIntY(), 35, 100 };
+	mCollisionR = { mPosition.getIntX(), mPosition.getIntY(), 35, 100 };
+	mDestR = { mPosition.getIntX(), mPosition.getIntY(), 35, 100 };
 	MAX_HP = 700;
 	mHP = MAX_HP;
 	mDamage = 30;
 	LoadAnimation();
+	mArmor = 15;
 }
 
 void Tower1::Draw()

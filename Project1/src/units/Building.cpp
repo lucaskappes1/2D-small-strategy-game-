@@ -14,12 +14,23 @@ void Building::Update(float deltaTime)
 {
 	if (mHP <= 0)
 	{
+		if (getIsPlayer())
+		{
+			mGame->DecreasePlayerBuildingCount();
+		}
+		else
+		{
+			mGame->DecreaseAIBuildingCount();
+		}
 		mGame->KillObject(this);
 	}
-	GameObject* res = mGame->RangedAttackDetection(this, 210);
-	if (res != nullptr)
+	if (mReloadCount < 0)
 	{
-		Attack(res);
+		GameObject* res = mGame->RangedAttackDetection(this, 300);
+		if (res != nullptr)
+		{
+			Attack(res);
+		}
 	}
 	mReloadCount--;
 }
