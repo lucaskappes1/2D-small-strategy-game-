@@ -28,6 +28,7 @@ public:
 	inline const std::vector<GameObject*>& GetGameObjectVector() { return mObjects; }
 	GameObject* RangedAttackDetection(GameObject* gameObject, int range);
 	GameObject* CollisionDetection(GameObject* gameObject);
+	GameObject* GetTarget(GameObject* gameObject);
 	SDL_Texture* getTexture(int id);
 	SDL_Renderer* getRenderer() { return mRenderer; }
 	void KillObject(GameObject* target);

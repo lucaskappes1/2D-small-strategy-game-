@@ -17,7 +17,8 @@ public:
 	inline const int& getX() const { return mPosition.getIntX(); }
 	inline const int& getY() const { return mPosition.getIntY(); }
 	inline const Vector2& getPositionVec() const { return mPosition; }
-	inline const bool& getIsPlayer() const { return mIsPlayer; }
+	inline const Vector2& getVelocityVec() const { return mVelocity; }
+	inline const bool getIsPlayer() const { return mIsPlayer; }
 	inline const SDL_Rect& getCollisionRect() const { return mCollisionR; }
 	virtual void setArmor(int Armor) { mArmor = Armor; }
 	virtual void setAttack(int Damage) { mDamage = Damage; }

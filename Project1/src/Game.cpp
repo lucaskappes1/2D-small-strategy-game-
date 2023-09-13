@@ -85,79 +85,61 @@ void Game::Shutdown()
 
 GameObject* Game::RangedAttackDetection(GameObject* gameObject, int range)
 {
-	int index = -1;
+	float d = INFINITY;
+	GameObject* result = nullptr;
 	for (auto& i : mObjects)
 	{
-		index++;
-		if (i == gameObject)
+		if (i != gameObject && (i->getIsPlayer() != gameObject->getIsPlayer()))
 		{
-			break;
-		}
-	}
-	if (gameObject->getIsPlayer())
-	{
-		for (int i = index + 1; i < mObjects.size(); i++)
-		{
-			if (!mObjects.at(i)->getIsPlayer() && mObjects.at(i)->eState != GameObject::DEATH)
+			float temp = Vector2::CalculateDistance(i->getPositionVec(), gameObject->getPositionVec());
+			if (temp < d)
 			{
-				Vector2 distance = mObjects.at(i)->getPositionVec() - gameObject->getPositionVec();
-				int d = abs(distance.getIntX());
-				if(d < range)
-				{
-					return mObjects.at(i);
-				}
-				else
-				{
-					return nullptr;
-				}
+				d = temp;
+				result = i;
 			}
 		}
 	}
-	else
+	if (d < range)
 	{
-		for (int i = index - 1; i < mObjects.size(); i--)
-		{
-			if (mObjects.at(i)->getIsPlayer() && mObjects.at(i)->eState != GameObject::DEATH)
-			{
-				Vector2 distance = mObjects.at(i)->getPositionVec() - gameObject->getPositionVec();
-				int d = abs(distance.getIntX());
-				if (d < range)
-				{
-					return mObjects.at(i);
-				}
-			}
-		}
+		return result;
 	}
 	return nullptr;
 }
 
 GameObject* Game::CollisionDetection(GameObject* gameObject)
 {
-	int index = -1;
+	int x = gameObject->getVelocityVec().getIntX() > 0 ? 2 : -2;
+	int y = gameObject->getVelocityVec().getIntY() > 0 ? 2 : -2;
+	SDL_Rect rectangle = gameObject->getCollisionRect();
+	rectangle.x += x;
+	rectangle.y += y;
 	for (auto& i : mObjects)
 	{
-		index++;
-		if (i == gameObject)
+		if (i != gameObject && SDL_HasIntersection(&rectangle, &i->getCollisionRect()))
 		{
-			break;
+			return i;
 		}
-	}
-	try
-	{
-		if (gameObject->getIsPlayer() && SDL_HasIntersection(&gameObject->getCollisionRect(), &mObjects.at(index + 1)->getCollisionRect()))
-		{
-			return mObjects.at(index + 1);
-		}
-		else if (!gameObject->getIsPlayer() && SDL_HasIntersection(&gameObject->getCollisionRect(), &mObjects.at(index - 1)->getCollisionRect()))
-		{
-			return mObjects.at(index - 1); 
-		}
-	}
-	catch (const std::out_of_range& e)
-	{
-		Shutdown();
 	}
 	return nullptr;
+}
+
+GameObject* Game::GetTarget(GameObject* gameObject)
+{
+	float d = INFINITY;
+	GameObject* result = nullptr;
+	for (auto& i : mObjects)
+	{
+		if (i != gameObject && (i->getIsPlayer() != gameObject->getIsPlayer()))
+		{
+			float temp = Vector2::CalculateDistance(i->getPositionVec(), gameObject->getPositionVec());
+			if (temp < d)
+			{
+				d = temp;
+				result = i;
+			}
+		}
+	}
+	return result;
 }
 
 SDL_Texture* Game::getTexture(int id)
@@ -399,11 +381,9 @@ void Game::SplashDamage(int Damage, int x, int Radious)
 		d = abs(d);
 		if (d < Radious)
 		{
-			int aux = 0;
 			float m = (float)d / Radious;
 			m = 1 - m;
-			aux = Damage * m;
-			i->TakeDamage(aux);
+			i->TakeDamage(Damage * m);
 		}
 	}
 }
@@ -531,9 +511,6 @@ void Game::Update()
 			mPendingProjectiles.clear();
 		}
 	}
-	std::sort(mObjects.begin(), mObjects.end(), [](const GameObject* a, const GameObject* b) {
-		return a->getCollisionRect().x < b->getCollisionRect().x;
-		});
 	if (SDL_GetTicks() - mTimeSeconds > 6000)
 	{
 		mTimeSeconds = SDL_GetTicks();

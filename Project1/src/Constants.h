@@ -5,7 +5,7 @@
 const int WIDTH = 1024;
 const int HEIGHT = 768;
 
-const int PLAYER_CREATE_UNIT_POSITION = WIDTH - 934;
+const int PLAYER_CREATE_UNIT_POSITION = WIDTH - 925;
 const int AI_CREATE_UNIT_POSITION = WIDTH - 130;
 
 //texture naming

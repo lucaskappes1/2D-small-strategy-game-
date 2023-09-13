@@ -1,7 +1,7 @@
 #include "Rock.h"
 #include "../Game.h"
 
-Rock::Rock(const Vector2& position, const Vector2& destination, SDL_Renderer* renderer, Game* game, int upgradeLevel) : 
+Rock::Rock(const Vector2& position, const Vector2& destination, SDL_Renderer* renderer, Game* game, int upgradeLevel) :
 	Projectile(position, destination, renderer, game)
 {
 	mVelocity = { 180.0f, 0.0f };
@@ -23,10 +23,10 @@ Rock::Rock(const Vector2& position, const Vector2& destination, SDL_Renderer* re
 	CalculateVelocity(0.0f);
 }
 
-Rock::Rock(const Vector2& position, const Vector2& destination, SDL_Renderer* renderer, Game* game, float offset) : 
+Rock::Rock(const Vector2& position, const Vector2& destination, SDL_Renderer* renderer, Game* game, float offset, float velocityOffset) : 
 	Projectile(position, destination, renderer, game)
 {
-	mVelocity = { 180.0f, 0.0f };
+	mVelocity = { 180.0f + velocityOffset, 0.0f };
 	mAcceleration = { 0.0f, 50.0f };
 	mPosition = position;
 	mDestR = { mPosition.getIntX(), mPosition.getIntY(), 12, 12 };

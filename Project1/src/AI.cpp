@@ -96,7 +96,7 @@ void AI::ChangeState()
 	const std::vector<GameObject*>& temp = mGame->GetGameObjectVector();
 	int playerCount= 0;
 	int AICount = 0;
-	int x = 0;;
+	int x = 0;
 	for (GameObject* i : temp)
 	{
 		if (i->getIsPlayer())
@@ -120,7 +120,10 @@ void AI::ChangeState()
 			AICount++;
 		}
 	}
-	mEnemyMiddle = x / playerCount;
+	if (playerCount != 0)
+	{
+		mEnemyMiddle = x / playerCount;
+	}
 	if (eState == UNDERATTACK || eState == ENEMYATTHEGATES)
 	{
 		Act();

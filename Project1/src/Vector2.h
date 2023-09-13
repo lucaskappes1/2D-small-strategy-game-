@@ -10,6 +10,7 @@ public:
     Vector2& operator-=(const Vector2& other);
     Vector2 operator*(float scalar) const;
     Vector2& operator*=(float scalar);
+    static float CalculateDistance(const Vector2& first, const Vector2& second);
     inline int getIntX() const { return static_cast<int>(x); }
     inline int getIntY() const { return static_cast<int>(y); }
     inline float getX() const { return x; }

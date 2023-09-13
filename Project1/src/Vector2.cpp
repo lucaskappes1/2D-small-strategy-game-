@@ -46,6 +46,15 @@ Vector2& Vector2::operator*=(float scalar)
 	return *this;
 }
 
+float Vector2::CalculateDistance(const Vector2& first, const Vector2& second)
+{
+	float x = first.getX() - second.getX();
+	x = abs(x);
+	float y = first.getY() - second.getY();
+	y = abs(y);
+	return std::sqrt(std::pow(x, 2) + std::pow(y,2));
+}
+
 float Vector2::dot(const Vector2& other) const
 {
 	return x * other.x + y * other.y;
