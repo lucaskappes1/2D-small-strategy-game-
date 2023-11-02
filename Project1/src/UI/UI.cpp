@@ -3,6 +3,7 @@
 #include "../Player.h"
 
 
+
 UI::UI(Game* game, SDL_Renderer* renderer, Player* Player) : mPlayer(Player), mStoneButtonClicked(false)
 {
 	mGame = game;
@@ -65,45 +66,105 @@ void UI::Initialize()
 	mGold = "Gold: 100";
 	mTextSurface = TTF_RenderText_Solid(mFont, mGold.c_str(), mTextColor);
 	mTextTexture = SDL_CreateTextureFromSurface(mRenderer, mTextSurface);
+
+	mButtonMap.emplace(mStartGameButton, [this]()
+		{
+			mGame->StartGame();
+	mStartGameButton->Hide();
+		});
+
+	mButtonMap.emplace(mPauseButton, [this]()
+		{
+			mGame->Pause();
+	HideGameplayButtons();
+	mContinueButton->Show();
+	mPauseButton->Hide();
+		});
+
+	mButtonMap.emplace(mContinueButton, [this]()
+		{
+			mGame->Continue();
+	ShowGameplayButtons();
+	mPauseButton->Show();
+	mContinueButton->Hide();
+		});
+
+	mButtonMap.emplace(mKnightButton, [this]()
+		{
+			mPlayer->CreateKnight();
+		});
+
+	mButtonMap.emplace(mSpearKnightButton, [this]()
+		{
+			mPlayer->CreateSpearKnight();
+		});
+
+	mButtonMap.emplace(mAxeKnightButton, [this]()
+		{
+			mPlayer->CreateAxeKnight();
+		});
+
+	mButtonMap.emplace(mAcherButton, [this]()
+		{
+			mPlayer->CreateArcher();
+		});
+
+	mButtonMap.emplace(mHeavyInfantryButton, [this]()
+		{
+			mPlayer->CreateHeavyInfantry();
+		});
+
+	mButtonMap.emplace(mRockButton, [this]()
+		{
+			mStoneButtonClicked = true;
+		});
+
+	mButtonMap.emplace(mUpgradeArmorButton, [this]()
+		{
+			mPlayer->UpgradeArmor();
+		});
+
+	mButtonMap.emplace(mUpgradeAttackButton, [this]()
+		{
+			mPlayer->UpgradeAttack();
+		});
+
+	mButtonMap.emplace(mUpgradeRockButton, [this]()
+		{
+			mPlayer->UpgradeRock();
+		});
+
+	mButtonMap.emplace(mChangeOrderButton, [this]()
+		{
+			mPlayer->ChangeOrder();
+		});
+
+	mButtonMap.emplace(mTower1Button, [this]()
+		{
+			mPlayer->CreateTower1();
+		});
+
+	mButtonMap.emplace(mTower2Button, [this]()
+		{
+			mPlayer->CreateTower2();
+		});
 }
 
 void UI::Update()
 {
-	mKnightButton->Update();
-	mSpearKnightButton->Update();
-	mAxeKnightButton->Update();
-	mAcherButton->Update();
-	mHeavyInfantryButton->Update();
-	mUpgradeArmorButton->Update();
-	mUpgradeAttackButton->Update();
-	mStartGameButton->Update();
-	mPauseButton->Update();
-	mContinueButton->Update();
-	mChangeOrderButton->Update();
-	mRockButton->Update();
-	mUpgradeRockButton->Update();
-	mTower1Button->Update();
-	mTower2Button->Update();
+	for (const auto& pair : mButtonMap)
+	{
+		pair.first->Update();
+	}
 	mMouse->Update();
 }
 
 void UI::Draw()
 {
-	mKnightButton->Draw();
-	mSpearKnightButton->Draw();
-	mAxeKnightButton->Draw();
-	mAcherButton->Draw();
-	mHeavyInfantryButton->Draw();
-	mUpgradeArmorButton->Draw();
-	mUpgradeAttackButton->Draw();
-	mStartGameButton->Draw();
-	mPauseButton->Draw();
-	mContinueButton->Draw();
-	mChangeOrderButton->Draw();
-	mRockButton->Draw();
-	mUpgradeRockButton->Draw();
-	mTower1Button->Draw();
-	mTower2Button->Draw();
+	for (const auto& pair : mButtonMap)
+	{
+		pair.first->Draw();
+	}
 	SDL_RenderCopy(mRenderer, mTextTexture, NULL, &mTextRect);
 	mMouse->Draw();
 }
@@ -115,72 +176,13 @@ void UI::OnMouseClickEvent()
 		mPlayer->LaunchRock(mMouse->getCollisionRect().x);
 		mStoneButtonClicked = false;
 	}
-	else if (mKnightButton->IsSelected())
+	for (const auto& pair : mButtonMap)
 	{
-		mPlayer->CreateKnight();
-	}
-	else if (mSpearKnightButton->IsSelected())
-	{
-		mPlayer->CreateSpearKnight();
-	}
-	else if (mAxeKnightButton->IsSelected())
-	{
-		mPlayer->CreateAxeKnight();
-	}
-	else if (mAcherButton->IsSelected())
-	{
-		mPlayer->CreateArcher();
-	}
-	else if (mHeavyInfantryButton->IsSelected())
-	{
-		mPlayer->CreateHeavyInfantry();
-	}
-	else if (mUpgradeArmorButton->IsSelected())
-	{
-		mPlayer->UpgradeArmor();
-	}
-	else if (mUpgradeAttackButton->IsSelected())
-	{
-		mPlayer->UpgradeAttack();
-	}
-	else if (mStartGameButton->IsSelected())
-	{
-		mGame->StartGame();
-		mStartGameButton->Hide();
-	}
-	else if (mPauseButton->IsSelected())
-	{
-		mGame->Pause();
-		HideGameplayButtons();
-		mContinueButton->Show();
-		mPauseButton->Hide();
-	}
-	else if (mContinueButton->IsSelected())
-	{
-		mGame->Continue();
-		ShowGameplayButtons();
-		mPauseButton->Show();
-		mContinueButton->Hide();
-	}
-	else if (mChangeOrderButton->IsSelected())
-	{
-		mPlayer->ChangeOrder();
-	}
-	else if (mRockButton->IsSelected())
-	{
-		mStoneButtonClicked = true;
-	}
-	else if (mUpgradeRockButton->IsSelected())
-	{
-		mPlayer->UpgradeRock();
-	}
-	else if (mTower1Button->IsSelected())
-	{
-		mPlayer->CreateTower1();
-	}
-	else if (mTower2Button->IsSelected())
-	{
-		mPlayer->CreateTower2();
+		if (pair.first->IsSelected())
+		{
+			pair.second();				//Important to remember that () means the lambda function is called. Without () the function is not called
+			break;
+		}
 	}
 }
 

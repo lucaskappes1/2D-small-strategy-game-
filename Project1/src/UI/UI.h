@@ -1,6 +1,8 @@
 #pragma once
 #include "Button.h"
 #include <string>
+#include <unordered_map>
+#include <functional>
 
 class UI
 {
@@ -38,6 +40,8 @@ private:
 	Button* mRockButton;
 	Button* mTower1Button;
 	Button* mTower2Button;
+
+	std::unordered_map<Button*, std::function<void()>> mButtonMap;
 	std::string mGold;
 	TTF_Font* mFont;
 	SDL_Color mTextColor = { 255, 0, 0 };
