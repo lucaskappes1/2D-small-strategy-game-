@@ -22,7 +22,7 @@ public:
 	inline const SDL_Rect& getCollisionRect() const { return mCollisionR; }
 	virtual void setArmor(int Armor) { mArmor = Armor; }
 	virtual void setAttack(int Damage) { mDamage = Damage; }
-	enum State { ATTACKING, WALKING, IDLE, DEATH } eState;
+	enum class State { ATTACKING, WALKING, IDLE, DEATH } eState;
 	void ChangeOrder() { mAdvancing = !mAdvancing; }
 	void setOrder(bool isAdvancing) { mAdvancing = isAdvancing; }
 protected:

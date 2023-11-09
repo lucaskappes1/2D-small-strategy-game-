@@ -12,7 +12,7 @@ public:
 	~Button();
 	void Update();
 	void Draw();
-	const bool& IsSelected() const { return mIsSelected; }
+	const bool& IsSelected();
 	void addTooltip(const char* Tooltip);
 	void Show();
 	void Hide();

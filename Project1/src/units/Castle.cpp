@@ -12,6 +12,8 @@ Castle::Castle(SDL_Renderer* renderer, int x, int y, Game* game, bool isPlayer) 
 	mDamage = 65;
 	mArmor = 20;
 	LoadAnimation();
+	mRange = 300;
+	ATTACK_RELOAD_TIME = 50;
 }
 
 void Castle::Draw()

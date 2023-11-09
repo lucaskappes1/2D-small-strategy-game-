@@ -19,7 +19,7 @@ Knight::Knight(SDL_Renderer* renderer, int x, int y, class Game* game, bool isPl
 	mPercentHPBar = 1.0f;
 	mArmor = 6;
 	mDamage = 20;
-	eState = WALKING;
+	eState = State::WALKING;
 	mFrameCount = 0;
 	mCurrentFrame = 0;
 	LoadAnimation();
@@ -29,7 +29,7 @@ void Knight::Draw()
 {
 	switch (eState)
 	{
-	case Knight::ATTACKING:
+	case State::ATTACKING:
 		if (eState != eLastFrameState)
 		{
 			mCurrentFrame = 0;
@@ -55,7 +55,7 @@ void Knight::Draw()
 		}
 		RenderHPBar(mPosition.getIntX(), mPosition.getIntY() - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
 		break;
-	case Knight::WALKING:
+	case State::WALKING:
 		if (eState != eLastFrameState)
 		{
 			mCurrentFrame = 0;
@@ -81,7 +81,7 @@ void Knight::Draw()
 		}
 		RenderHPBar(mPosition.getIntX(), mPosition.getIntY() - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
 		break;
-	case Knight::IDLE:
+	case State::IDLE:
 		if (!mIsPlayer)
 		{
 			SDL_RenderCopyEx(mRenderer, mIdleTexture, &mSrcR, &mDestR, 0, nullptr, SDL_FLIP_HORIZONTAL);
@@ -92,7 +92,7 @@ void Knight::Draw()
 		}
 		RenderHPBar(mPosition.getIntX(), mPosition.getIntY() - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
 		break;
-	case Knight::DEATH:
+	case State::DEATH:
 		mSrcR.w = 223;
 		mDestR.w = 50;
 		if (eState != eLastFrameState)

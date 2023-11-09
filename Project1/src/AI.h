@@ -13,13 +13,15 @@ public:
 	void UpgradeAttack() { mAttackUpgradeCount++; }
 	void UpgradeArmor() { mArmorUpgradeCount++; }
 	virtual void ChangeState();
-	bool mIsActive;
-protected:
 	void CreateKnight();
 	void CreateSpearKnight();
 	void CreateAxeKnight();
 	void CreateArcher();
 	void CreateHeavyInfantry();
+	void CreateTower1();
+	void CreateTower2();
+	bool mIsActive;
+protected:
 	void ApplyUpgrade(class GameObject* unit);
 	int mAttackUpgradeCount;
 	int mArmorUpgradeCount;

@@ -156,6 +156,8 @@
     <ClCompile Include="src\Vector2.cpp" />
     <ClCompile Include="src\units\Tower1.cpp" />
     <ClCompile Include="src\units\Tower2.cpp" />
+    <ClCompile Include="src\level\Stage.cpp" />
+    <ClCompile Include="src\level\UpgradeList.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\units\Building.h" />
@@ -183,6 +185,8 @@
     <ClInclude Include="src\Vector2.h" />
     <ClInclude Include="src\units\Tower1.h" />
     <ClInclude Include="src\units\Tower2.h" />
+    <ClInclude Include="src\level\Stage.h" />
+    <ClInclude Include="src\level\UpgradeList.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

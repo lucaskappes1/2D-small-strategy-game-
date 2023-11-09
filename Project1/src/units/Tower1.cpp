@@ -12,6 +12,9 @@ Tower1::Tower1(SDL_Renderer* renderer, int x, int y, Game* game, bool isPlayer) 
 	mDamage = 30;
 	LoadAnimation();
 	mArmor = 15;
+	mRange = 260;
+	mProjectileNumber = 1;
+	ATTACK_RELOAD_TIME = 110;
 }
 
 void Tower1::Draw()
@@ -22,11 +25,8 @@ void Tower1::Draw()
 
 void Tower1::Attack(GameObject* target)
 {
-	if (mReloadCount <= 0)
-	{
-		mGame->AddProjectile(new Arrow(mPosition, target, mRenderer, mGame, mDamage));
-		mReloadCount = ATTACK_RELOAD_TIME;
-	}
+	mGame->AddProjectile(new Arrow(mPosition, target, mRenderer, mGame, mDamage));
+	mReloadCount = ATTACK_RELOAD_TIME;
 }
 
 void Tower1::LoadAnimation()

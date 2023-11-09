@@ -27,6 +27,7 @@ private:
 	int mAttackUpgradeCount;
 	int mArmorUpgradeCount;
 	int mRockUpgradeLevel;
+	class UpgradeList* mUpgrade;
 	class UI* mUI;
 	class Game* mGame;
 };

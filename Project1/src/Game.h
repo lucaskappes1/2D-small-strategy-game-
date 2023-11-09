@@ -17,6 +17,7 @@
 #include "Constants.h"
 #include "units/Tower1.h"
 #include "units/Tower2.h"
+#include "level/Stage.h"
 
 class Game
 {
@@ -26,6 +27,7 @@ public:
 	bool Initialize();
 	void Shutdown();
 	inline const std::vector<GameObject*>& GetGameObjectVector() { return mObjects; }
+	inline std::vector<GameObject*>& GetModifiableGameObjectVector() { return mObjects; }
 	GameObject* RangedAttackDetection(GameObject* gameObject, int range);
 	GameObject* CollisionDetection(GameObject* gameObject);
 	SDL_Texture* getTexture(int id);
@@ -62,6 +64,7 @@ private:
 	std::queue<GameObject*> mPendingPlayerObjects;
 	std::queue<GameObject*> mPendingAIObjects;
 	std::vector<GameObject*> mPendingProjectiles;
+	Stage* mStage;
 
 	class Player* mPlayer;
 

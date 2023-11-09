@@ -7,19 +7,22 @@
 class UI
 {
 public:
-	UI(class Game* game, SDL_Renderer* renderer, class Player* Player);
+	UI(class Game* game, SDL_Renderer* renderer, class Player* Player, class Stage* stage);
 	~UI();
 	void Initialize();
 	void Update();
 	void Draw();
 	void OnMouseClickEvent();
 	void UpdateGoldText();
-	void StartGame();
 private:
 	void HideGameplayButtons();
 	void ShowGameplayButtons();
+	void ShowIntermissionButtons();
+	void HideIntermissionButtons();
+	
 	bool mStoneButtonClicked;
 	class Player* mPlayer;
+	class Stage* mStage;
 	Game* mGame;
 	SDL_Renderer* mRenderer;
 	SDL_Surface* mTextSurface;
@@ -40,6 +43,10 @@ private:
 	Button* mRockButton;
 	Button* mTower1Button;
 	Button* mTower2Button;
+	Button* mStage1Button;
+	Button* mStage2Button;
+	Button* mStage3Button;
+	Button* mStage4Button;
 
 	std::unordered_map<Button*, std::function<void()>> mButtonMap;
 	std::string mGold;

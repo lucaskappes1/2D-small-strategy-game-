@@ -46,13 +46,13 @@ bool Game::Initialize()
 	LoadData();
 	BG = new Background(getTexture("assets/Background.png", BACKGROUND_TEXTURE), mRenderer, WIDTH, HEIGHT);
 	mPlayer = new Player(this);
-	mUI = new UI(this, mRenderer, mPlayer);
+	mAI = new AIhard(this);
+	mStage = new Stage(this, mRenderer, mAI);
+	mUI = new UI(this, mRenderer, mPlayer, mStage);
 	mPlayer->setUiPointer(mUI);
 	mUI->Initialize();
 	mIsMenuActive = true;
-	mAI = new AIhard(this);
 	mIsRunning = true;
-	
 	return true;
 }
 
@@ -72,6 +72,7 @@ void Game::Shutdown()
 		mPendingAIObjects.pop();
 	}
 	delete mPlayer;
+	delete mStage;
 	mTextureMap.clear();
 	std::cout << "kills: " << mKills << " deaths: " << mDeaths << std::endl;
 	SDL_DestroyRenderer(mRenderer);
@@ -334,11 +335,7 @@ void Game::PlayerChangeOrder()
 
 void Game::StartGame()
 {
-	mObjects.emplace_back(new Castle(mRenderer, WIDTH - 974, HEIGHT - 175, this, 1));
-	mObjects.emplace_back(new Castle(mRenderer, WIDTH - 50, HEIGHT - 175, this, 0));
-	mObjects.at(1)->setArmor(120);
 	mIsMenuActive = false;
-	mUI->StartGame();
 	mAI->Activate();
 }
 

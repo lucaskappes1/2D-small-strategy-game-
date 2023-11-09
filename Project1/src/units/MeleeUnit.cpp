@@ -3,6 +3,7 @@
 
 MeleeUnit::MeleeUnit() : mPercentHPBar(1.0f)
 {
+		StartGenerator();	
 }
 
 void MeleeUnit::Update(float deltaTime)
@@ -10,7 +11,7 @@ void MeleeUnit::Update(float deltaTime)
 	if (mHP <= 0)
 	{
 		eLastFrameState = eState;
-		eState = DEATH;
+		eState = State::DEATH;
 		mGame->KillObject(this);
 		return;
 	}
@@ -21,21 +22,21 @@ void MeleeUnit::Update(float deltaTime)
 		mDestR.x = mPosition.getIntX();
 		mCollisionR.x = mPosition.getIntX();
 		eLastFrameState = eState;
-		eState = WALKING;
+		eState = State::WALKING;
 	}
 	else if (res != nullptr)
 	{
 		if ((res->getIsPlayer() && !mIsPlayer) || (mIsPlayer && !res->getIsPlayer()))
 		{
 			eLastFrameState = eState;
-			eState = ATTACKING;
+			eState = State::ATTACKING;
 			Attack(res);
 		}
 	}
 	else
 	{
 		eLastFrameState = eState;
-		eState = IDLE;
+		eState = State::IDLE;
 	}
 	mReloadCount--;
 }
@@ -51,7 +52,12 @@ void MeleeUnit::Attack(GameObject* target)
 
 void MeleeUnit::TakeDamage(int DMG)
 {
+
 	DMG = DMG - mArmor;
+	if (mDistribution(mGenerator) % 100 <= mBlockChance)
+	{
+		return;
+	}
 	if (DMG <= 0)
 	{
 		mHP -= 1;
@@ -77,4 +83,10 @@ void MeleeUnit::RenderHPBar(int x, int y, int w, int h, float Percent, SDL_Color
 	SDL_Rect fgrect = { px, y, pw, h };
 	SDL_RenderFillRect(mRenderer, &fgrect);
 	SDL_SetRenderDrawColor(mRenderer, old.r, old.g, old.b, old.a);
+}
+
+void MeleeUnit::StartGenerator()
+{
+	std::random_device rd;
+	mGenerator.seed(rd());
 }

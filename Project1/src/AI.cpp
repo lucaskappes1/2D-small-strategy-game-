@@ -18,37 +18,57 @@ AI::AI(Game* game) : mRng(mRd()),
 
 void AI::CreateKnight()
 {
-	GameObject* temp = new Knight(mGame->getRenderer(), AI_CREATE_UNIT_POSITION, HEIGHT - 110, mGame, 0, mIsAdvancing);
+	Knight* temp = new Knight(mGame->getRenderer(), mGame->getAICreateUnitPosition(), HEIGHT - 110, mGame, 0, mIsAdvancing);
 	ApplyUpgrade(temp);
 	mGame->CreateUnit(temp);
 }
 
 void AI::CreateSpearKnight()
 {
-	GameObject* temp = new SpearKnight(mGame->getRenderer(), AI_CREATE_UNIT_POSITION, HEIGHT - 110, mGame, 0, mIsAdvancing);
+	SpearKnight* temp = new SpearKnight(mGame->getRenderer(), mGame->getAICreateUnitPosition(), HEIGHT - 110, mGame, 0, mIsAdvancing);
 	ApplyUpgrade(temp);
 	mGame->CreateUnit(temp);
 }
 
 void AI::CreateAxeKnight()
 {
-	GameObject* temp = new AxeKnight(mGame->getRenderer(), AI_CREATE_UNIT_POSITION, HEIGHT - 110, mGame, 0, mIsAdvancing);
+	AxeKnight* temp = new AxeKnight(mGame->getRenderer(), mGame->getAICreateUnitPosition(), HEIGHT - 110, mGame, 0, mIsAdvancing);
 	ApplyUpgrade(temp);
 	mGame->CreateUnit(temp);
 }
 
 void AI::CreateArcher()
 {
-	GameObject* temp = new Archer(mGame->getRenderer(), AI_CREATE_UNIT_POSITION, HEIGHT - 110, mGame, 0, mIsAdvancing);
+	Archer* temp = new Archer(mGame->getRenderer(), mGame->getAICreateUnitPosition(), HEIGHT - 110, mGame, 0, mIsAdvancing);
 	ApplyUpgrade(temp);
 	mGame->CreateUnit(temp);
 }
 
 void AI::CreateHeavyInfantry()
 {
-	GameObject* temp = new HeavyInfantry(mGame->getRenderer(), AI_CREATE_UNIT_POSITION, HEIGHT - 110, mGame, 0, mIsAdvancing);
+	HeavyInfantry* temp = new HeavyInfantry(mGame->getRenderer(), mGame->getAICreateUnitPosition(), HEIGHT - 110, mGame, 0, mIsAdvancing);
 	ApplyUpgrade(temp);
 	mGame->CreateUnit(temp);
+}
+
+void AI::CreateTower1()
+{
+	if (mGame->getAIBuildingCount() < 3)
+	{
+		Tower1* temp = new Tower1(mGame->getRenderer(), mGame->getAICreateUnitPosition(), HEIGHT - 175, mGame, 0);
+		mGame->CreateUnit(temp);
+		mGame->IncreaseAIBuildingCount();
+	}
+}
+
+void AI::CreateTower2()
+{
+	if (mGame->getAIBuildingCount() < 3)
+	{
+		Tower2* temp = new Tower2(mGame->getRenderer(), mGame->getAICreateUnitPosition(), HEIGHT - 175, mGame, 0);
+		mGame->CreateUnit(temp);
+		mGame->IncreaseAIBuildingCount();
+	}
 }
 
 void AI::Act()

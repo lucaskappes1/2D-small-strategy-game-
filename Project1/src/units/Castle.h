@@ -8,6 +8,5 @@ public:
 	void Draw();
 	void Attack(GameObject* target);
 private:
-	const int ATTACK_RELOAD_TIME = 50;
 	void LoadAnimation();
 };

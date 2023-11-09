@@ -11,19 +11,28 @@ void RangedUnit::Update(float deltaTime)
 	if (mHP <= 0)
 	{
 		eLastFrameState = eState;
-		eState = DEATH;
+		eState = State::DEATH;
 		mGame->KillObject(this);
 		return;
 	}
 	GameObject* res2 = mGame->CollisionDetection(this);
 	if (mReloadCount < 0)
 	{
-		mTarget = mGame->RangedAttackDetection(this, 210);
+		mTarget = mGame->RangedAttackDetection(this, mRange);
 		if (mTarget != nullptr)
 		{
 			Attack(mTarget);
+			mProjectileCount++;
+			if (mProjectileCount < mProjectileNumber)
+			{
+				mReloadCount = 6;
+			}
+			else
+			{
+				mProjectileCount = 0;
+			}
 			eLastFrameState = eState;
-			eState = ATTACKING;
+			eState = State::ATTACKING;
 		}
 	}
 	if (mTarget == nullptr && res2 == nullptr && mAdvancing)
@@ -32,12 +41,12 @@ void RangedUnit::Update(float deltaTime)
 		mDestR.x = mPosition.getIntX();
 		mCollisionR.x = mPosition.getIntX();
 		eLastFrameState = eState;
-		eState = WALKING;
+		eState = State::WALKING;
 	}
 	else if(mTarget == nullptr)
 	{
 		eLastFrameState = eState;
-		eState = IDLE;
+		eState = State::IDLE;
 	}
 	mReloadCount--;
 }
@@ -54,6 +63,11 @@ void RangedUnit::TakeDamage(int DMG)
 		mHP -= DMG;
 	}
 	mPercentHPBar = (float)mHP / (float)MAX_HP;
+}
+
+void RangedUnit::IncreaseRange(int range)
+{
+	mRange += range;
 }
 
 void RangedUnit::RenderHPBar(int x, int y, int w, int h, float Percent, SDL_Color FGColor, SDL_Color BGColor)

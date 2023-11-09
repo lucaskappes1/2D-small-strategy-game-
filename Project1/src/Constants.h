@@ -7,6 +7,8 @@ const int HEIGHT = 768;
 
 const int PLAYER_CREATE_UNIT_POSITION = WIDTH - 925;
 const int AI_CREATE_UNIT_POSITION = WIDTH - 130;
+const int PLAYER_CASTLE_POSITION = WIDTH - 974;
+const int AI_CASTLE_POSITION = WIDTH - 50;
 
 //texture naming
 const int ARCHER_WALK = 1;

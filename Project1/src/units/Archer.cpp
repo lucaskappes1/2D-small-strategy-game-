@@ -22,14 +22,16 @@ Archer::Archer(SDL_Renderer* renderer, int x, int y, Game* game, bool isPlayer, 
 	mDamage = 18;
 	mFrameCount = 0;
 	mDeathAnimFrameCount = 0;
+	mRange = 210;
+	mProjectileNumber = 1;
 	LoadAnimation();
 }
 
 void Archer::Draw()
 {
-	switch (eState)
+	switch (Archer::eState)
 	{
-	case Archer::ATTACKING:	
+	case State::ATTACKING:	
 		if (eState != eLastFrameState)
 		{
 			mSrcR = { 0, 0, 756, 1070 };
@@ -60,7 +62,7 @@ void Archer::Draw()
 		}
 		RenderHPBar(mPosition.getIntX(), mPosition.getIntY() - 5, 28, 3, mPercentHPBar, {0, 255, 0, 255}, {255, 0, 0, 255});
 		break;
-	case Archer::WALKING:		
+	case State::WALKING:		
 		if (eState != eLastFrameState)
 		{
 			mSrcR = { 0, 0, 686, 1055 };
@@ -91,7 +93,7 @@ void Archer::Draw()
 		}
 		RenderHPBar(mPosition.getIntX(), mPosition.getIntY() - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
 		break;
-	case Archer::IDLE:		
+	case State::IDLE:		
 		if (mIsPlayer)
 		{
 			SDL_RenderCopyEx(mRenderer, mIdleTexture, NULL, &mDestR, 0, nullptr, SDL_FLIP_HORIZONTAL);
@@ -102,7 +104,7 @@ void Archer::Draw()
 		}
 		RenderHPBar(mPosition.getIntX(), mPosition.getIntY() - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
 		break;
-	case Archer::DEATH:
+	case State::DEATH:
 		if (eState != eLastFrameState)
 		{
 			mSrcR = { 0, 0, 683, 1122 };

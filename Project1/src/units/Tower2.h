@@ -10,6 +10,5 @@ public:
 	void Attack(GameObject* target);
 private:
 	const static int mGoldCost = 850;
-	const int ATTACK_RELOAD_TIME = 110;
 	void LoadAnimation();
 };

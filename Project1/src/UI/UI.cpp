@@ -1,10 +1,10 @@
 #include "UI.h"
 #include "../Game.h"
 #include "../Player.h"
+#include "../level/Stage.h"
 
 
-
-UI::UI(Game* game, SDL_Renderer* renderer, Player* Player) : mPlayer(Player), mStoneButtonClicked(false)
+UI::UI(Game* game, SDL_Renderer* renderer, Player* Player, Stage* stage) : mPlayer(Player), mStoneButtonClicked(false), mStage(stage)
 {
 	mGame = game;
 	mRenderer = renderer;
@@ -48,7 +48,12 @@ void UI::Initialize()
 	mChangeOrderButton = new Button(mGame->getTexture(CHANGE_ORDER_BUTTON), mRenderer, mMouse, 200, 100, { 0, 0, 64, 64 }, mFont);
 	mTower1Button = new Button(mGame->getTexture(TOWER1), mRenderer, mMouse, 350, 50, { 0, 0, 239, 486 }, mFont);
 	mTower2Button = new Button(mGame->getTexture(TOWER2), mRenderer, mMouse, 400, 50, { 0, 0, 251, 481 }, mFont);
+	mStage1Button = new Button(mRenderer, mMouse, 300, 300, mFont, "Stage 1");
+	mStage2Button = new Button(mRenderer, mMouse, 300, 400, mFont, "Stage 2");
+	mStage3Button = new Button(mRenderer, mMouse, 300, 500, mFont, "Stage 3");
+	mStage4Button = new Button(mRenderer, mMouse, 300, 600, mFont, "Stage 4");
 	HideGameplayButtons();
+	HideIntermissionButtons();
 	mContinueButton->Hide();
 	mPauseButton->Hide();
 	mKnightButton->addTooltip("Cost: 35 gold\nStrong all around infantry");
@@ -69,7 +74,7 @@ void UI::Initialize()
 
 	mButtonMap.emplace(mStartGameButton, [this]()
 		{
-			mGame->StartGame();
+			ShowIntermissionButtons();
 	mStartGameButton->Hide();
 		});
 
@@ -148,6 +153,42 @@ void UI::Initialize()
 		{
 			mPlayer->CreateTower2();
 		});
+
+	mButtonMap.emplace(mStage1Button, [this]()
+		{
+			HideIntermissionButtons();
+			ShowGameplayButtons();
+			mPauseButton->Show();
+			mStage->LoadStage1(mGame->GetModifiableGameObjectVector());
+			mGame->StartGame();
+		});
+
+	mButtonMap.emplace(mStage2Button, [this]()
+		{
+			HideIntermissionButtons();
+			ShowGameplayButtons();
+			mPauseButton->Show();
+			mStage->LoadStage2(mGame->GetModifiableGameObjectVector());
+			mGame->StartGame();
+		});
+
+	mButtonMap.emplace(mStage3Button, [this]()
+		{
+			HideIntermissionButtons();
+			ShowGameplayButtons();
+			mPauseButton->Show();
+			mStage->LoadStage3(mGame->GetModifiableGameObjectVector());
+			mGame->StartGame();
+		});
+
+	mButtonMap.emplace(mStage4Button, [this]()
+		{
+			HideIntermissionButtons();
+			ShowGameplayButtons();
+			mPauseButton->Show();
+			mStage->LoadStage4(mGame->GetModifiableGameObjectVector());
+			mGame->StartGame();
+		});
 }
 
 void UI::Update()
@@ -195,12 +236,6 @@ void UI::UpdateGoldText()
 	mTextTexture = SDL_CreateTextureFromSurface(mRenderer, mTextSurface);
 }
 
-void UI::StartGame()
-{
-	ShowGameplayButtons();
-	mPauseButton->Show();
-}
-
 void UI::HideGameplayButtons()
 {
 	mKnightButton->Hide();
@@ -208,11 +243,8 @@ void UI::HideGameplayButtons()
 	mAxeKnightButton->Hide();
 	mAcherButton->Hide();
 	mHeavyInfantryButton->Hide();
-	mUpgradeArmorButton->Hide();
-	mUpgradeAttackButton->Hide();
 	mChangeOrderButton->Hide();
 	mRockButton->Hide();
-	mUpgradeRockButton->Hide();
 	mTower1Button->Hide();
 	mTower2Button->Hide();
 }
@@ -224,11 +256,30 @@ void UI::ShowGameplayButtons()
 	mAxeKnightButton->Show();
 	mAcherButton->Show();
 	mHeavyInfantryButton->Show();
-	mUpgradeArmorButton->Show();
-	mUpgradeAttackButton->Show();
 	mChangeOrderButton->Show();
 	mRockButton->Show();
-	mUpgradeRockButton->Show();
 	mTower1Button->Show();
 	mTower2Button->Show();
+}
+
+void UI::ShowIntermissionButtons()
+{
+	mStage1Button->Show();
+	mStage2Button->Show();
+	mStage3Button->Show();
+	mStage4Button->Show();
+	mUpgradeArmorButton->Show();
+	mUpgradeAttackButton->Show();
+	mUpgradeRockButton->Show();
+}
+
+void UI::HideIntermissionButtons()
+{
+	mStage1Button->Hide();
+	mStage2Button->Hide();
+	mStage3Button->Hide();
+	mStage4Button->Hide();
+	mUpgradeArmorButton->Hide();
+	mUpgradeAttackButton->Hide();
+	mUpgradeRockButton->Hide();
 }

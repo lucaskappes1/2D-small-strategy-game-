@@ -26,10 +26,19 @@ void Building::Update(float deltaTime)
 	}
 	if (mReloadCount < 0)
 	{
-		GameObject* res = mGame->RangedAttackDetection(this, 300);
+		GameObject* res = mGame->RangedAttackDetection(this, mRange);
 		if (res != nullptr)
 		{
 			Attack(res);
+			mProjectileCount++;
+			if (mProjectileCount < mProjectileNumber)
+			{
+				mReloadCount = 6;
+			}
+			else
+			{
+				mProjectileCount = 0;
+			}
 		}
 	}
 	mReloadCount--;

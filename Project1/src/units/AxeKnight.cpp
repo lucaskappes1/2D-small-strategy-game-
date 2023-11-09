@@ -20,7 +20,7 @@ AxeKnight::AxeKnight(SDL_Renderer* renderer, int x, int y, Game* game, bool isPl
 	mDamage = 80;
 	mCurrentFrame = 0;
 	mFrameCount = 0;
-	eState = WALKING;
+	eState = State::WALKING;
 	LoadAnimation();
 }
 
@@ -28,7 +28,7 @@ void AxeKnight::Draw()
 {
 	switch (eState)
 	{
-	case AxeKnight::ATTACKING:
+	case State::ATTACKING:
 		mDestR.w = 77;
 		if (eState != eLastFrameState)
 		{
@@ -57,7 +57,7 @@ void AxeKnight::Draw()
 		}
 		RenderHPBar(mPosition.getIntX(), mPosition.getIntY() - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
 		break;
-	case AxeKnight::WALKING:
+	case State::WALKING:
 		mDestR.w = 32;
 		if (eState != eLastFrameState)
 		{
@@ -84,7 +84,7 @@ void AxeKnight::Draw()
 		}
 		RenderHPBar(mPosition.getIntX(), mPosition.getIntY() - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
 		break;
-	case AxeKnight::IDLE:
+	case State::IDLE:
 		mDestR.w = 32;
 		mDestR.x = mPosition.getIntX();
 		if (!mIsPlayer)
@@ -97,7 +97,7 @@ void AxeKnight::Draw()
 		}
 		RenderHPBar(mPosition.getIntX(), mPosition.getIntY() - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
 		break;
-	case AxeKnight::DEATH:
+	case State::DEATH:
 		mDestR.w = 59;
 		mDestR.h = 50;
 		if (eState != eLastFrameState)

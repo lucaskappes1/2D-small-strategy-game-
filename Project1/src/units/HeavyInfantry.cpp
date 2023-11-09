@@ -27,7 +27,7 @@ void HeavyInfantry::Draw()
 {
 	switch (eState)
 	{
-	case GameObject::ATTACKING:
+	case State::ATTACKING:
 		if (eLastFrameState != eState)
 		{
 			mSrcR.x = 1581;
@@ -55,7 +55,7 @@ void HeavyInfantry::Draw()
 		}
 		RenderHPBar(mPosition.getIntX(), mPosition.getIntY() - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
 		break;
-	case GameObject::WALKING:
+	case State::WALKING:
 		if (eLastFrameState != eState)
 		{
 			mSrcR.x = 557;
@@ -83,7 +83,7 @@ void HeavyInfantry::Draw()
 		}
 		RenderHPBar(mPosition.getIntX(), mPosition.getIntY() - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
 		break;
-	case GameObject::IDLE:
+	case State::IDLE:
 		mSrcR.x = 45;
 		if (!mIsPlayer)
 		{
@@ -96,7 +96,7 @@ void HeavyInfantry::Draw()
 		}
 		RenderHPBar(mPosition.getIntX(), mPosition.getIntY() - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
 		break;
-	case GameObject::DEATH:
+	case State::DEATH:
 		if (eLastFrameState != eState)
 		{
 			mSrcR.x = 2093;

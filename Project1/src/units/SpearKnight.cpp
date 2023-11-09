@@ -27,7 +27,7 @@ void SpearKnight::Draw()
 {
 	switch (eState)
 	{
-	case GameObject::ATTACKING:
+	case State::ATTACKING:
 		if (eLastFrameState != eState)
 		{
 			mSrcR.x = 0;
@@ -53,7 +53,7 @@ void SpearKnight::Draw()
 		}
 		RenderHPBar(mPosition.getIntX(), mPosition.getIntY() - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
 		break;
-	case GameObject::WALKING:
+	case State::WALKING:
 		if (eLastFrameState != eState)
 		{
 			mSrcR.x = 0;
@@ -79,7 +79,7 @@ void SpearKnight::Draw()
 		}
 		RenderHPBar(mPosition.getIntX(), mPosition.getIntY() - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
 		break;
-	case GameObject::IDLE:
+	case State::IDLE:
 		mSrcR.x = 1281;
 		if (!mIsPlayer)
 		{
@@ -91,7 +91,7 @@ void SpearKnight::Draw()
 		}
 		RenderHPBar(mPosition.getIntX(), mPosition.getIntY() - 5, 28, 3, mPercentHPBar, { 0, 255, 0, 255 }, { 255, 0, 0, 255 });
 		break;
-	case GameObject::DEATH:
+	case State::DEATH:
 		if (eLastFrameState != eState)
 		{
 			mSrcR.x = 0;

@@ -58,6 +58,18 @@ void Button::Draw()
 	}
 }
 
+const bool& Button::IsSelected()
+{
+	if (eState == SHOWING)
+	{
+		return mIsSelected;
+	} 
+	else
+	{
+		return false;
+	}
+}
+
 void Button::addTooltip(const char* Tooltip)
 {
 	mTooltip = new std::string(Tooltip);
