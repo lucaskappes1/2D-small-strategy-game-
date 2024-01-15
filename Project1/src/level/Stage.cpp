@@ -17,7 +17,7 @@ mRenderer(renderer)
 {
 }
 
-void Stage::LoadStage1(std::vector<class GameObject*>& mObjects)
+void Stage::ClearStage(std::vector<class GameObject*>& mObjects)
 {
 	if (mObjects.size() > 0)
 	{
@@ -27,20 +27,18 @@ void Stage::LoadStage1(std::vector<class GameObject*>& mObjects)
 		}
 		mObjects.clear();
 	}
+}
+
+void Stage::LoadStage1(std::vector<class GameObject*>& mObjects)
+{
+	ClearStage(mObjects);
 	mObjects.emplace_back(new Castle(mRenderer, PLAYER_CASTLE_POSITION, HEIGHT - 175, mGame, 1));
 	mObjects.emplace_back(new Castle(mRenderer, AI_CASTLE_POSITION, HEIGHT - 175, mGame, 0));
 }
 
 void Stage::LoadStage2(std::vector<class GameObject*>& mObjects)
 {
-	if (mObjects.size() > 0)
-	{
-		for (auto i : mObjects)
-		{
-			delete i;
-		}
-		mObjects.clear();
-	}
+	ClearStage(mObjects);
 	mObjects.emplace_back(new Castle(mRenderer, PLAYER_CASTLE_POSITION, HEIGHT - 175, mGame, 1));
 	mObjects.emplace_back(new Castle(mRenderer, AI_CASTLE_POSITION, HEIGHT - 175, mGame, 0));
 	mAI->CreateTower1();
@@ -49,14 +47,7 @@ void Stage::LoadStage2(std::vector<class GameObject*>& mObjects)
 
 void Stage::LoadStage3(std::vector<class GameObject*>& mObjects)
 {
-	if (mObjects.size() > 0)
-	{
-		for (auto i : mObjects)
-		{
-			delete i;
-		}
-		mObjects.clear();
-	}
+	ClearStage(mObjects);
 	mObjects.emplace_back(new Castle(mRenderer, PLAYER_CASTLE_POSITION, HEIGHT - 175, mGame, 1));
 	mObjects.emplace_back(new Castle(mRenderer, AI_CASTLE_POSITION, HEIGHT - 175, mGame, 0));
 	mAI->CreateTower2();
@@ -66,14 +57,7 @@ void Stage::LoadStage3(std::vector<class GameObject*>& mObjects)
 
 void Stage::LoadStage4(std::vector<class GameObject*>& mObjects)
 {
-	if (mObjects.size() > 0)
-	{
-		for (auto i : mObjects)
-		{
-			delete i;
-		}
-		mObjects.clear();
-	}
+	ClearStage(mObjects);
 	mObjects.emplace_back(new Castle(mRenderer, PLAYER_CASTLE_POSITION, HEIGHT - 175, mGame, 1));
 	mObjects.emplace_back(new Castle(mRenderer, AI_CASTLE_POSITION, HEIGHT - 175, mGame, 0));
 	mAI->CreateTower2();

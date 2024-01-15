@@ -13,9 +13,12 @@ public:
 	void ApplyUpgrade(class SpearKnight* unit);
 	void ApplyUpgrade(class Tower1* unit);
 	void ApplyUpgrade(class Tower2* unit);
+	void BuyArcherArrowUpgrade();
+	void BuyArcherRangeUpgrade();
+	void BuyShieldUpgrade();
+	void BuyTowerUpgrade();
 
 private:
-
 	void DefineArcherUpgrade();
 	void DefineAxeKnightUpgrade();
 	void DefineHeavyInfantryUpgrade();
@@ -23,10 +26,6 @@ private:
 	void DefineSpearKnightUpgrade();
 	void DefineTower1Upgrade();
 	void DefineTower2Upgrade();
-
-
-
-
 
 	std::vector<std::pair<bool, std::function<void(class Archer* unit)>>> mArcherUpgrade;
 	std::vector<std::pair<bool, std::function<void(class AxeKnight* unit)>>> mAxeKnightUpgrade;

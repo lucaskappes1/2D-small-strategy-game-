@@ -9,6 +9,7 @@ public:
 	virtual void Update(float deltaTime);
 	virtual void Attack(GameObject* target);
 	virtual void TakeDamage(int DMG);
+	virtual void OnDeathAction() {}
 	int getBlockChance() { return mBlockChance; }
 	void setBlockChance(int n) { mBlockChance = n; }
 protected:

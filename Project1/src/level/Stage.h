@@ -5,6 +5,7 @@ class Stage
 {
 public:
 	Stage(class Game* game, struct SDL_Renderer* renderer, class AI* ai);
+	void ClearStage(std::vector<class GameObject*>& mObjects);
 	void LoadStage1(std::vector<class GameObject*>& mObjects);
 	void LoadStage2(std::vector<class GameObject*>& mObjects);
 	void LoadStage3(std::vector<class GameObject*>& mObjects);

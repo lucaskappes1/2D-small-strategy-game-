@@ -27,6 +27,7 @@ UI::~UI()
 	delete mUpgradeRockButton;
 	delete mTower1Button;
 	delete mTower2Button;
+	delete mStage;
 }
 
 void UI::Initialize()
@@ -52,6 +53,11 @@ void UI::Initialize()
 	mStage2Button = new Button(mRenderer, mMouse, 300, 400, mFont, "Stage 2");
 	mStage3Button = new Button(mRenderer, mMouse, 300, 500, mFont, "Stage 3");
 	mStage4Button = new Button(mRenderer, mMouse, 300, 600, mFont, "Stage 4");
+	mSpecialUpgradeButton = new Button(mRenderer, mMouse, 600, 300, mFont, "Special Up");
+	mArcherBonusButton = new Button(mRenderer, mMouse, 300, 300, mFont, "Archer Bonus");
+	mMeleeBonusButton = new Button(mRenderer, mMouse, 300, 400, mFont, "Melee Bonus");
+	mTowerBonusButton = new Button(mRenderer, mMouse, 300, 500, mFont, "Tower Bonus");
+	HideSpecialUpgradeScreen();
 	HideGameplayButtons();
 	HideIntermissionButtons();
 	mContinueButton->Hide();
@@ -189,6 +195,32 @@ void UI::Initialize()
 			mStage->LoadStage4(mGame->GetModifiableGameObjectVector());
 			mGame->StartGame();
 		});
+
+	mButtonMap.emplace(mSpecialUpgradeButton, [this]()
+		{
+			HideIntermissionButtons();
+			ShowSpecialUpgradeScreen();
+		});
+
+	mButtonMap.emplace(mArcherBonusButton, [this]()
+		{
+			mPlayer->BuyArcherUpgrade();
+			HideSpecialUpgradeScreen();
+			ShowIntermissionButtons();
+		});
+
+	mButtonMap.emplace(mMeleeBonusButton, [this]()
+		{
+			mPlayer->BuyShieldUpgrade();
+			HideSpecialUpgradeScreen();
+			ShowIntermissionButtons();
+		});
+	mButtonMap.emplace(mTowerBonusButton, [this]()
+		{
+			mPlayer->BuyTowerUpgrade();
+			HideSpecialUpgradeScreen();
+			ShowIntermissionButtons();
+		});
 }
 
 void UI::Update()
@@ -236,6 +268,13 @@ void UI::UpdateGoldText()
 	mTextTexture = SDL_CreateTextureFromSurface(mRenderer, mTextSurface);
 }
 
+void UI::VictoryScreen()
+{
+	mStage->ClearStage(mGame->GetModifiableGameObjectVector());
+	HideGameplayButtons();
+	ShowIntermissionButtons();
+}
+
 void UI::HideGameplayButtons()
 {
 	mKnightButton->Hide();
@@ -247,6 +286,8 @@ void UI::HideGameplayButtons()
 	mRockButton->Hide();
 	mTower1Button->Hide();
 	mTower2Button->Hide();
+	mUpgradeArmorButton->Hide();
+	mUpgradeAttackButton->Hide();
 }
 
 void UI::ShowGameplayButtons()
@@ -260,6 +301,8 @@ void UI::ShowGameplayButtons()
 	mRockButton->Show();
 	mTower1Button->Show();
 	mTower2Button->Show();
+	mUpgradeArmorButton->Show();
+	mUpgradeAttackButton->Show();
 }
 
 void UI::ShowIntermissionButtons()
@@ -268,9 +311,8 @@ void UI::ShowIntermissionButtons()
 	mStage2Button->Show();
 	mStage3Button->Show();
 	mStage4Button->Show();
-	mUpgradeArmorButton->Show();
-	mUpgradeAttackButton->Show();
 	mUpgradeRockButton->Show();
+	mSpecialUpgradeButton->Show();
 }
 
 void UI::HideIntermissionButtons()
@@ -279,7 +321,20 @@ void UI::HideIntermissionButtons()
 	mStage2Button->Hide();
 	mStage3Button->Hide();
 	mStage4Button->Hide();
-	mUpgradeArmorButton->Hide();
-	mUpgradeAttackButton->Hide();
 	mUpgradeRockButton->Hide();
+	mSpecialUpgradeButton->Hide();
+}
+
+void UI::ShowSpecialUpgradeScreen()
+{
+	mArcherBonusButton->Show();
+	mMeleeBonusButton->Show();
+	mTowerBonusButton->Show();
+}
+
+void UI::HideSpecialUpgradeScreen()
+{
+	mArcherBonusButton->Hide();
+	mMeleeBonusButton->Hide();
+	mTowerBonusButton->Hide();
 }

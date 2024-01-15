@@ -10,7 +10,7 @@
 #include "UI/UI.h"
 #include "level/UpgradeList.h"
 
-Player::Player( Game* game) : mGame(game), mGold(100), mArmorUpgradeCount(0), mAttackUpgradeCount(0), mRockUpgradeLevel(0)
+Player::Player( Game* game) : mGame(game), mGold(100), mArmorUpgradeCount(0), mAttackUpgradeCount(0), mRockUpgradeLevel(0), mPlatinum(1000)
 {
 	mUpgrade = new UpgradeList();
 }
@@ -152,6 +152,33 @@ void Player::UpgradeRock()
 			mRockUpgradeLevel++;
 			mUI->UpdateGoldText();
 		}
+	}
+}
+
+void Player::BuyShieldUpgrade()
+{
+	if (mPlatinum >= 800)
+	{
+		mPlatinum -= 800;
+		mUpgrade->BuyShieldUpgrade();
+	}
+}
+
+void Player::BuyArcherUpgrade()
+{
+	if (mPlatinum >= 800)
+	{
+		mPlatinum -= 800;
+		mUpgrade->BuyArcherArrowUpgrade();
+	}
+}
+
+void Player::BuyTowerUpgrade()
+{
+	if (mPlatinum >= 800)
+	{
+		mPlatinum -= 800;
+		mUpgrade->BuyTowerUpgrade();
 	}
 }
 

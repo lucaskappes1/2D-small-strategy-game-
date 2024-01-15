@@ -7,9 +7,9 @@ Castle::Castle(SDL_Renderer* renderer, int x, int y, Game* game, bool isPlayer) 
 {
 	mCollisionR = { mPosition.getIntX() - 50, mPosition.getIntY(), 100, 100};
 	mDestR = { mPosition.getIntX() - 50, mPosition.getIntY(), 100, 100 };
-	MAX_HP = 2500;
+	MAX_HP = 1500;
 	mHP = MAX_HP;
-	mDamage = 65;
+	mDamage = 50;
 	mArmor = 20;
 	LoadAnimation();
 	mRange = 300;
@@ -26,6 +26,11 @@ void Castle::Attack(GameObject* target)
 {
 	mGame->AddProjectile(new Arrow(mPosition, target, mRenderer, mGame, mDamage));
 	mReloadCount = ATTACK_RELOAD_TIME;
+}
+
+void Castle::OnDeathAction()
+{
+	mGame->GameOver(this);
 }
 
 void Castle::LoadAnimation()

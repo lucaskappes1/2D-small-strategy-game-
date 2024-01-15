@@ -10,6 +10,7 @@ public:
 	void setProjectileNumber(int n) { mProjectileNumber = n; }
 	int getAttackReloadTime() { return ATTACK_RELOAD_TIME; }
 	void setAttackReloadTime(int n) { ATTACK_RELOAD_TIME = n; }
+	virtual void OnDeathAction() {}
 protected:
 	int mRange;
 	void RenderHPBar(int x, int y, int w, int h, float Percent, SDL_Color FGColor, SDL_Color BGColor);

@@ -145,6 +145,7 @@ void Game::KillObject(GameObject* target)
 		mPlayer->IncreaseGold(target->getGoldCost() * mAI->getGoldMultiplier());
 		mKills++;
 	}
+	target->OnDeathAction();
 	mDeadObjects.emplace_back(target);
 }
 
@@ -389,6 +390,19 @@ void Game::DecreasePlayerBuildingCount()
 void Game::DecreaseAIBuildingCount()
 {
 	mAIBuildingCount--;
+}
+
+void Game::GameOver(Castle* castle)
+{
+	if (castle->getIsPlayer())
+	{
+		Shutdown();
+	}
+	else
+	{
+		mUI->VictoryScreen();
+	}
+	mAI->Deactivate();
 }
 
 SDL_Texture* Game::getTexture(std::string path, int name)

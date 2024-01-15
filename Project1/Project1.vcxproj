@@ -134,6 +134,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\units\Building.cpp" />
+    <ClCompile Include="src\units\GameObject.cpp" />
     <ClCompile Include="src\units\RangedUnit.cpp" />
     <ClCompile Include="src\units\Arrow.cpp" />
     <ClCompile Include="src\units\MeleeUnit.cpp" />

@@ -7,10 +7,14 @@ public:
 	RangedUnit();
 	void Update(float deltaTime);
 	virtual void TakeDamage(int DMG);
+	virtual void OnDeathAction() {}
 	void IncreaseRange(int range);
 	int getAttackReloadTime() { return ATTACK_RELOAD_TIME; }
+	int getRange() { return mRange; }
 	void setProjectileNumber(int n) { mProjectileNumber = n; }
 	void setAttackReloadTime(int n) { ATTACK_RELOAD_TIME = n; }
+	void setRange(int n) { mRange = n; }
+
 protected:
 	GameObject* mTarget;
 	float mPercentHPBar;

@@ -96,12 +96,39 @@ void UpgradeList::ApplyUpgrade(Tower2* unit)
 	}
 }
 
+void UpgradeList::BuyArcherArrowUpgrade()
+{
+	mArcherUpgrade.at(0).first = true;
+}
+
+void UpgradeList::BuyArcherRangeUpgrade()
+{
+	mArcherUpgrade.at(1).first = true;
+}
+
+void UpgradeList::BuyShieldUpgrade()
+{
+	mSpearKnightUpgrade.at(0).first = true;
+	mAxeKnightUpgrade.at(0).first = true;
+	mKnightUpgrade.at(0).first = true;
+}
+
+void UpgradeList::BuyTowerUpgrade()
+{
+	mTower1Upgrade.at(0).first = true;
+	mTower2Upgrade.at(0).first = true;
+}
+
 void UpgradeList::DefineArcherUpgrade()
 {
 	mArcherUpgrade.emplace_back(std::make_pair(false, [](Archer* unit)
 		{
 			unit->setProjectileNumber(3);
 			unit->setAttackReloadTime(unit->getAttackReloadTime() * 2);
+		}));
+	mArcherUpgrade.emplace_back(std::make_pair(false, [](Archer* unit)
+		{
+			unit->setRange(unit->getRange() + 50);
 		}));
 }
 

@@ -49,6 +49,7 @@ public:
 	void IncreaseAIBuildingCount();
 	void DecreasePlayerBuildingCount();
 	void DecreaseAIBuildingCount();
+	void GameOver(Castle* castle);
 private:
 	void Update();
 	void Render();

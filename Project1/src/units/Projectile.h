@@ -11,6 +11,7 @@ public:
     virtual void LoadAnimation() = 0;
     virtual void Attack(GameObject* target) {}
     virtual void TakeDamage(int DMG) {}
+    virtual void OnDeathAction() {}
 protected:
     Vector2 mAcceleration;
     Vector2 mDestination;

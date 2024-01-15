@@ -12,6 +12,7 @@ public:
 	virtual void Update(float deltaTime) = 0;
 	virtual void Attack(GameObject* target) = 0;
 	virtual void TakeDamage(int DMG) = 0;
+	virtual void OnDeathAction() = 0;
 	inline const int& getAttack() const { return mDamage; }
 	inline const int& getArmor() const { return mArmor; }
 	inline const int& getX() const { return mPosition.getIntX(); }

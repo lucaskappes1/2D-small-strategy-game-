@@ -85,3 +85,4 @@ void RangedUnit::RenderHPBar(int x, int y, int w, int h, float Percent, SDL_Colo
 	SDL_RenderFillRect(mRenderer, &fgrect);
 	SDL_SetRenderDrawColor(mRenderer, old.r, old.g, old.b, old.a);
 }
+

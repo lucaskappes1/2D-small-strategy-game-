@@ -14,11 +14,15 @@ public:
 	void Draw();
 	void OnMouseClickEvent();
 	void UpdateGoldText();
+	void VictoryScreen();
 private:
 	void HideGameplayButtons();
 	void ShowGameplayButtons();
 	void ShowIntermissionButtons();
 	void HideIntermissionButtons();
+	void ShowSpecialUpgradeScreen();
+	void HideSpecialUpgradeScreen();
+
 	
 	bool mStoneButtonClicked;
 	class Player* mPlayer;
@@ -47,6 +51,10 @@ private:
 	Button* mStage2Button;
 	Button* mStage3Button;
 	Button* mStage4Button;
+	Button* mSpecialUpgradeButton;
+	Button* mArcherBonusButton;
+	Button* mMeleeBonusButton;
+	Button* mTowerBonusButton;
 
 	std::unordered_map<Button*, std::function<void()>> mButtonMap;
 	std::string mGold;

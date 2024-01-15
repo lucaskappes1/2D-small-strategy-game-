@@ -90,3 +90,4 @@ void MeleeUnit::StartGenerator()
 	std::random_device rd;
 	mGenerator.seed(rd());
 }
+
