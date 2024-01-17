@@ -133,6 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\units\Catapult.cpp" />
     <ClCompile Include="src\units\Building.cpp" />
     <ClCompile Include="src\units\GameObject.cpp" />
     <ClCompile Include="src\units\RangedUnit.cpp" />
@@ -161,6 +162,7 @@
     <ClCompile Include="src\level\UpgradeList.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\units\Catapult.h" />
     <ClInclude Include="src\units\Building.h" />
     <ClInclude Include="src\units\RangedUnit.h" />
     <ClInclude Include="src\units\Arrow.h" />

@@ -300,6 +300,8 @@ void Game::LoadData()
 
 	getTexture("assets/tower_2.png", TOWER2);
 	getTexture("assets/tower.png", TOWER1);
+
+	getTexture("assets/Catapult.png", CATAPULT);
 	
 }
 

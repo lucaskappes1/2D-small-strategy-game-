@@ -7,6 +7,7 @@
 #include "units/Archer.h"
 #include "units/Rock.h"
 #include "units/HeavyInfantry.h"
+#include "units/Catapult.h"
 #include "UI/UI.h"
 #include "level/UpgradeList.h"
 
@@ -75,6 +76,19 @@ void Player::CreateHeavyInfantry()
 		HeavyInfantry* temp = new HeavyInfantry(mGame->getRenderer(), mGame->getPlayerCreateUnitPosition(), HEIGHT - 110, mGame, 1, mIsAdvancing);
 		mUpgrade->ApplyUpgrade(temp);
 		ApplyUpgrade(temp);
+		mGame->CreateUnit(temp);
+		mUI->UpdateGoldText();
+	}
+}
+
+void Player::CreateCatapult()
+{
+	if (mGold >= Catapult::getStaticGoldCost())
+	{
+		mGold -= Catapult::getStaticGoldCost();
+		Catapult* temp = new Catapult(mGame->getRenderer(), mGame->getPlayerCreateUnitPosition(), HEIGHT - 110, mGame, 1, mIsAdvancing);
+		//mUpgrade->ApplyUpgrade(temp);
+		//ApplyUpgrade(temp);
 		mGame->CreateUnit(temp);
 		mUI->UpdateGoldText();
 	}

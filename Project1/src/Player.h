@@ -9,6 +9,7 @@ public:
 	void CreateAxeKnight();
 	void CreateArcher();
 	void CreateHeavyInfantry();
+	void CreateCatapult();
 	void CreateTower1();
 	void CreateTower2();
 	void ChangeOrder();
