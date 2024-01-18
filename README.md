@@ -1,4 +1,8 @@
 # 2D Small Strategy Game
+![1](https://github.com/lucaskappes1/2D-small-strategy-game-/assets/135165651/bfedccc8-1bf9-46ed-a2da-fbdfc954f796)
+![2](https://github.com/lucaskappes1/2D-small-strategy-game-/assets/135165651/005fe3e9-9e3e-4847-ae4c-00a1dc2fa13e)
+![3](https://github.com/lucaskappes1/2D-small-strategy-game-/assets/135165651/8fa6da6d-8b6f-4561-b5f3-b398a291a2fc)
+![4](https://github.com/lucaskappes1/2D-small-strategy-game-/assets/135165651/677d297a-3ed7-4d34-a0a3-44ee08f2c20a)
 
 This repository contains a small strategy game in which the player must destroy an AI-controlled castle without losing their own. The game is heavily inspired by Age of War.
 
