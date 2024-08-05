@@ -1,5 +1,8 @@
 #include "Rock.h"
 #include "../Game.h"
+#include "../TextureManager.h"
+
+SDL_Texture* Rock::mTexture = nullptr;
 
 Rock::Rock(const Vector2& position, const Vector2& destination, SDL_Renderer* renderer, Game* game, int upgradeLevel) :
 	Projectile(position, destination, renderer, game)
@@ -54,5 +57,5 @@ void Rock::Draw()
 
 void Rock::LoadAnimation()
 {
-	mTexture = mGame->getTexture(ROCK);
+	mTexture = TextureManager::getTexture(ROCK);
 }

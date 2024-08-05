@@ -1,5 +1,11 @@
 #include "Knight.h"
 #include "../Game.h"
+#include "../TextureManager.h"
+
+std::vector<SDL_Texture*> Knight::mWalkingAnimVec;
+std::vector<SDL_Texture*> Knight::mAttackingAnimVec;
+std::vector<SDL_Texture*> Knight::mDeathAnimVec;
+SDL_Texture* Knight::mIdleTexture = nullptr;
 
 Knight::Knight(SDL_Renderer* renderer, int x, int y, class Game* game, bool isPlayer, bool isAdvancing)
 {
@@ -127,57 +133,57 @@ void Knight::Draw()
 
 void Knight::LoadAnimation()
 {
-	mWalkingAnimVec.emplace_back(mGame->getTexture(KNIGHT_WALK0));
-	mWalkingAnimVec.emplace_back(mGame->getTexture(KNIGHT_WALK1));
-	mWalkingAnimVec.emplace_back(mGame->getTexture(KNIGHT_WALK2));
-	mWalkingAnimVec.emplace_back(mGame->getTexture(KNIGHT_WALK3));
-	mWalkingAnimVec.emplace_back(mGame->getTexture(KNIGHT_WALK4));
-	mWalkingAnimVec.emplace_back(mGame->getTexture(KNIGHT_WALK5));
-	mWalkingAnimVec.emplace_back(mGame->getTexture(KNIGHT_WALK6));
-	mWalkingAnimVec.emplace_back(mGame->getTexture(KNIGHT_WALK7));
-	mWalkingAnimVec.emplace_back(mGame->getTexture(KNIGHT_WALK8));
-	mWalkingAnimVec.emplace_back(mGame->getTexture(KNIGHT_WALK9));
-	mWalkingAnimVec.emplace_back(mGame->getTexture(KNIGHT_WALK10));
-	mWalkingAnimVec.emplace_back(mGame->getTexture(KNIGHT_WALK11));
-	mWalkingAnimVec.emplace_back(mGame->getTexture(KNIGHT_WALK12));
-	mWalkingAnimVec.emplace_back(mGame->getTexture(KNIGHT_WALK13));
-	mWalkingAnimVec.emplace_back(mGame->getTexture(KNIGHT_WALK14));
+	mWalkingAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_WALK0));
+	mWalkingAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_WALK1));
+	mWalkingAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_WALK2));
+	mWalkingAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_WALK3));
+	mWalkingAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_WALK4));
+	mWalkingAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_WALK5));
+	mWalkingAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_WALK6));
+	mWalkingAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_WALK7));
+	mWalkingAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_WALK8));
+	mWalkingAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_WALK9));
+	mWalkingAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_WALK10));
+	mWalkingAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_WALK11));
+	mWalkingAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_WALK12));
+	mWalkingAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_WALK13));
+	mWalkingAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_WALK14));
 
-	mAttackingAnimVec.emplace_back(mGame->getTexture(KNIGHT_ATTACK0));
-	mAttackingAnimVec.emplace_back(mGame->getTexture(KNIGHT_ATTACK1));
-	mAttackingAnimVec.emplace_back(mGame->getTexture(KNIGHT_ATTACK2));
-	mAttackingAnimVec.emplace_back(mGame->getTexture(KNIGHT_ATTACK3));
-	mAttackingAnimVec.emplace_back(mGame->getTexture(KNIGHT_ATTACK4));
-	mAttackingAnimVec.emplace_back(mGame->getTexture(KNIGHT_ATTACK5));
-	mAttackingAnimVec.emplace_back(mGame->getTexture(KNIGHT_ATTACK6));
-	mAttackingAnimVec.emplace_back(mGame->getTexture(KNIGHT_ATTACK7));
-	mAttackingAnimVec.emplace_back(mGame->getTexture(KNIGHT_ATTACK8));
-	mAttackingAnimVec.emplace_back(mGame->getTexture(KNIGHT_ATTACK9));
-	mAttackingAnimVec.emplace_back(mGame->getTexture(KNIGHT_ATTACK10));
-	mAttackingAnimVec.emplace_back(mGame->getTexture(KNIGHT_ATTACK11));
-	mAttackingAnimVec.emplace_back(mGame->getTexture(KNIGHT_ATTACK12));
-	mAttackingAnimVec.emplace_back(mGame->getTexture(KNIGHT_ATTACK13));
-	mAttackingAnimVec.emplace_back(mGame->getTexture(KNIGHT_ATTACK14));
-	mAttackingAnimVec.emplace_back(mGame->getTexture(KNIGHT_ATTACK15));
-	mAttackingAnimVec.emplace_back(mGame->getTexture(KNIGHT_ATTACK16));
-	mAttackingAnimVec.emplace_back(mGame->getTexture(KNIGHT_ATTACK17));
+	mAttackingAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_ATTACK0));
+	mAttackingAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_ATTACK1));
+	mAttackingAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_ATTACK2));
+	mAttackingAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_ATTACK3));
+	mAttackingAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_ATTACK4));
+	mAttackingAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_ATTACK5));
+	mAttackingAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_ATTACK6));
+	mAttackingAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_ATTACK7));
+	mAttackingAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_ATTACK8));
+	mAttackingAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_ATTACK9));
+	mAttackingAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_ATTACK10));
+	mAttackingAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_ATTACK11));
+	mAttackingAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_ATTACK12));
+	mAttackingAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_ATTACK13));
+	mAttackingAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_ATTACK14));
+	mAttackingAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_ATTACK15));
+	mAttackingAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_ATTACK16));
+	mAttackingAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_ATTACK17));
 
-	mDeathAnimVec.emplace_back(mGame->getTexture(KNIGHT_DEATH0));
-	mDeathAnimVec.emplace_back(mGame->getTexture(KNIGHT_DEATH1));
-	mDeathAnimVec.emplace_back(mGame->getTexture(KNIGHT_DEATH2));
-	mDeathAnimVec.emplace_back(mGame->getTexture(KNIGHT_DEATH3));
-	mDeathAnimVec.emplace_back(mGame->getTexture(KNIGHT_DEATH4));
-	mDeathAnimVec.emplace_back(mGame->getTexture(KNIGHT_DEATH5));
-	mDeathAnimVec.emplace_back(mGame->getTexture(KNIGHT_DEATH6));
-	mDeathAnimVec.emplace_back(mGame->getTexture(KNIGHT_DEATH7));
-	mDeathAnimVec.emplace_back(mGame->getTexture(KNIGHT_DEATH8));
-	mDeathAnimVec.emplace_back(mGame->getTexture(KNIGHT_DEATH9));
-	mDeathAnimVec.emplace_back(mGame->getTexture(KNIGHT_DEATH10));
-	mDeathAnimVec.emplace_back(mGame->getTexture(KNIGHT_DEATH11));
-	mDeathAnimVec.emplace_back(mGame->getTexture(KNIGHT_DEATH12));
-	mDeathAnimVec.emplace_back(mGame->getTexture(KNIGHT_DEATH13));
-	mDeathAnimVec.emplace_back(mGame->getTexture(KNIGHT_DEATH14));
-	mDeathAnimVec.emplace_back(mGame->getTexture(KNIGHT_DEATH15));
+	mDeathAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_DEATH0));
+	mDeathAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_DEATH1));
+	mDeathAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_DEATH2));
+	mDeathAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_DEATH3));
+	mDeathAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_DEATH4));
+	mDeathAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_DEATH5));
+	mDeathAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_DEATH6));
+	mDeathAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_DEATH7));
+	mDeathAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_DEATH8));
+	mDeathAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_DEATH9));
+	mDeathAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_DEATH10));
+	mDeathAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_DEATH11));
+	mDeathAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_DEATH12));
+	mDeathAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_DEATH13));
+	mDeathAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_DEATH14));
+	mDeathAnimVec.emplace_back(TextureManager::getTexture(KNIGHT_DEATH15));
 
-	mIdleTexture = mGame->getTexture(KNIGHT_IDLE);
+	mIdleTexture = TextureManager::getTexture(KNIGHT_IDLE);
 }

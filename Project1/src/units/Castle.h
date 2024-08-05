@@ -8,6 +8,7 @@ public:
 	void Draw();
 	void Attack(GameObject* target);
 	virtual void OnDeathAction();
+	static void LoadAnimation();
 private:
-	void LoadAnimation();
+	static SDL_Texture* mTexture;
 };

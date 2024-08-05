@@ -11,12 +11,13 @@ public:
 	void Attack(GameObject* target);
 	inline const static int getStaticGoldCost() { return mGoldCost; }
 	inline const int getGoldCost() const override { return mGoldCost; }
+	static void LoadAnimation();
 private:
 	const static int mGoldCost = 55;
-	void LoadAnimation();
-	SDL_Texture* mAttackTexture;
-	SDL_Texture* mIdleTexture;
-	SDL_Texture* mDeathTexture;
+	static SDL_Texture* mTexture;
+	static SDL_Texture* mAttackTexture;
+	static SDL_Texture* mIdleTexture;
+	static SDL_Texture* mDeathTexture;
 	int mFrameCount;
 	int mDeathAnimFrameCount;
 };

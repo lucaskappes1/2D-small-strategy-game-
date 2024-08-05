@@ -9,13 +9,13 @@ public:
 	void Draw();
 	inline static const int getStaticGoldCost() { return mGoldCost; }
 	inline const int getGoldCost() const override { return mGoldCost; }
+	static void LoadAnimation();
 private:
 	const static int mGoldCost = 35;
 	int mFrameCount;
 	int mCurrentFrame;
-	std::vector<SDL_Texture*> mWalkingAnimVec;
-	std::vector<SDL_Texture*> mAttackingAnimVec;
-	std::vector<SDL_Texture*> mDeathAnimVec;
-	SDL_Texture* mIdleTexture;
-	void LoadAnimation();
+	static std::vector<SDL_Texture*> mWalkingAnimVec;
+	static std::vector<SDL_Texture*> mAttackingAnimVec;
+	static std::vector<SDL_Texture*> mDeathAnimVec;
+	static SDL_Texture* mIdleTexture;
 };

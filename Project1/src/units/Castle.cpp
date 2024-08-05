@@ -1,6 +1,9 @@
 #include "Castle.h"
 #include "Arrow.h"
 #include "../Game.h"
+#include "../TextureManager.h"
+
+SDL_Texture* Castle::mTexture = nullptr;
 
 Castle::Castle(SDL_Renderer* renderer, int x, int y, Game* game, bool isPlayer) :
 	Building(renderer, x, y, game, isPlayer)
@@ -35,5 +38,5 @@ void Castle::OnDeathAction()
 
 void Castle::LoadAnimation()
 {
-	mTexture = mGame->getTexture(CASTLE);
+	mTexture = TextureManager::getTexture(CASTLE);
 }

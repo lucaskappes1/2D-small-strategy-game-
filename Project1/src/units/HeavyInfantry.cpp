@@ -1,5 +1,8 @@
 #include "HeavyInfantry.h"
 #include "../Game.h"
+#include "../TextureManager.h"
+
+SDL_Texture* HeavyInfantry::mTexture = nullptr;
 
 HeavyInfantry::HeavyInfantry(SDL_Renderer* renderer, int x, int y, Game* game, bool isPlayer, bool isAdvancing) 
 {
@@ -129,5 +132,5 @@ void HeavyInfantry::Draw()
 
 void HeavyInfantry::LoadAnimation()
 {
-	mTexture = mGame->getTexture(HEAVY_INFANTRY);
+	mTexture = TextureManager::getTexture(HEAVY_INFANTRY);
 }

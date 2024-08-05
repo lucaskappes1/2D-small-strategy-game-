@@ -1,6 +1,9 @@
 #include "Tower1.h"
 #include "Arrow.h"
 #include "../Game.h"
+#include "../TextureManager.h"
+
+SDL_Texture* Tower1::mTexture = nullptr;
 
 Tower1::Tower1(SDL_Renderer* renderer, int x, int y, Game* game, bool isPlayer) :
 	Building(renderer, x, y, game, isPlayer)
@@ -31,5 +34,5 @@ void Tower1::Attack(GameObject* target)
 
 void Tower1::LoadAnimation()
 {
-	mTexture = mGame->getTexture(TOWER1);
+	mTexture = TextureManager::getTexture(TOWER1);
 }

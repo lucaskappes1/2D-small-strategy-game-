@@ -7,9 +7,10 @@ public:
     Arrow(const Vector2& position, GameObject* target, SDL_Renderer* renderer, class Game* game, int damage);
     void Update(float deltaTime);
     void Draw();
-    void LoadAnimation();
+    static void LoadAnimation();
 private:
     int mDamage;
     GameObject* mTarget;
+    static SDL_Texture* mTexture;
 };
 

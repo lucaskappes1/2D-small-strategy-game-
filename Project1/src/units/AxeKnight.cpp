@@ -1,5 +1,11 @@
 #include "AxeKnight.h"
 #include "../Game.h"
+#include "../TextureManager.h"
+
+std::vector<SDL_Texture*> AxeKnight::mWalkingAnimVec;
+std::vector<SDL_Texture*> AxeKnight::mAttackingAnimVec;
+std::vector<SDL_Texture*> AxeKnight::mDeathAnimVec;
+SDL_Texture* AxeKnight::mIdleTexture = nullptr;
 
 AxeKnight::AxeKnight(SDL_Renderer* renderer, int x, int y, Game* game, bool isPlayer, bool isAdvancing)
 {
@@ -132,40 +138,40 @@ void AxeKnight::Draw()
 
 void AxeKnight::LoadAnimation()
 {
-	mWalkingAnimVec.emplace_back(mGame->getTexture(GREEK_WALK0));
-	mWalkingAnimVec.emplace_back(mGame->getTexture(GREEK_WALK1));
-	mWalkingAnimVec.emplace_back(mGame->getTexture(GREEK_WALK2));
-	mWalkingAnimVec.emplace_back(mGame->getTexture(GREEK_WALK3));
-	mWalkingAnimVec.emplace_back(mGame->getTexture(GREEK_WALK4));
-	mWalkingAnimVec.emplace_back(mGame->getTexture(GREEK_WALK5));
-	mWalkingAnimVec.emplace_back(mGame->getTexture(GREEK_WALK6));
-	mWalkingAnimVec.emplace_back(mGame->getTexture(GREEK_WALK7));
-	mWalkingAnimVec.emplace_back(mGame->getTexture(GREEK_WALK8));
-	mWalkingAnimVec.emplace_back(mGame->getTexture(GREEK_WALK9));
-	mWalkingAnimVec.emplace_back(mGame->getTexture(GREEK_WALK10));
-	mWalkingAnimVec.emplace_back(mGame->getTexture(GREEK_WALK11));
+	mWalkingAnimVec.emplace_back(TextureManager::getTexture(GREEK_WALK0));
+	mWalkingAnimVec.emplace_back(TextureManager::getTexture(GREEK_WALK1));
+	mWalkingAnimVec.emplace_back(TextureManager::getTexture(GREEK_WALK2));
+	mWalkingAnimVec.emplace_back(TextureManager::getTexture(GREEK_WALK3));
+	mWalkingAnimVec.emplace_back(TextureManager::getTexture(GREEK_WALK4));
+	mWalkingAnimVec.emplace_back(TextureManager::getTexture(GREEK_WALK5));
+	mWalkingAnimVec.emplace_back(TextureManager::getTexture(GREEK_WALK6));
+	mWalkingAnimVec.emplace_back(TextureManager::getTexture(GREEK_WALK7));
+	mWalkingAnimVec.emplace_back(TextureManager::getTexture(GREEK_WALK8));
+	mWalkingAnimVec.emplace_back(TextureManager::getTexture(GREEK_WALK9));
+	mWalkingAnimVec.emplace_back(TextureManager::getTexture(GREEK_WALK10));
+	mWalkingAnimVec.emplace_back(TextureManager::getTexture(GREEK_WALK11));
 
-	mAttackingAnimVec.emplace_back(mGame->getTexture(GREEK_ATTACK0));
-	mAttackingAnimVec.emplace_back(mGame->getTexture(GREEK_ATTACK1));
-	mAttackingAnimVec.emplace_back(mGame->getTexture(GREEK_ATTACK2));
-	mAttackingAnimVec.emplace_back(mGame->getTexture(GREEK_ATTACK3));
-	mAttackingAnimVec.emplace_back(mGame->getTexture(GREEK_ATTACK4));
-	mAttackingAnimVec.emplace_back(mGame->getTexture(GREEK_ATTACK5));
-	mAttackingAnimVec.emplace_back(mGame->getTexture(GREEK_ATTACK6));
-	mAttackingAnimVec.emplace_back(mGame->getTexture(GREEK_ATTACK7));
+	mAttackingAnimVec.emplace_back(TextureManager::getTexture(GREEK_ATTACK0));
+	mAttackingAnimVec.emplace_back(TextureManager::getTexture(GREEK_ATTACK1));
+	mAttackingAnimVec.emplace_back(TextureManager::getTexture(GREEK_ATTACK2));
+	mAttackingAnimVec.emplace_back(TextureManager::getTexture(GREEK_ATTACK3));
+	mAttackingAnimVec.emplace_back(TextureManager::getTexture(GREEK_ATTACK4));
+	mAttackingAnimVec.emplace_back(TextureManager::getTexture(GREEK_ATTACK5));
+	mAttackingAnimVec.emplace_back(TextureManager::getTexture(GREEK_ATTACK6));
+	mAttackingAnimVec.emplace_back(TextureManager::getTexture(GREEK_ATTACK7));
 
-	mDeathAnimVec.emplace_back(mGame->getTexture(GREEK_DEATH0));
-	mDeathAnimVec.emplace_back(mGame->getTexture(GREEK_DEATH1));
-	mDeathAnimVec.emplace_back(mGame->getTexture(GREEK_DEATH2));
-	mDeathAnimVec.emplace_back(mGame->getTexture(GREEK_DEATH3));
-	mDeathAnimVec.emplace_back(mGame->getTexture(GREEK_DEATH4));
-	mDeathAnimVec.emplace_back(mGame->getTexture(GREEK_DEATH5));
-	mDeathAnimVec.emplace_back(mGame->getTexture(GREEK_DEATH6));
-	mDeathAnimVec.emplace_back(mGame->getTexture(GREEK_DEATH7));
-	mDeathAnimVec.emplace_back(mGame->getTexture(GREEK_DEATH8));
-	mDeathAnimVec.emplace_back(mGame->getTexture(GREEK_DEATH9));
-	mDeathAnimVec.emplace_back(mGame->getTexture(GREEK_DEATH10));
-	mDeathAnimVec.emplace_back(mGame->getTexture(GREEK_DEATH11));
+	mDeathAnimVec.emplace_back(TextureManager::getTexture(GREEK_DEATH0));
+	mDeathAnimVec.emplace_back(TextureManager::getTexture(GREEK_DEATH1));
+	mDeathAnimVec.emplace_back(TextureManager::getTexture(GREEK_DEATH2));
+	mDeathAnimVec.emplace_back(TextureManager::getTexture(GREEK_DEATH3));
+	mDeathAnimVec.emplace_back(TextureManager::getTexture(GREEK_DEATH4));
+	mDeathAnimVec.emplace_back(TextureManager::getTexture(GREEK_DEATH5));
+	mDeathAnimVec.emplace_back(TextureManager::getTexture(GREEK_DEATH6));
+	mDeathAnimVec.emplace_back(TextureManager::getTexture(GREEK_DEATH7));
+	mDeathAnimVec.emplace_back(TextureManager::getTexture(GREEK_DEATH8));
+	mDeathAnimVec.emplace_back(TextureManager::getTexture(GREEK_DEATH9));
+	mDeathAnimVec.emplace_back(TextureManager::getTexture(GREEK_DEATH10));
+	mDeathAnimVec.emplace_back(TextureManager::getTexture(GREEK_DEATH11));
 
-	mIdleTexture = mGame->getTexture(GREEK_IDLE);
+	mIdleTexture = TextureManager::getTexture(GREEK_IDLE);
 }

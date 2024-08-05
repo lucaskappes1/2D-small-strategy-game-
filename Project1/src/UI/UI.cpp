@@ -2,13 +2,14 @@
 #include "../Game.h"
 #include "../Player.h"
 #include "../level/Stage.h"
+#include "../TextureManager.h"
 
 
 UI::UI(Game* game, SDL_Renderer* renderer, Player* Player, Stage* stage) : mPlayer(Player), mStoneButtonClicked(false), mStage(stage)
 {
 	mGame = game;
 	mRenderer = renderer;
-	mMouse = new Mouse(mGame->getTexture(MOUSE_BUTTON), mRenderer);
+	mMouse = new Mouse(TextureManager::getTexture(MOUSE_BUTTON), mRenderer);
 }
 
 UI::~UI()
@@ -37,19 +38,19 @@ void UI::Initialize()
 	mPauseButton = new Button(mRenderer, mMouse, 500, 100, mFont, "Pause");
 	mContinueButton = new Button(mRenderer, mMouse, 500, 100, mFont, "Continue");
 	mStartGameButton->Show();
-	mKnightButton = new Button(mGame->getTexture(KNIGHT_BUTTON), mRenderer, mMouse, 50, 50, {130, 50, 106, 186}, mFont);
-	mSpearKnightButton = new Button(mGame->getTexture(SPEARMAN_BUTTON), mRenderer, mMouse, 100, 50, {0, 0, 172, 177}, mFont);
-	mAxeKnightButton = new Button(mGame->getTexture(GREEK_BUTTON), mRenderer, mMouse, 150, 50, {0, 0, 362, 586}, mFont);
-	mAcherButton = new Button(mGame->getTexture(ARCHER_BUTTON), mRenderer, mMouse, 200, 50, {0, 0, 303, 525}, mFont);
-	mHeavyInfantryButton = new Button(mGame->getTexture(HEAVY_INFANTRY_BUTTON), mRenderer, mMouse, 250, 50, { 0, 0, 65, 63 }, mFont);
-	mCatapultButton = new Button(mGame->getTexture(CATAPULT), mRenderer, mMouse, 300, 50, { 0, 256, 128, 128 }, mFont);
-	mRockButton = new Button(mGame->getTexture(ROCK), mRenderer, mMouse, 350, 50, { 0, 0, 64, 64 }, mFont);
-	mUpgradeArmorButton = new Button(mGame->getTexture(ARMOR_UPGRADE_BUTTON), mRenderer, mMouse, 50, 100, { 0, 0, 64, 64 }, mFont);
-	mUpgradeAttackButton = new Button(mGame->getTexture(ATTACK_UPGRADE_BUTTON), mRenderer, mMouse, 100, 100, { 0, 0, 64, 64 }, mFont);
-	mUpgradeRockButton = new Button(mGame->getTexture(ROCK_UPGRADE_BUTTON), mRenderer, mMouse, 150, 100, { 0, 0, 128, 128 }, mFont);
-	mChangeOrderButton = new Button(mGame->getTexture(CHANGE_ORDER_BUTTON), mRenderer, mMouse, 200, 100, { 0, 0, 64, 64 }, mFont);
-	mTower1Button = new Button(mGame->getTexture(TOWER1), mRenderer, mMouse, 400, 50, { 0, 0, 239, 486 }, mFont);
-	mTower2Button = new Button(mGame->getTexture(TOWER2), mRenderer, mMouse, 450, 50, { 0, 0, 251, 481 }, mFont);
+	mKnightButton = new Button(TextureManager::getTexture(KNIGHT_BUTTON), mRenderer, mMouse, 50, 50, {130, 50, 106, 186}, mFont);
+	mSpearKnightButton = new Button(TextureManager::getTexture(SPEARMAN_BUTTON), mRenderer, mMouse, 100, 50, {0, 0, 172, 177}, mFont);
+	mAxeKnightButton = new Button(TextureManager::getTexture(GREEK_BUTTON), mRenderer, mMouse, 150, 50, {0, 0, 362, 586}, mFont);
+	mAcherButton = new Button(TextureManager::getTexture(ARCHER_BUTTON), mRenderer, mMouse, 200, 50, {0, 0, 303, 525}, mFont);
+	mHeavyInfantryButton = new Button(TextureManager::getTexture(HEAVY_INFANTRY_BUTTON), mRenderer, mMouse, 250, 50, { 0, 0, 65, 63 }, mFont);
+	mCatapultButton = new Button(TextureManager::getTexture(CATAPULT), mRenderer, mMouse, 300, 50, { 0, 256, 128, 128 }, mFont);
+	mRockButton = new Button(TextureManager::getTexture(ROCK), mRenderer, mMouse, 350, 50, { 0, 0, 64, 64 }, mFont);
+	mUpgradeArmorButton = new Button(TextureManager::getTexture(ARMOR_UPGRADE_BUTTON), mRenderer, mMouse, 50, 100, { 0, 0, 64, 64 }, mFont);
+	mUpgradeAttackButton = new Button(TextureManager::getTexture(ATTACK_UPGRADE_BUTTON), mRenderer, mMouse, 100, 100, { 0, 0, 64, 64 }, mFont);
+	mUpgradeRockButton = new Button(TextureManager::getTexture(ROCK_UPGRADE_BUTTON), mRenderer, mMouse, 150, 100, { 0, 0, 128, 128 }, mFont);
+	mChangeOrderButton = new Button(TextureManager::getTexture(CHANGE_ORDER_BUTTON), mRenderer, mMouse, 200, 100, { 0, 0, 64, 64 }, mFont);
+	mTower1Button = new Button(TextureManager::getTexture(TOWER1), mRenderer, mMouse, 400, 50, { 0, 0, 239, 486 }, mFont);
+	mTower2Button = new Button(TextureManager::getTexture(TOWER2), mRenderer, mMouse, 450, 50, { 0, 0, 251, 481 }, mFont);
 	mStage1Button = new Button(mRenderer, mMouse, 300, 300, mFont, "Stage 1");
 	mStage2Button = new Button(mRenderer, mMouse, 300, 400, mFont, "Stage 2");
 	mStage3Button = new Button(mRenderer, mMouse, 300, 500, mFont, "Stage 3");

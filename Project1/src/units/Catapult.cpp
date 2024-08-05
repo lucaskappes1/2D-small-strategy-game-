@@ -1,6 +1,9 @@
 #include "Catapult.h"
 #include "Rock.h"
 #include "../Game.h"
+#include "../TextureManager.h"
+
+SDL_Texture* Catapult::mTexture = nullptr;
 
 Catapult::Catapult(SDL_Renderer* renderer, int x, int y, Game* game, bool isPlayer, bool isAdvancing)
 {
@@ -110,5 +113,5 @@ void Catapult::Attack(GameObject* target)
 
 void Catapult::LoadAnimation()
 {
-	mTexture = mGame->getTexture(CATAPULT);
+	mTexture = TextureManager::getTexture(CATAPULT);
 }

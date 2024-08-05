@@ -1,5 +1,11 @@
 #include "SpearKnight.h"
 #include "../Game.h"
+#include "../TextureManager.h"
+
+SDL_Texture* SpearKnight::mTexture = nullptr;
+SDL_Texture* SpearKnight::mTextureAttack = nullptr;
+SDL_Texture* SpearKnight::mIdleTexture = nullptr;
+SDL_Texture* SpearKnight::mDeathTexture = nullptr;
 
 SpearKnight::SpearKnight(SDL_Renderer* renderer, int x, int y, class Game* game, bool isPlayer, bool isAdvancing)
 {
@@ -122,8 +128,8 @@ void SpearKnight::Draw()
 
 void SpearKnight::LoadAnimation()
 {
-	mTexture = mGame->getTexture(SPEARMAN_WALK);
-	mTextureAttack = mGame->getTexture(SPEARKMAN_ATTACK);
-	mIdleTexture = mGame->getTexture(SPEARMAN_IDLE);
-	mDeathTexture = mGame->getTexture(SPEARMAN_DEATH);
+	mTexture = TextureManager::getTexture(SPEARMAN_WALK);
+	mTextureAttack = TextureManager::getTexture(SPEARKMAN_ATTACK);
+	mIdleTexture = TextureManager::getTexture(SPEARMAN_IDLE);
+	mDeathTexture = TextureManager::getTexture(SPEARMAN_DEATH);
 }

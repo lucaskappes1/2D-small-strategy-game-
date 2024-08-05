@@ -1,5 +1,8 @@
 #include "Arrow.h"
 #include "../Game.h"
+#include "../TextureManager.h"
+
+SDL_Texture* Arrow::mTexture = nullptr;
 
 Arrow::Arrow(const Vector2& position, GameObject* target, SDL_Renderer* renderer, Game* game, int damage) : 
 	Projectile(position, target->getPositionVec(), renderer, game),
@@ -45,5 +48,5 @@ void Arrow::Draw()
 
 void Arrow::LoadAnimation()
 {
-	mTexture = mGame->getTexture(ARROW);
+	mTexture = TextureManager::getTexture(ARROW);
 }

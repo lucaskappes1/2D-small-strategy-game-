@@ -8,9 +8,10 @@ public:
 	void Draw();
 	inline static const int getStaticGoldCost() { return mGoldCost; }
 	inline const int getGoldCost() const override { return mGoldCost; }
+	static void LoadAnimation();
 private:
+	static SDL_Texture* mTexture;
 	const static int mGoldCost = 380;
-	void LoadAnimation();
 	int mFrameCount;
 	bool mStateChanged;
 };

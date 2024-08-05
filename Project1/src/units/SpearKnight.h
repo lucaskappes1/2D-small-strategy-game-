@@ -8,12 +8,13 @@ public:
 	void Draw();
 	inline static const int getStaticGoldCost() { return mGoldCost; }
 	inline const int getGoldCost() const override { return mGoldCost; }
+	static void LoadAnimation();
 private:
-	SDL_Texture* mTextureAttack;
-	SDL_Texture* mIdleTexture;
-	SDL_Texture* mDeathTexture;
+	static SDL_Texture* mTexture;
+	static SDL_Texture* mTextureAttack;
+	static SDL_Texture* mIdleTexture;
+	static SDL_Texture* mDeathTexture;
 	const static int mGoldCost = 80;
-	void LoadAnimation();
 	int mFrameCount;
 	bool mStateChanged;
 };

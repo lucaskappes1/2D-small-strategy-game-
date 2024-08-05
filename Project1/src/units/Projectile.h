@@ -8,7 +8,6 @@ public:
     Projectile(const Vector2& position, const Vector2& destination, SDL_Renderer* renderer, class Game* game);
     virtual void Update(float deltaTime) = 0;
     virtual void Draw() = 0;
-    virtual void LoadAnimation() = 0;
     virtual void Attack(GameObject* target) {}
     virtual void TakeDamage(int DMG) {}
     virtual void OnDeathAction() {}
@@ -17,7 +16,6 @@ protected:
     Vector2 mDestination;
     void CalculateVelocity(float offset);
     SDL_Renderer* mRenderer;
-    SDL_Texture* mTexture;
     SDL_Rect mDestR;
     class Game* mGame;
 };

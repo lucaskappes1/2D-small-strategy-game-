@@ -4,6 +4,10 @@
 #include <chrono>
 #include "Player.h"
 #include "units/Projectile.h"
+#include "TextureManager.h"
+#include "units/Arrow.h"
+#include "units/Catapult.h"
+#include "units/Rock.h"
 
 Game::Game()
 {
@@ -44,7 +48,7 @@ bool Game::Initialize()
 		return false;
 	}
 	LoadData();
-	BG = new Background(getTexture("assets/Background.png", BACKGROUND_TEXTURE), mRenderer, WIDTH, HEIGHT);
+	BG = new Background(TextureManager::getTexture(BACKGROUND_TEXTURE), mRenderer, WIDTH, HEIGHT);
 	mPlayer = new Player(this);
 	mAI = new AIhard(this);
 	mStage = new Stage(this, mRenderer, mAI);
@@ -73,7 +77,7 @@ void Game::Shutdown()
 	}
 	delete mPlayer;
 	delete mStage;
-	mTextureMap.clear();
+	TextureManager::ClearTextureMap();
 	std::cout << "kills: " << mKills << " deaths: " << mDeaths << std::endl;
 	SDL_DestroyRenderer(mRenderer);
 	SDL_DestroyWindow(mWindow);
@@ -122,16 +126,6 @@ GameObject* Game::CollisionDetection(GameObject* gameObject)
 		}
 	}
 	return nullptr;
-}
-
-SDL_Texture* Game::getTexture(int id)
-{
-	auto temp = mTextureMap.find(id);
-	if (temp == mTextureMap.end())
-	{
-		return nullptr;
-	}
-	return temp->second;
 }
 
 void Game::KillObject(GameObject* target)
@@ -185,124 +179,18 @@ void Game::ProcessInput()
 
 void Game::LoadData()
 {
-	getTexture("assets/castle.png", CASTLE);
-	getTexture("assets/ArcherSkeleton/Walk/walk.png", ARCHER_WALK);
-	getTexture("assets/ArcherSkeleton/Attack/attack.png", ARCHER_ATTACK);
-	getTexture("assets/ArcherSkeleton/Idle/Separate sp/idle (1).png", ARCHER_IDLE);
-	getTexture("assets/ArcherSkeleton/Dead/dead.png", ARCHER_DEATH);
-
-	getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_00.png", GREEK_WALK0);
-	getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_01.png", GREEK_WALK1);
-	getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_02.png", GREEK_WALK2);
-	getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_03.png", GREEK_WALK3);
-	getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_04.png", GREEK_WALK4);
-	getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_05.png", GREEK_WALK5);
-	getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_06.png", GREEK_WALK6);
-	getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_07.png", GREEK_WALK7);
-	getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_08.png", GREEK_WALK8);
-	getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_09.png", GREEK_WALK9);
-	getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_10.png", GREEK_WALK10);
-	getTexture("assets/GreekSoldier/Walk/GreekBasic_Walk_11.png", GREEK_WALK11);
-	getTexture("assets/GreekSoldier/Attack/GreekBasic_Attack_0.png", GREEK_ATTACK0);
-	getTexture("assets/GreekSoldier/Attack/GreekBasic_Attack_1.png", GREEK_ATTACK1);
-	getTexture("assets/GreekSoldier/Attack/GreekBasic_Attack_2.png", GREEK_ATTACK2);
-	getTexture("assets/GreekSoldier/Attack/GreekBasic_Attack_3.png", GREEK_ATTACK3);
-	getTexture("assets/GreekSoldier/Attack/GreekBasic_Attack_4.png", GREEK_ATTACK4);
-	getTexture("assets/GreekSoldier/Attack/GreekBasic_Attack_5.png", GREEK_ATTACK5);
-	getTexture("assets/GreekSoldier/Attack/GreekBasic_Attack_6.png", GREEK_ATTACK6);
-	getTexture("assets/GreekSoldier/Attack/GreekBasic_Attack_7.png", GREEK_ATTACK7);
-	getTexture("assets/GreekSoldier/Idle/GreekBasic_Idle_00.png", GREEK_IDLE);
-	getTexture("assets/GreekSoldier/Die/GreekBasic_Die_00.png", GREEK_DEATH0);
-	getTexture("assets/GreekSoldier/Die/GreekBasic_Die_01.png", GREEK_DEATH1);
-	getTexture("assets/GreekSoldier/Die/GreekBasic_Die_02.png", GREEK_DEATH2);
-	getTexture("assets/GreekSoldier/Die/GreekBasic_Die_03.png", GREEK_DEATH3);
-	getTexture("assets/GreekSoldier/Die/GreekBasic_Die_04.png", GREEK_DEATH4);
-	getTexture("assets/GreekSoldier/Die/GreekBasic_Die_05.png", GREEK_DEATH5);
-	getTexture("assets/GreekSoldier/Die/GreekBasic_Die_06.png", GREEK_DEATH6);
-	getTexture("assets/GreekSoldier/Die/GreekBasic_Die_07.png", GREEK_DEATH7);
-	getTexture("assets/GreekSoldier/Die/GreekBasic_Die_08.png", GREEK_DEATH8);
-	getTexture("assets/GreekSoldier/Die/GreekBasic_Die_09.png", GREEK_DEATH9);
-	getTexture("assets/GreekSoldier/Die/GreekBasic_Die_10.png", GREEK_DEATH10);
-	getTexture("assets/GreekSoldier/Die/GreekBasic_Die_11.png", GREEK_DEATH11);
-
-
-	getTexture("assets/Knight/Walk/Tuscan_Walk_20000.png", KNIGHT_WALK0);
-	getTexture("assets/Knight/Walk/Tuscan_Walk_20001.png", KNIGHT_WALK1);
-	getTexture("assets/Knight/Walk/Tuscan_Walk_20002.png", KNIGHT_WALK2);
-	getTexture("assets/Knight/Walk/Tuscan_Walk_20003.png", KNIGHT_WALK3);
-	getTexture("assets/Knight/Walk/Tuscan_Walk_20004.png", KNIGHT_WALK4);
-	getTexture("assets/Knight/Walk/Tuscan_Walk_20005.png", KNIGHT_WALK5);
-	getTexture("assets/Knight/Walk/Tuscan_Walk_20006.png", KNIGHT_WALK6);
-	getTexture("assets/Knight/Walk/Tuscan_Walk_20007.png", KNIGHT_WALK7);
-	getTexture("assets/Knight/Walk/Tuscan_Walk_20008.png", KNIGHT_WALK8);
-	getTexture("assets/Knight/Walk/Tuscan_Walk_20009.png", KNIGHT_WALK9);
-	getTexture("assets/Knight/Walk/Tuscan_Walk_20010.png", KNIGHT_WALK10);
-	getTexture("assets/Knight/Walk/Tuscan_Walk_20011.png", KNIGHT_WALK11);
-	getTexture("assets/Knight/Walk/Tuscan_Walk_20012.png", KNIGHT_WALK12);
-	getTexture("assets/Knight/Walk/Tuscan_Walk_20013.png", KNIGHT_WALK13);
-	getTexture("assets/Knight/Walk/Tuscan_Walk_20014.png", KNIGHT_WALK14);
-	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20000.png", KNIGHT_ATTACK0);
-	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20001.png", KNIGHT_ATTACK1);
-	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20002.png", KNIGHT_ATTACK2);
-	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20003.png", KNIGHT_ATTACK3);
-	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20004.png", KNIGHT_ATTACK4);
-	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20005.png", KNIGHT_ATTACK5);
-	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20006.png", KNIGHT_ATTACK6);
-	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20007.png", KNIGHT_ATTACK7);
-	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20008.png", KNIGHT_ATTACK8);
-	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20009.png", KNIGHT_ATTACK9);
-	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20010.png", KNIGHT_ATTACK10);
-	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20011.png", KNIGHT_ATTACK11);
-	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20012.png", KNIGHT_ATTACK12);
-	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20013.png", KNIGHT_ATTACK13);
-	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20014.png", KNIGHT_ATTACK14);
-	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20015.png", KNIGHT_ATTACK15);
-	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20016.png", KNIGHT_ATTACK16);
-	getTexture("assets/Knight/Attack_01/Tuscan_Attack_01_20017.png", KNIGHT_ATTACK17);
-	getTexture("assets/Knight/Idle/Tuscan_Idle_20000.png", KNIGHT_IDLE);
-	getTexture("assets/Knight/Death/Tuscan_Death_20000.png", KNIGHT_DEATH0);
-	getTexture("assets/Knight/Death/Tuscan_Death_20001.png", KNIGHT_DEATH1);
-	getTexture("assets/Knight/Death/Tuscan_Death_20002.png", KNIGHT_DEATH2);
-	getTexture("assets/Knight/Death/Tuscan_Death_20003.png", KNIGHT_DEATH3);
-	getTexture("assets/Knight/Death/Tuscan_Death_20004.png", KNIGHT_DEATH4);
-	getTexture("assets/Knight/Death/Tuscan_Death_20005.png", KNIGHT_DEATH5);
-	getTexture("assets/Knight/Death/Tuscan_Death_20006.png", KNIGHT_DEATH6);
-	getTexture("assets/Knight/Death/Tuscan_Death_20007.png", KNIGHT_DEATH7);
-	getTexture("assets/Knight/Death/Tuscan_Death_20008.png", KNIGHT_DEATH8);
-	getTexture("assets/Knight/Death/Tuscan_Death_20009.png", KNIGHT_DEATH9);
-	getTexture("assets/Knight/Death/Tuscan_Death_20010.png", KNIGHT_DEATH10);
-	getTexture("assets/Knight/Death/Tuscan_Death_20011.png", KNIGHT_DEATH11);
-	getTexture("assets/Knight/Death/Tuscan_Death_20012.png", KNIGHT_DEATH12);
-	getTexture("assets/Knight/Death/Tuscan_Death_20013.png", KNIGHT_DEATH13);
-	getTexture("assets/Knight/Death/Tuscan_Death_20014.png", KNIGHT_DEATH14);
-	getTexture("assets/Knight/Death/Tuscan_Death_20015.png", KNIGHT_DEATH15);
-
-	getTexture("assets/bSpearman/_walk/bSpearman_Walk_Right_strip10.png", SPEARMAN_WALK);
-	getTexture("assets/bSpearman/_attack/bSpearman_Attack01_Right_strip8.png", SPEARKMAN_ATTACK);
-	getTexture("assets/bSpearman/bSpearman_Idle_strip8.png", SPEARMAN_IDLE);
-	getTexture("assets/bSpearman/_death/bSpearman_Die_Right_strip8.png", SPEARMAN_DEATH);
-
-	getTexture("assets/HeavyInfantry/HeavyInfantry.png", HEAVY_INFANTRY);
-	getTexture("assets/HeavyInfantry/HeavyInfantryButton.png", HEAVY_INFANTRY_BUTTON);
-
-	getTexture("assets/Knight/Idle/Tuscan_Idle_10000.png", KNIGHT_BUTTON);
-	getTexture("assets/bSpearman/Button.png", SPEARMAN_BUTTON);
-	getTexture("assets/GreekSoldier/Idle/GreekBasic_Idle_00.png", GREEK_BUTTON);
-	getTexture("assets/ArcherSkeleton/Idle/Separate sp/idle (1).png", ARCHER_BUTTON);
-	getTexture("assets/ArmorUpgrade.png", ARMOR_UPGRADE_BUTTON);
-	getTexture("assets/AttackUpgrade.png", ATTACK_UPGRADE_BUTTON);
-	getTexture("assets/Mouse.png", MOUSE_BUTTON);
-	getTexture("assets/ChangeOrder.png", CHANGE_ORDER_BUTTON);
-	getTexture("assets/Rock.png", ROCK);
-	getTexture("assets/RockUpgrade.png", ROCK_UPGRADE_BUTTON);
-
-	getTexture("assets/Arrow.png", ARROW);
-
-	getTexture("assets/tower_2.png", TOWER2);
-	getTexture("assets/tower.png", TOWER1);
-
-	getTexture("assets/Catapult.png", CATAPULT);
-	
+	TextureManager::LoadAllTextures(mRenderer);
+	Archer::LoadAnimation();
+	Arrow::LoadAnimation();
+	AxeKnight::LoadAnimation();
+	Castle::LoadAnimation();
+	Catapult::LoadAnimation();
+	HeavyInfantry::LoadAnimation();
+	Knight::LoadAnimation();
+	Rock::LoadAnimation();
+	SpearKnight::LoadAnimation();
+	Tower1::LoadAnimation();
+	Tower2::LoadAnimation();
 }
 
 void Game::CreateUnit(GameObject* unit)
@@ -405,20 +293,6 @@ void Game::GameOver(Castle* castle)
 		mUI->VictoryScreen();
 	}
 	mAI->Deactivate();
-}
-
-SDL_Texture* Game::getTexture(std::string path, int name)
-{
-	auto temp = mTextureMap.find(name);
-	if (temp == mTextureMap.end())
-	{
-		SDL_Surface* surf = IMG_Load(path.c_str());
-		SDL_Texture* tex = SDL_CreateTextureFromSurface(mRenderer, surf);
-		SDL_FreeSurface(surf);
-		mTextureMap.emplace(name, tex);
-		return tex;
-	}
-	return temp->second;	//temp é um iterator. Assim, temp->second retorna o value da posição do iterator no mapa
 }
 
 void Game::Update()

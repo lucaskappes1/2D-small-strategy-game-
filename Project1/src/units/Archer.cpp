@@ -1,6 +1,12 @@
 #include "Archer.h"
 #include "../Game.h"
 #include "Arrow.h"
+#include "../TextureManager.h"
+
+SDL_Texture* Archer::mTexture = nullptr;
+SDL_Texture* Archer::mIdleTexture = nullptr;
+SDL_Texture* Archer::mAttackTexture =nullptr;
+SDL_Texture* Archer::mDeathTexture = nullptr;
 
 Archer::Archer(SDL_Renderer* renderer, int x, int y, Game* game, bool isPlayer, bool isAdvancing)
 {
@@ -152,8 +158,8 @@ void Archer::Attack(GameObject* target)
 
 void Archer::LoadAnimation()
 {
-	mTexture = mGame->getTexture(ARCHER_WALK);
-	mIdleTexture = mGame->getTexture(ARCHER_IDLE);
-	mAttackTexture = mGame->getTexture(ARCHER_ATTACK);
-	mDeathTexture = mGame->getTexture(ARCHER_DEATH);
+	mTexture = TextureManager::getTexture(ARCHER_WALK);
+	mIdleTexture = TextureManager::getTexture(ARCHER_IDLE);
+	mAttackTexture = TextureManager::getTexture(ARCHER_ATTACK);
+	mDeathTexture = TextureManager::getTexture(ARCHER_DEATH);
 }

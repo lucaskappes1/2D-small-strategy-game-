@@ -160,6 +160,7 @@
     <ClCompile Include="src\units\Tower2.cpp" />
     <ClCompile Include="src\level\Stage.cpp" />
     <ClCompile Include="src\level\UpgradeList.cpp" />
+    <ClCompile Include="src\TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\units\Catapult.h" />
@@ -190,6 +191,7 @@
     <ClInclude Include="src\units\Tower2.h" />
     <ClInclude Include="src\level\Stage.h" />
     <ClInclude Include="src\level\UpgradeList.h" />
+    <ClInclude Include="src\TextureManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

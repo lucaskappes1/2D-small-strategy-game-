@@ -30,7 +30,6 @@ public:
 	inline std::vector<GameObject*>& GetModifiableGameObjectVector() { return mObjects; }
 	GameObject* RangedAttackDetection(GameObject* gameObject, int range);
 	GameObject* CollisionDetection(GameObject* gameObject);
-	SDL_Texture* getTexture(int id);
 	SDL_Renderer* getRenderer() { return mRenderer; }
 	void KillObject(GameObject* target);
 	void CreateUnit(GameObject* unit);
@@ -55,8 +54,6 @@ private:
 	void Render();
 	void ProcessInput();
 	void LoadData();
-	SDL_Texture* getTexture(std::string path, int name);
-	std::map<int, SDL_Texture*> mTextureMap;
 	SDL_Renderer* mRenderer;
 	SDL_Window* mWindow;
 	std::vector<GameObject*> mObjects;

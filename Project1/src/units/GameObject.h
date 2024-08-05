@@ -34,7 +34,6 @@ protected:
 	SDL_Rect mCollisionR;
 	SDL_Rect mDestR;
 	SDL_Renderer* mRenderer;
-	SDL_Texture* mTexture;
 	class Game* mGame;
 	int mReloadCount;
 	SDL_Rect mSrcR;
